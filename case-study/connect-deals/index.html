@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Connect Deals — Deal Performance at a Glance · Jeury Santos</title>
+<meta name="description" content="Connect Deals — redesigning Google's internal deal-reporting tab into an insight-driven dashboard for sellers. A product design case study by Jeury Santos."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+  :root{
+    --ink:#0f1419; --body:#48535b; --muted:#5c6770;
+    --line:#e7eaee; --bg:#ffffff; --soft:#f6f8fa;
+    --blue:#1a73e8; --accent:#1a73e8; --accent-2:#c2761f;
+    --ok:#137333; --warn:#b06000; --err:#c5221f; --yellow:#e8a400;
+    --maxw:1120px; --r:20px;
+    --shadow:0 30px 70px -28px rgba(15,23,42,.38), 0 10px 26px -12px rgba(15,23,42,.16);
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --font-display:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:var(--font);color:var(--body);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  h1,h2,h3{color:var(--ink);line-height:1.12;letter-spacing:-0.02em;margin:0;}
+  h1,h2,footer .big{font-family:var(--font-display);letter-spacing:-0.035em;}
+  a{color:var(--blue);text-decoration:none;}
+  img{display:block;max-width:100%;}
+
+  .skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--ink);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;font-weight:600;font-size:14px;}
+  .skip:focus{left:0;}
+  a:focus-visible,button:focus-visible,.sidenav a:focus-visible{outline:3px solid rgba(26,115,232,.5);outline-offset:3px;border-radius:6px;}
+
+  body{counter-reset:sec;}
+  section{position:relative;padding:104px 0;border-bottom:1px solid var(--line);}
+  @media(max-width:760px){section{padding:64px 0;}}
+  section>.wrap{position:relative;z-index:2;}
+  section::before{counter-increment:sec;content:counter(sec,decimal-leading-zero);position:absolute;top:18px;right:5%;z-index:0;font-family:var(--font-display);font-weight:700;font-size:clamp(72px,9vw,150px);line-height:1;color:var(--accent-2);opacity:.06;pointer-events:none;}
+  @media(max-width:760px){section::before{right:16px;font-size:64px;}}
+
+  .js section>.wrap, .js .hero .wrap{opacity:0;transform:translateY(28px);transition:opacity .8s ease, transform .85s cubic-bezier(.2,.85,.25,1);}
+  .js section>.wrap.in, .js .hero .wrap.in{opacity:1;transform:none;}
+  [data-parallax]{will-change:transform;}
+  @media(prefers-reduced-motion:reduce){.js section>.wrap,.js .hero .wrap{opacity:1!important;transform:none!important;transition:none;}[data-parallax]{transform:none!important;}}
+
+  /* nav */
+  nav.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line);}
+  nav.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;}
+  .brand{font-family:'Caveat',cursive;font-weight:700;font-size:28px;line-height:1;color:var(--ink);text-decoration:none;transition:color .3s,filter .3s;}
+  .brand:hover{background:linear-gradient(100deg,#1de9b6,#7d5cff,#ffb454);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;filter:drop-shadow(0 0 12px rgba(125,92,255,.4));}
+  .navlinks{display:flex;gap:24px;font-size:14px;font-weight:500;}
+  .navlinks a{color:var(--body);}.navlinks a:hover{color:var(--ink);}
+  @media(max-width:720px){.navlinks{display:none;}}
+
+  .sidenav{position:fixed;left:18px;top:50%;transform:translateY(-50%);z-index:60;display:none;flex-direction:column;gap:2px;padding:10px 8px;border-radius:20px;background:rgba(255,255,255,.55);-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);border:1px solid rgba(255,255,255,.6);box-shadow:0 18px 46px -18px rgba(15,23,42,.34);}
+  .sidenav a{position:relative;display:flex;align-items:center;padding:9px 10px;border-radius:12px;color:var(--body);transition:background .28s ease,transform .28s cubic-bezier(.2,.8,.2,1);}
+  .sidenav a .dot{width:7px;height:7px;border-radius:50%;background:#c1c9d2;flex-shrink:0;transition:all .28s cubic-bezier(.2,.8,.2,1);}
+  .sidenav a .label{max-width:0;overflow:hidden;white-space:nowrap;opacity:0;font-size:13.5px;font-weight:600;transition:max-width .42s cubic-bezier(.2,.8,.2,1),opacity .26s ease,margin-left .42s cubic-bezier(.2,.8,.2,1);}
+  .sidenav:hover a .label{max-width:180px;opacity:1;margin-left:12px;}
+  .sidenav a:hover{background:rgba(26,115,232,.10);transform:translateX(3px);}
+  .sidenav a:hover .dot,.sidenav a.active .dot{background:var(--blue);transform:scale(1.4);box-shadow:0 0 0 4px rgba(26,115,232,.16);}
+  .sidenav a.active{color:var(--ink);}
+  @media(min-width:1180px){.sidenav{display:flex;} .topbar .navlinks{display:none;}}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden;background:radial-gradient(1100px 500px at 80% -8%,rgba(26,115,232,.13),transparent 60%),radial-gradient(900px 480px at 0% 12%,rgba(52,168,83,.10),transparent 55%),linear-gradient(180deg,#fbfcfe 0%,#f4f7fb 100%);border-bottom:1px solid var(--line);}
+  .hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.02fr .98fr;gap:48px;align-items:center;padding-top:96px;padding-bottom:100px;}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--blue);background:#eaf1fc;border:1px solid #d6e4fb;padding:6px 12px;border-radius:999px;}
+  .hero h1{font-size:clamp(40px,6vw,72px);font-weight:700;margin:20px 0 0;}
+  .hero .lede{font-size:19px;color:var(--body);margin:18px 0 0;max-width:42ch;}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+  .chip{font-size:12.5px;font-weight:600;color:var(--ink);background:#fff;border:1px solid var(--line);padding:7px 12px;border-radius:999px;box-shadow:0 1px 2px rgba(15,23,42,.04);}
+  .chip.ok{color:var(--ok);border-color:#bfe3cf;background:#eaf6ef;}
+  .hero-shot{border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:#fff;transform:rotate(.6deg);}
+  @media(max-width:920px){.hero .wrap{grid-template-columns:1fr;gap:30px;}.hero h1{font-size:38px;}}
+
+  .kicker{font-size:13px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--blue);margin:0 0 14px;}
+  h2{font-size:clamp(28px,4vw,40px);font-weight:700;}
+  .lead{font-size:20px;color:var(--ink);max-width:62ch;margin:18px 0 0;font-weight:500;}
+  p.body{font-size:17px;max-width:64ch;margin:16px 0 0;}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+  @media(max-width:860px){.two{grid-template-columns:1fr;gap:28px;}}
+
+  figure{margin:34px 0 0;}
+  figure img{border-radius:14px;border:1px solid var(--line);box-shadow:var(--shadow);background:#fff;width:100%;}
+  figcaption{font-size:13.5px;color:var(--muted);margin-top:12px;text-align:center;}
+
+  /* overview strip */
+  .ovgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
+  .ovgrid h4{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px;font-weight:700;}
+  .ovgrid p{margin:0;color:var(--ink);font-weight:600;font-size:15.5px;}
+  @media(max-width:760px){.ovgrid{grid-template-columns:1fr 1fr;gap:22px;}}
+
+  /* cards */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;transition:transform .25s ease,box-shadow .25s ease;}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+  .card h3{font-size:18px;margin:0 0 8px;}
+  .card .n{font-family:var(--font-display);font-weight:700;font-size:14px;color:var(--blue);}
+  .card p{margin:8px 0 0;font-size:15px;}
+  @media(max-width:860px){.cards{grid-template-columns:1fr;}}
+
+  /* goal callout */
+  .goal{background:var(--ink);color:#fff;border-radius:var(--r);padding:40px;}
+  .goal .kicker{color:#8ab4f8;}
+  .goal p{font-size:24px;line-height:1.4;color:#fff;font-weight:600;margin:0;max-width:48ch;letter-spacing:-0.01em;}
+
+  /* before / after */
+  .ba-two{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:34px;}
+  @media(max-width:860px){.ba-two{grid-template-columns:1fr;}}
+  .ba-block{border-radius:18px;padding:26px;border:1px solid var(--line);}
+  .ba-block.before{background:#f4ece3;}
+  .ba-block.after{background:#e8f1fc;}
+  .ba-word{font-family:var(--font-display);font-weight:700;font-size:30px;letter-spacing:-.03em;display:block;}
+  .ba-block.before .ba-word{color:#caa988;}
+  .ba-block.after .ba-word{color:#9cc0f4;}
+  .ba-cap{margin:10px 0 0;font-size:15px;color:var(--ink);}
+  .ba-block.before .ba-cap b,.ba-block.after .ba-cap b{font-weight:700;}
+
+  /* persona */
+  .persona{display:grid;grid-template-columns:.7fr 1.3fr;gap:34px;align-items:center;background:var(--soft);border:1px solid var(--line);border-radius:var(--r);padding:30px;margin-top:34px;}
+  .persona img{border-radius:14px;border:1px solid var(--line);width:100%;}
+  .persona .qt{font-family:var(--font-display);font-size:22px;color:var(--ink);font-weight:600;letter-spacing:-.02em;margin:0 0 14px;line-height:1.3;}
+  .persona dl{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;margin:0;font-size:14.5px;}
+  .persona dt{color:var(--muted);font-weight:600;}
+  .persona dd{margin:0;color:var(--ink);}
+  @media(max-width:760px){.persona{grid-template-columns:1fr;}}
+
+  /* outcome stats */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px;}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:28px;}
+  .stat .num{font-family:var(--font-display);font-weight:700;font-size:clamp(34px,5vw,52px);color:var(--ink);letter-spacing:-.03em;line-height:1;}
+  .stat .num em{color:var(--blue);font-style:normal;}
+  .stat .lab{margin-top:10px;font-size:14.5px;color:var(--body);}
+  @media(max-width:760px){.stats{grid-template-columns:1fr;}}
+
+  ul.clean{list-style:none;padding:0;margin:18px 0 0;}
+  ul.clean li{position:relative;padding:0 0 0 26px;margin:0 0 14px;font-size:16px;color:var(--ink);}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:8px;height:8px;border-radius:8px;background:var(--blue);}
+  ul.clean li b{font-weight:700;}
+
+  footer{background:var(--ink);color:#cdd6df;padding:64px 0;border:none;}
+  footer .big{font-size:clamp(28px,4vw,42px);color:#fff;font-weight:700;}
+  footer .frow{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px;}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;padding:12px 20px;border-radius:999px;border:1px solid rgba(255,255,255,.25);color:#fff;}
+  .btn.solid{background:#fff;color:var(--ink);border-color:#fff;}
+  .btn:hover{border-color:#fff;}
+  .foot-note{margin-top:28px;font-size:13px;color:#8a96a3;}
+</style>
+</head>
+<body>
+<a href="#problem" class="skip">Skip to content</a>
+
+<aside class="sidenav" aria-label="Section navigation">
+  <a href="#beforeafter"><span class="dot"></span><span class="label">Before / after</span></a>
+  <a href="#problem"><span class="dot"></span><span class="label">Problem</span></a>
+  <a href="#research"><span class="dot"></span><span class="label">Research</span></a>
+  <a href="#insight"><span class="dot"></span><span class="label">Insight</span></a>
+  <a href="#strategy"><span class="dot"></span><span class="label">Strategy</span></a>
+  <a href="#design"><span class="dot"></span><span class="label">Final design</span></a>
+  <a href="#iterations"><span class="dot"></span><span class="label">Iterations</span></a>
+  <a href="#outcome"><span class="dot"></span><span class="label">Outcome</span></a>
+</aside>
+
+<nav class="topbar"><div class="wrap">
+  <a class="brand" href="../../index.html" aria-label="Back to home">jeurysantos</a>
+  <div class="navlinks">
+    <a href="#beforeafter">Before/after</a>
+    <a href="#problem">Problem</a>
+    <a href="#research">Research</a>
+    <a href="#strategy">Strategy</a>
+    <a href="#design">Final design</a>
+    <a href="#outcome">Outcome</a>
+  </div>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Google · Senior Product Designer</span>
+      <h1>Deal performance, at a glance.</h1>
+      <p class="lede">I redesigned Connect Deals' reporting tab — Google's internal tool for tracking global deal performance — from a dense data table into an insight-driven dashboard that saves the sales org an estimated 12,000 hours a year.</p>
+      <div class="meta">
+        <span class="chip">Connect Deals · Reporting</span>
+        <span class="chip">Research → implementation</span>
+        <span class="chip ok">≈12,000 FTE hrs/yr saved</span>
+      </div>
+    </div>
+    <div class="hero-shot" data-parallax="0.03">
+      <img src="images/s19_0.png" alt="Connect Deals reporting dashboard — pacing, spend performance, and milestones at a glance" loading="lazy"/>
+    </div>
+  </div>
+</header>
+
+<!-- OVERVIEW -->
+<section>
+  <div class="wrap">
+    <p class="kicker">Overview</p>
+    <h2>Turning a reporting tool into an insight engine</h2>
+    <p class="lead">Connect Deals is the internal platform Google sellers use to track global deal performance. I led the reporting side end to end — from discovery research to implementation — partnering with PMs, engineers, and data analysts.</p>
+    <div class="ovgrid" style="margin-top:40px;">
+      <div><h4>Role</h4><p>Senior Product Designer (lead, Reporting)</p></div>
+      <div><h4>Company</h4><p>Google · Connect Deals</p></div>
+      <div><h4>Scope</h4><p>Research, IA, interaction, dataviz, validation</p></div>
+      <div><h4>Phase 1</h4><p>2025 · Q4 launch target</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section id="beforeafter">
+  <div class="wrap" style="text-align:center;">
+    <p class="kicker">Before &amp; after</p>
+    <h2>From a black box to a glance</h2>
+    <p class="lead" style="margin:18px auto 0;">The old reporting view was a dense data table with no visual hierarchy — sellers exported raw data to spreadsheets just to understand deal health. The redesign surfaces pacing, gap-to-tier, and milestone progress instantly.</p>
+    <div class="ba-two" style="text-align:left;">
+      <div class="ba-block before">
+        <span class="ba-word">Before</span>
+        <p class="ba-cap"><b>A reporting-only table.</b> Dense rows, no hierarchy, no pacing logic, no client-safe mode. Understanding a deal meant a manual download into Excel.</p>
+      </div>
+      <div class="ba-block after">
+        <span class="ba-word">After</span>
+        <p class="ba-cap"><b>An insight-driven dashboard.</b> Pacing, gap-to-next-tier, spend deep-dive, and an external-share toggle — the answer is on the screen.</p>
+      </div>
+    </div>
+    <figure><img src="images/s19_0.png" alt="The redesigned Connect Deals dashboard" loading="lazy"/><figcaption>After: pacing, cumulative spend performance, and milestone tiers in one glanceable view.</figcaption></figure>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="wrap">
+    <p class="kicker">The problem</p>
+    <h2>The black box of deal reporting</h2>
+    <p class="lead">Reporting answered "what happened" but never "what now." Three pain points kept surfacing.</p>
+    <div class="cards">
+      <div class="card"><span class="n">01</span><h3>Efficiency drain</h3><p>Sellers spent an estimated <b>12,000 hours a year</b> on manual workarounds — downloading raw data into spreadsheets just to understand deal health.</p></div>
+      <div class="card"><span class="n">02</span><h3>Lack of actionability</h3><p>Reporting was too high-level to answer basic client questions like <b>"How close are we to the next tier?"</b> — a true black box.</p></div>
+      <div class="card"><span class="n">03</span><h3>Alarm fatigue</h3><p>Overuse of red alert colors for non-critical metrics caused anxiety and desensitization — <b>eroding trust</b> in the reporting system.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="wrap">
+    <p class="kicker">Research</p>
+    <h2>Uncovering the seller's reality</h2>
+    <p class="lead">Discovery interviews with <b>17 participants across 4 global regions</b> (AMER, EMEA, APAC, LATAM), plus concept-validation sessions with 8 users. I audited the current system for cognitive load across metric hierarchy, navigation, insight visibility, and external shareability.</p>
+    <div class="cards">
+      <div class="card"><span class="n">01</span><h3>The "now" bias</h3><p>Sellers focused on current milestones — they cared most about the action they needed to take <b>right now</b>.</p></div>
+      <div class="card"><span class="n">02</span><h3>Manual calculations</h3><p>Many were manually calculating <b>gap-to-goal</b> metrics in Excel because the tool wouldn't.</p></div>
+      <div class="card"><span class="n">03</span><h3>Fear of sharing</h3><p>Sellers hesitated to share their screen with clients — nothing separated <b>internal metrics from client-safe ones</b>.</p></div>
+    </div>
+    <figure><img src="images/s35_0.png" alt="Exploration board — sketches, references, and widget anatomy" loading="lazy"/><figcaption>Exploration: from whiteboard sketches and competitive references to widget anatomy.</figcaption></figure>
+  </div>
+</section>
+
+<!-- INSIGHT + PERSONA -->
+<section id="insight">
+  <div class="wrap">
+    <div class="goal">
+      <p class="kicker">The insight</p>
+      <p>The problem wasn't the data — it was <em style="color:#8ab4f8;font-style:normal;">interpretation time</em>. Sellers aren't analysts; the dashboard has to synthesize "spend X to get Y," not just display numbers.</p>
+    </div>
+    <div class="persona">
+      <img src="images/s32_0.png" alt="Persona — Simone, Account Executive" loading="lazy"/>
+      <div>
+        <p class="qt">"I need to know if my client is leaving money on the table so I can call them today."</p>
+        <dl>
+          <dt>Persona</dt><dd>Simone — Account Executive</dd>
+          <dt>Deal load</dt><dd>20–50 active deals</dd>
+          <dt>Support</dt><dd>No dedicated analyst</dd>
+          <dt>Today</dt><dd>~3 hrs/week manually formatting reports for clients</dd>
+        </dl>
+      </div>
+    </div>
+    <p class="body" style="margin-top:34px;"><b>How might we</b> empower sellers with clear, actionable deal metrics that eliminate manual spreadsheets and enable client communication?</p>
+  </div>
+</section>
+
+<!-- STRATEGY -->
+<section id="strategy">
+  <div class="wrap">
+    <p class="kicker">Strategy</p>
+    <h2>Design principles for a wall of data</h2>
+    <div class="two" style="margin-top:8px;">
+      <ul class="clean">
+        <li><b>Focus on the gap.</b> Emphasize gap-to-next-tier in the current milestone, not just total spend.</li>
+        <li><b>Visuals over tables.</b> Replace text-heavy tables with interactive donut charts for spend segmentation.</li>
+        <li><b>Dual-access experience.</b> A simple view for quick checks; a detailed view for deep troubleshooting.</li>
+      </ul>
+      <div>
+        <p class="body" style="margin-top:0;">Three requirements were non-negotiable:</p>
+        <ul class="clean">
+          <li><b>Metric visibility</b> — draw the eye to the metrics that matter most.</li>
+          <li><b>External safety</b> — a toggle that hides internal data from the client-facing view.</li>
+          <li><b>Dynamic filtering</b> — slice spend by buying platform (DV360, Google Ads, YouTube) in one click.</li>
+        </ul>
+      </div>
+    </div>
+    <figure><img src="images/s37_0.png" alt="Spend deep-dive with donut charts and dynamic filtering by platform, product area, and YouTube product type" loading="lazy"/><figcaption>Visuals over tables: a spend deep-dive with donut segmentation, horizontal milestone timeline, and one-click filtering.</figcaption></figure>
+  </div>
+</section>
+
+<!-- HYPOTHESES -->
+<section>
+  <div class="wrap">
+    <p class="kicker">Hypotheses we tested</p>
+    <h2>Minimalist or detailed?</h2>
+    <div class="two" style="margin-top:8px;">
+      <div class="card"><span class="n">A · Detailed</span><h3 style="margin-top:8px;">Every metric</h3><p>Forecast Tier, Forecast YTC, Forecast DIF — everything available.</p></div>
+      <div class="card"><span class="n">B · Minimalist</span><h3 style="margin-top:8px;">Current pacing + gap</h3><p>Only pacing and gap-to-next-tier, to reduce cognitive load.</p></div>
+    </div>
+    <p class="body"><b>Finding — a hybrid.</b> Sellers preferred the detailed view to trust the data, so the interface defaults to "All Metrics" — but visual hierarchy highlights the signals that matter (pacing, milestone progress) and de-emphasizes the rest. The second test confirmed reframing "Credits at Risk" from a red alert into a neutral metric reduced anxiety.</p>
+  </div>
+</section>
+
+<!-- FINAL DESIGN -->
+<section id="design">
+  <div class="wrap">
+    <p class="kicker">Final design</p>
+    <h2>One screen that answers "what now?"</h2>
+    <p class="lead">A milestone summary card tracks current-quarter performance; a visual spend deep-dive replaces static tables; and an external-share toggle makes the whole view client-safe.</p>
+    <figure><img src="images/s36_0.png" alt="Final dashboard — milestone summary, performance timeline, and incentives" loading="lazy"/><figcaption>Milestone summary, performance timeline, and incentives — organized by urgency.</figcaption></figure>
+  </div>
+</section>
+
+<!-- ITERATIONS -->
+<section id="iterations">
+  <div class="wrap">
+    <p class="kicker">Usability testing &amp; iterations</p>
+    <h2>What we tested — and fixed</h2>
+    <ul class="clean">
+      <li><b>Grouping.</b> Users preferred the detailed view but wanted related metrics grouped to cut clutter.</li>
+      <li><b>Color logic.</b> Standardized pacing colors — green (&gt;100%), yellow (90–100%), red (&lt;90%).</li>
+      <li><b>The red problem.</b> Changed "Credit at Risk" to neutral gray unless risk was critical, reducing alarm fatigue.</li>
+      <li><b>Chart confusion.</b> Switched vertical bars to horizontal timelines to match the seller's mental model of progress over time.</li>
+      <li><b>Toggle placement.</b> Moved "External Share" from settings to the top-level view, next to the deal title.</li>
+    </ul>
+    <figure><img src="images/s44_0.png" alt="Tier-indicator iteration — restoring visibility with de-emphasis instead of hiding" loading="lazy"/><figcaption>Tier indicators: restored visibility with visual de-emphasis instead of hiding — "what's next" without the clutter.</figcaption></figure>
+  </div>
+</section>
+
+<!-- OUTCOME -->
+<section id="outcome">
+  <div class="wrap">
+    <p class="kicker">Outcome</p>
+    <h2>Impact of the design</h2>
+    <div class="stats">
+      <div class="stat"><div class="num"><em>12,000</em></div><div class="lab">Annual FTE hours saved — manual reporting workarounds eliminated across the sales org.</div></div>
+      <div class="stat"><div class="num">Share<em>-safe</em></div><div class="lab">An externally shareable mode that reduced reliance on static slide decks.</div></div>
+      <div class="stat"><div class="num">At a<em> glance</em></div><div class="lab">Sellers instantly answer "Are we beating last year?" and "How is my client pacing?"</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- REFLECTION -->
+<section style="border-bottom:none;">
+  <div class="wrap">
+    <p class="kicker">Reflection &amp; next</p>
+    <h2>Data density isn't the enemy — poor hierarchy is</h2>
+    <ul class="clean">
+      <li>Sellers wanted <b>more</b> data, not less — but organized by urgency so it became actionable.</li>
+      <li><b>Sellers aren't analysts.</b> Data must be synthesized ("spend X to get Y"), not just displayed — and trust is visual: sellers judge accuracy by how professional the report looks.</li>
+      <li><b>Next:</b> generative AI for performance summaries — auto-writing the "performance summary" sentence so sellers focus on selling, not interpreting.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="big">Let's build something worth shipping.</p>
+    <div class="frow">
+      <a class="btn solid" href="https://mail.google.com/mail/?view=cm&fs=1&to=jeurysantos1@gmail.com" target="_blank" rel="noopener">Email me ↗</a>
+      <a class="btn" href="../../index.html">← Back to portfolio</a>
+    </div>
+    <p class="foot-note">Connect Deals · Google · Senior Product Designer. Case study by Jeury Santos.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:0.12, rootMargin:'0px 0px -6% 0px' });
+  document.querySelectorAll('section>.wrap, .hero .wrap').forEach(function(el){ io.observe(el); });
+  setTimeout(function(){ document.querySelectorAll('section>.wrap:not(.in), .hero .wrap:not(.in)').forEach(function(el){ var r=el.getBoundingClientRect(); if(r.top<innerHeight*1.1) el.classList.add('in'); }); }, 1400);
+
+  if(!REDUCE){
+    var layers=[].slice.call(document.querySelectorAll('[data-parallax]'));
+    var t=false;
+    function up(){ var y=scrollY; layers.forEach(function(el){ var s=parseFloat(el.dataset.parallax); var r=el.getBoundingClientRect(); el.style.transform='translate3d(0,'+(-(r.top+y-innerHeight/2)*s)+'px,0)'; }); t=false; }
+    addEventListener('scroll', function(){ if(!t){requestAnimationFrame(up);t=true;} }, {passive:true}); up();
+  }
+
+  var links={};
+  document.querySelectorAll('.sidenav a').forEach(function(a){ links[a.getAttribute('href').slice(1)]=a; });
+  var spy=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ var id=e.target.id; Object.keys(links).forEach(function(k){ links[k].classList.toggle('active', k===id); }); } });
+  }, { rootMargin:'-45% 0px -45% 0px' });
+  ['beforeafter','problem','research','insight','strategy','design','iterations','outcome'].forEach(function(id){ var el=document.getElementById(id); if(el) spy.observe(el); });
+})();
+</script>
+</body>
+</html>
