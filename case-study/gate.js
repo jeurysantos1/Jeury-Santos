@@ -17,7 +17,7 @@
   var css =
     '#jgate{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;padding:24px;overflow:hidden;' +
     'background:radial-gradient(900px 560px at 50% -5%,rgba(29,233,182,.16),transparent 60%),rgba(6,8,11,.94);' +
-    '-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);opacity:0;animation:jgfade .5s ease forwards;' +
+    '-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);opacity:0;animation:jgfade .2s ease forwards;' +
     'font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}' +
     '#jgate.jg-open{opacity:0;transition:opacity .45s ease;}' +
     '@keyframes jgfade{to{opacity:1;}}' +
@@ -29,7 +29,7 @@
     '.jg-card{position:relative;z-index:2;max-width:460px;width:100%;background:rgba(13,16,21,.9);' +
     'border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:42px 36px;text-align:center;color:#f3f6f8;' +
     'box-shadow:0 50px 110px -40px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.08);' +
-    'animation:jgcardIn .65s cubic-bezier(.2,.85,.25,1) both;}' +
+    'animation:jgcardIn .4s cubic-bezier(.2,.85,.25,1) both;}' +
     '.jg-card::before{content:"";position:absolute;inset:-4px;z-index:-1;border-radius:28px;' +
     'background:conic-gradient(from 0deg,#1de9b6,#7d5cff,#0a9bd6,#1de9b6);filter:blur(34px);opacity:.28;' +
     'animation:jgspin 30s linear infinite;}' +
@@ -51,9 +51,11 @@
     'border-radius:12px;padding:14px 15px;color:#fff;font-size:15px;outline:none;transition:border-color .2s,box-shadow .2s;}' +
     '.jg-input:focus{border-color:#1de9b6;box-shadow:0 0 0 3px rgba(29,233,182,.2);}' +
     '.jg-input::placeholder{color:#6b7682;}' +
-    '.jg-btn{position:relative;background:linear-gradient(100deg,#1de9b6,#7d5cff);color:#04110d;font-weight:700;border:none;' +
-    'border-radius:12px;padding:14px 22px;font-size:15px;cursor:pointer;transition:transform .2s,box-shadow .2s;}' +
-    '.jg-btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px -10px rgba(29,233,182,.6);}' +
+    '.jg-btn{position:relative;background:#0d1117;color:#1de9b6;font-weight:700;border:1px solid rgba(29,233,182,.4);' +
+    'border-radius:999px;padding:14px 24px;font-size:15px;cursor:pointer;transition:transform .25s,box-shadow .25s,background .25s,color .25s,border-color .25s;}' +
+    '.jg-btn::before{content:"";position:absolute;inset:-2px;border-radius:inherit;z-index:-1;background:conic-gradient(from 0deg,#1de9b6,#7d5cff,#ffb454,#1de9b6);filter:blur(9px);opacity:.5;animation:jgspin 7s linear infinite;}' +
+    '.jg-btn:hover{background:linear-gradient(100deg,#1de9b6,#7d5cff,#ffb454);color:#04110d;border-color:transparent;box-shadow:0 14px 44px -10px rgba(125,92,255,.55);}' +
+    '.jg-btn:hover::before{opacity:.95;filter:blur(5px);}' +
     '.jg-err{color:#ff8f8f;font-size:13.5px;margin:14px 0 0;font-weight:600;min-height:1.2em;}' +
     '.jg-hint{font-size:13px;color:#6b7682;margin:18px 0 0;}' +
     '.jg-hint a{color:#1de9b6;text-decoration:none;}' +
@@ -83,7 +85,9 @@
       '<p class="jg-hint">No password? <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jeurysantos1@gmail.com" target="_blank" rel="noopener">Email Jeury</a> and say something nice.</p>' +
     '</div>';
 
+  var mounted = false;
   function mount() {
+    if (mounted) return; mounted = true;
     document.body.appendChild(ov);
     document.documentElement.style.overflow = "hidden";
     var form = ov.querySelector(".jg-form"),
@@ -109,4 +113,6 @@
 
   if (document.body) mount();
   else document.addEventListener("DOMContentLoaded", mount);
+  /* belt-and-suspenders: also trigger as soon as the user scrolls 30px */
+  addEventListener("scroll", function () { if (scrollY > 30) mount(); }, { passive: true });
 })();
