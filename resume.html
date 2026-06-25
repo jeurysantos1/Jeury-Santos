@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Jeury Santos — Résumé</title>
+<meta name="description" content="Résumé of Jeury Santos, Product Designer."/>
+<script>(function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --accent:#1de9b6;
+    --font-display:'Bricolage Grotesque',-apple-system,sans-serif;
+    --font-body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  :root,[data-theme="dark"]{
+    --bg:#06080b; --panel:#0d1117; --text:#f3f6f8; --soft:#aab4bd; --muted:#6b7682;
+    --border:rgba(255,255,255,.1); --chip:rgba(255,255,255,.04); --accent-ui:#1de9b6;
+  }
+  [data-theme="light"]{
+    --bg:#f3f6f9; --panel:#ffffff; --text:#0f1419; --soft:#414b54; --muted:#6b7682;
+    --border:rgba(15,20,25,.12); --chip:rgba(15,20,25,.02); --accent-ui:#0c9c7e;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.55;-webkit-font-smoothing:antialiased;
+    transition:background .4s,color .4s;}
+  a{color:var(--accent-ui);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  h1,h2,h3{font-family:var(--font-display);margin:0;letter-spacing:-.03em;line-height:1.05;}
+
+  .bar{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:14px;
+    padding:14px 22px;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+  .bar .back{font-weight:600;color:var(--soft);display:inline-flex;align-items:center;gap:8px;}
+  .bar .back:hover{color:var(--text);text-decoration:none;}
+  .bar .actions{display:flex;gap:10px;}
+  .btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;padding:9px 16px;border-radius:999px;cursor:pointer;border:1px solid var(--border);background:var(--chip);color:var(--text);transition:all .25s;}
+  .btn:hover{border-color:var(--accent-ui);}
+  .btn-print{background:var(--accent-ui);color:#04110d;border-color:transparent;}
+
+  .sheet{max-width:880px;margin:34px auto;background:var(--panel);border:1px solid var(--border);border-radius:18px;
+    padding:54px 56px;box-shadow:0 40px 90px -40px rgba(0,0,0,.6);}
+  @media(max-width:680px){.sheet{padding:34px 26px;margin:18px;}}
+
+  header.head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:18px;
+    border-bottom:2px solid var(--text);padding-bottom:22px;}
+  .head h1{font-size:clamp(2.2rem,6vw,3.4rem);font-weight:800;}
+  .head .title{color:var(--accent-ui);font-weight:600;font-size:1.05rem;margin-top:6px;letter-spacing:.01em;}
+  .contact{text-align:right;font-size:13.5px;color:var(--soft);line-height:1.7;}
+  @media(max-width:560px){.contact{text-align:left;}}
+
+  section.block{margin-top:34px;}
+  .sechead{font-family:var(--font-body);font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--muted);margin:0 0 18px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+
+  .job{margin-bottom:24px;}
+  .job:last-child{margin-bottom:0;}
+  .job-top{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap;}
+  .job-role{font-family:var(--font-display);font-weight:700;font-size:1.18rem;color:var(--text);letter-spacing:-.02em;}
+  .job-org{color:var(--accent-ui);font-weight:600;font-size:14.5px;margin-top:2px;}
+  .job-when{font-size:12.5px;color:var(--muted);white-space:nowrap;}
+  .job ul{margin:11px 0 0;padding-left:18px;}
+  .job li{font-size:14px;color:var(--soft);margin-bottom:6px;}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:34px;}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr;gap:26px;}}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;}
+  .tags span{font-size:12.5px;color:var(--text);background:var(--chip);border:1px solid var(--border);padding:5px 11px;border-radius:999px;}
+  .mini{font-size:14px;color:var(--soft);margin:0 0 12px;}
+  .mini strong{display:block;color:var(--text);font-weight:600;font-size:14.5px;}
+  .subhead{font-family:var(--font-body);font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 12px;}
+
+  @media print{
+    .bar{display:none;}
+    body{background:#fff;color:#111;}
+    .sheet{box-shadow:none;border:none;margin:0;max-width:100%;padding:0;background:#fff;color:#111;border-radius:0;}
+    a{color:#111;}
+    .job-org,.title,.head .title{color:#0c7f66;}
+    .sechead,.job-when,.mini,.tags span{color:#333;}
+    .tags span{border-color:#ccc;background:#fff;}
+  }
+</style>
+</head>
+<body>
+<div class="bar">
+  <a class="back" href="index.html">← Back to portfolio</a>
+  <div class="actions">
+    <button class="btn" type="button" id="theme-btn">Toggle theme</button>
+    <button class="btn btn-print" type="button" onclick="window.print()">Download / Print</button>
+  </div>
+</div>
+
+<div class="sheet">
+  <header class="head">
+    <div>
+      <h1>Jeury Santos</h1>
+      <div class="title">Product Designer</div>
+    </div>
+    <div class="contact">
+      917-345-2765<br>
+      <a href="mailto:jeurysantos1@gmail.com">jeurysantos1@gmail.com</a><br>
+      Union, NJ<br>
+      <a href="https://www.jeurysantos1.com" target="_blank" rel="noopener">www.jeurysantos1.com</a>
+    </div>
+  </header>
+
+  <section class="block">
+    <p class="sechead">Work Experience</p>
+
+    <div class="job">
+      <div class="job-top">
+        <div><div class="job-role">Product Designer</div><div class="job-org">Google (Contract) · Connect Deals</div></div>
+        <div class="job-when">Feb 2025 – Aug 2026</div>
+      </div>
+      <ul>
+        <li>Led end-to-end design of reporting and analytics experiences for Connect Deals, an enterprise platform tracking advertising performance and reviews across multiple Google products and services.</li>
+        <li>Designed at-a-glance dashboards that surfaced key metrics, trends, and insights — helping sellers communicate results and give data-driven recommendations to clients.</li>
+        <li>Conducted global user research with sellers and account teams across regions to identify pain points, workflows, and reporting needs, informing product strategy and roadmap.</li>
+        <li>Partnered with PMs, engineers, data analysts, and business stakeholders to define requirements, prioritize opportunities, and deliver scalable enterprise solutions.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-top">
+        <div><div class="job-role">UX Designer · Prototyper</div><div class="job-org">Royal Caribbean Cruise — E-commerce Division</div></div>
+        <div class="job-when">Jul 2024 – Feb 2025</div>
+      </div>
+      <ul>
+        <li>Collaborated with cross-functional design teams to create user-focused components for RCCL's website, raising overall UX through effective layout and high graphic standards.</li>
+        <li>Developed interactive prototypes in Protopie and Principle to visualize design concepts and user flows.</li>
+        <li>Led design reviews and gave constructive feedback, fostering continuous improvement and innovation.</li>
+        <li>Built style guides and design systems to keep visual consistency across digital platforms.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-top">
+        <div><div class="job-role">UX Designer · Internship</div><div class="job-org">Google — New York, NY</div></div>
+        <div class="job-when">Sep 2022 – Jun 2024</div>
+      </div>
+      <ul>
+        <li>Crafted and shipped new features for the Google Pixel Tablet — a 25% reduction in Time on Task and a 20% increase in Task Success Rate.</li>
+        <li>Facilitated cross-functional collaboration with Developer, Marketing, Operations, and Product to deliver human-centered solutions.</li>
+        <li>Designed a share-notification system, securing senior stakeholder buy-in through concept development, user research, and a comprehensive PRD.</li>
+        <li>Supported UX research through cognitive analysis and heuristic evaluations; leveraged AI to enhance user experiences.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-top">
+        <div><div class="job-role">Product Designer</div><div class="job-org">Pick — Remote</div></div>
+        <div class="job-when">Jan 2020 – Sep 2021</div>
+      </div>
+      <ul>
+        <li>Led early-stage solutions via concept sketches, reducing development time by 30% and improving customer satisfaction by 25%.</li>
+        <li>Conducted user interviews and A/B testing, driving an 80% increase in user understanding and a 10% lift in MVP usability.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block grid2">
+    <div>
+      <p class="sechead">Skills &amp; Tools</p>
+      <p class="subhead">Toolkit</p>
+      <div class="tags"><span>Figma</span><span>FigJam</span><span>Framer</span><span>Sketch</span><span>Adobe Creative Suite</span><span>Protopie</span><span>HTML / CSS</span><span>JavaScript</span><span>Python</span><span>Claude Code</span></div>
+      <p class="subhead" style="margin-top:18px;">Design Methods</p>
+      <div class="tags"><span>User research</span><span>Information architecture</span><span>User flow</span><span>Journey mapping</span><span>Wireframing</span><span>Mockups</span><span>Design strategy</span><span>Data analysis</span><span>Prototyping</span></div>
+    </div>
+    <div>
+      <p class="sechead">Education</p>
+      <p class="mini"><strong>B.S. Computer Science</strong>Southern New Hampshire University · 2021–2025</p>
+      <p class="mini"><strong>B.S. Business Administration</strong>Universidad Autónoma de Santo Domingo · 2006–2011</p>
+      <p class="sechead" style="margin-top:26px;">Certifications</p>
+      <p class="mini"><strong>UX Design Certification</strong>Google · Coursera · 2022</p>
+      <p class="mini"><strong>UX Immersion Certification</strong>CareerFoundry · 2022</p>
+    </div>
+  </section>
+</div>
+
+<script>
+  document.getElementById('theme-btn').addEventListener('click', function(){
+    var root = document.documentElement;
+    var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    try{ localStorage.setItem('theme', next); }catch(e){}
+  });
+</script>
+</body>
+</html>
