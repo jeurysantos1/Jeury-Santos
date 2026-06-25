@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MobileSite Contact Collection — Case Study · Jeury Santos Avila</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+  :root{
+    --ink:#0f1419; --body:#48535b; --muted:#5c6770;
+    --line:#e7eaee; --bg:#ffffff; --soft:#f6f8fa;
+    --blue:#6d4aff; --accent:#6d4aff; --accent-2:#c2761f;
+    --ok:#1a8a4e; --warn:#af5000; --err:#c52a2f;
+    --maxw:1120px; --shadow:0 30px 70px -28px rgba(15,23,42,.38), 0 10px 26px -12px rgba(15,23,42,.18);
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji",sans-serif;
+    --font-display:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:var(--font);color:var(--body);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  h1,h2,h3{color:var(--ink);line-height:1.12;letter-spacing:-0.02em;margin:0;}
+  h1,h2,.ba-word,footer .big{font-family:var(--font-display);letter-spacing:-0.035em;}
+  a{color:var(--blue);text-decoration:none;}
+  img{display:block;max-width:100%;}
+
+  .skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--ink);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;font-weight:600;font-size:14px;}
+  .skip:focus{left:0;}
+  a:focus-visible,button:focus-visible,.sidenav a:focus-visible{outline:3px solid rgba(109,74,255,.5);outline-offset:3px;border-radius:6px;}
+
+  body{counter-reset:sec;}
+  section{position:relative;padding:104px 0;border-bottom:1px solid var(--line);}
+  @media(max-width:760px){section{padding:64px 0;}}
+  section > .wrap{position:relative;z-index:2;}
+  section::before{counter-increment:sec;content:counter(sec,decimal-leading-zero);position:absolute;top:18px;right:5%;z-index:0;font-family:var(--font-display);font-weight:700;font-size:clamp(72px,9vw,150px);line-height:1;color:var(--accent-2);opacity:.06;pointer-events:none;}
+  @media(max-width:760px){section::before{right:16px;font-size:64px;}}
+
+  .js section>.wrap, .js .hero .wrap{opacity:0;transform:translateY(28px);transition:opacity .8s ease, transform .85s cubic-bezier(.2,.85,.25,1);}
+  .js section>.wrap.in, .js .hero .wrap.in{opacity:1;transform:none;}
+  [data-parallax]{will-change:transform;}
+  @media(prefers-reduced-motion:reduce){.js section>.wrap,.js .hero .wrap{opacity:1!important;transform:none!important;transition:none;}[data-parallax]{transform:none!important;}.aurora span{animation:none;}}
+
+  /* nav */
+  nav.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line);}
+  nav.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;}
+  .brand{font-weight:700;color:var(--ink);}
+  .navlinks{display:flex;gap:24px;font-size:14px;font-weight:500;}
+  .navlinks a{color:var(--body);}.navlinks a:hover{color:var(--ink);}
+  @media(max-width:720px){.navlinks{display:none;}}
+
+  .sidenav{position:fixed;left:18px;top:50%;transform:translateY(-50%);z-index:60;display:none;flex-direction:column;gap:2px;padding:10px 8px;border-radius:20px;background:rgba(255,255,255,.52);-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);border:1px solid rgba(255,255,255,.6);box-shadow:0 18px 46px -18px rgba(15,23,42,.34), inset 0 1px 0 rgba(255,255,255,.65);animation:snIn .6s .15s ease both;}
+  .sidenav:hover{background:rgba(255,255,255,.62);}
+  .sidenav a{position:relative;display:flex;align-items:center;padding:9px 10px;border-radius:12px;color:var(--body);text-decoration:none;transition:background .28s ease, transform .28s cubic-bezier(.2,.8,.2,1);}
+  .sidenav a .dot{width:7px;height:7px;border-radius:50%;background:#c1c9d2;flex-shrink:0;transition:all .28s cubic-bezier(.2,.8,.2,1);}
+  .sidenav a .label{max-width:0;overflow:hidden;white-space:nowrap;opacity:0;font-size:13.5px;font-weight:600;transition:max-width .42s cubic-bezier(.2,.8,.2,1), opacity .26s ease, margin-left .42s cubic-bezier(.2,.8,.2,1);}
+  .sidenav:hover a .label{max-width:180px;opacity:1;margin-left:12px;}
+  .sidenav a:hover{background:rgba(109,74,255,.10);transform:translateX(3px);}
+  .sidenav a:hover .dot,.sidenav a.active .dot{background:var(--blue);transform:scale(1.4);box-shadow:0 0 0 4px rgba(109,74,255,.16);}
+  .sidenav a.active{color:var(--ink);}
+  @keyframes snIn{from{opacity:0;left:0;}to{opacity:1;left:18px;}}
+  @media(min-width:1180px){.sidenav{display:flex;} .topbar .navlinks{display:none;}}
+
+  /* aurora */
+  .aurora{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  .aurora span{position:absolute;border-radius:50%;filter:blur(72px);opacity:.55;will-change:transform;}
+  .aurora .b1{width:560px;height:560px;background:radial-gradient(circle at 30% 30%,#cdbcff,transparent 62%);top:-180px;left:-120px;animation:drift1 24s ease-in-out infinite;}
+  .aurora .b2{width:520px;height:520px;background:radial-gradient(circle at 60% 40%,#ffd9cc,transparent 62%);top:-90px;right:-140px;animation:drift2 28s ease-in-out infinite;}
+  .aurora .b3{width:620px;height:620px;background:radial-gradient(circle at 50% 60%,#d6ecd9,transparent 62%);bottom:-260px;left:28%;animation:drift3 32s ease-in-out infinite;}
+  @keyframes drift1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(70px,46px) scale(1.12);}}
+  @keyframes drift2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-56px,54px) scale(1.08);}}
+  @keyframes drift3{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(44px,-56px) scale(1.15);}}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden;background:radial-gradient(1100px 500px at 78% -8%, rgba(109,74,255,.13), transparent 60%),radial-gradient(900px 480px at 0% 12%, rgba(120,80,255,.10), transparent 55%),linear-gradient(180deg,#fbfcfe 0%, #f4f7fb 100%);border-bottom:1px solid var(--line);}
+  .hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding-top:104px;padding-bottom:112px;}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--blue);background:#efeaff;border:1px solid #ddd3ff;padding:6px 12px;border-radius:999px;}
+  .hero h1{font-size:clamp(46px,6.6vw,88px);font-weight:700;margin:20px 0 0;}
+  .hero .lede{font-size:19px;color:var(--body);margin:18px 0 0;max-width:40ch;}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+  .chip{font-size:12.5px;font-weight:600;color:var(--ink);background:#fff;border:1px solid var(--line);padding:7px 12px;border-radius:999px;box-shadow:0 1px 2px rgba(15,23,42,.04);}
+  .chip.ok{color:var(--ok);border-color:#bfe3cf;background:#eaf6ef;}
+  .stage{position:relative;height:560px;}
+  .device{position:absolute;border-radius:36px;overflow:hidden;background:#fff;border:1px solid rgba(15,23,42,.06);box-shadow:var(--shadow);}
+  .device img{width:100%;}
+  .d-front{width:262px;right:18px;top:8px;transform:rotate(2.2deg);z-index:2;}
+  .d-back{width:240px;left:8px;top:70px;transform:rotate(-4deg);z-index:1;opacity:.97;}
+  @media(max-width:920px){.hero .wrap{grid-template-columns:1fr;gap:8px;padding-bottom:56px;}.hero h1{font-size:40px;}.stage{height:480px;margin-top:18px;}.d-front{right:auto;left:50%;transform:translateX(-30%) rotate(2deg);}.d-back{left:50%;transform:translateX(-78%) rotate(-5deg);}}
+
+  .kicker{font-size:13px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--blue);margin:0 0 14px;}
+  h2{font-size:38px;font-weight:700;}
+  .lead{font-size:20px;color:var(--ink);max-width:62ch;margin:18px 0 0;font-weight:500;}
+  p.body{font-size:17px;max-width:64ch;margin:16px 0 0;}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+  @media(max-width:860px){.two{grid-template-columns:1fr;gap:28px;}}
+
+  .ovgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
+  .ovgrid h4{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px;font-weight:700;}
+  .ovgrid p{margin:0;color:var(--ink);font-weight:600;font-size:15.5px;}
+  @media(max-width:760px){.ovgrid{grid-template-columns:1fr 1fr;gap:22px;}}
+  .goal{background:var(--ink);color:#fff;border-radius:20px;padding:40px;}
+  .goal .kicker{color:#7fc0f0;}
+  .goal p{font-size:23px;line-height:1.45;color:#fff;font-weight:600;margin:0;max-width:52ch;letter-spacing:-0.01em;}
+  .goal em{color:#9bd0f5;font-style:normal;}
+
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:26px;}
+  .stat{border:1px solid var(--line);border-radius:18px;padding:26px;background:var(--bg);box-shadow:0 1px 2px rgba(15,23,42,.04);transition:transform .35s ease, box-shadow .35s ease;}
+  .stat:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+  .stat .figure{font-family:var(--font-display);font-weight:700;font-size:clamp(40px,5vw,58px);line-height:.95;color:var(--blue);letter-spacing:-0.045em;}
+  .stat p{margin:12px 0 0;font-size:15px;color:var(--ink);}
+  @media(max-width:760px){.stats{grid-template-columns:1fr;}}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;transition:transform .25s ease, box-shadow .25s ease;}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+  .card .n{width:34px;height:34px;border-radius:16px;background:#efeaff;color:var(--blue);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px;font-family:var(--font-display);}
+  .card h3{font-size:18px;margin:16px 0 8px;}
+  .card p{margin:0;font-size:14.5px;}
+  @media(max-width:860px){.cards{grid-template-columns:1fr;}}
+
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:24px;}
+  .step{border:1px solid var(--line);border-radius:14px;padding:18px;background:var(--bg);}
+  .step .sn{width:28px;height:28px;border-radius:16px;background:#efeaff;color:var(--blue);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);}
+  .step h4{font-size:15px;margin:12px 0 5px;color:var(--ink);font-weight:700;}
+  .step p{margin:0;font-size:13.5px;color:var(--body);line-height:1.5;}
+  @media(max-width:860px){.steps{grid-template-columns:1fr 1fr;}}@media(max-width:520px){.steps{grid-template-columns:1fr;}}
+
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:36px;}
+  .shot .device{position:static;transform:none;box-shadow:0 18px 40px -22px rgba(15,23,42,.35);}
+  .shot figcaption{margin:14px 2px 0;font-size:13.5px;color:var(--muted);}
+  .shot b{color:var(--ink);font-weight:600;}
+  @media(max-width:860px){.gallery{grid-template-columns:1fr 1fr;}}@media(max-width:560px){.gallery{grid-template-columns:1fr;}}
+
+  /* flow canvas */
+  .canvas{position:relative;margin-top:24px;height:600px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#0f1722;cursor:grab;touch-action:none;box-shadow:var(--shadow);}
+  .canvas.grabbing{cursor:grabbing;}
+  .canvas-stage{position:absolute;top:0;left:0;transform-origin:0 0;will-change:transform;}
+  .canvas-stage img{display:block;max-width:none;user-select:none;-webkit-user-drag:none;}
+  .canvas-ctrl{position:absolute;right:14px;bottom:14px;display:flex;gap:6px;z-index:3;}
+  .canvas-ctrl button{height:36px;min-width:36px;padding:0 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.92);font-size:15px;font-weight:700;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(15,23,42,.12);}
+  .canvas-ctrl .reset{font-size:12px;}
+  .canvas-hint{position:absolute;left:14px;bottom:14px;z-index:3;font-size:12px;color:#fff;background:rgba(255,255,255,.14);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:5px 11px;border-radius:999px;border:1px solid rgba(255,255,255,.2);}
+  @media(max-width:760px){.canvas{height:440px;}}
+
+  /* before/after */
+  .ba-two{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:42px;}
+  .ba-block{position:relative;border-radius:28px;padding:0 28px 38px;overflow:hidden;display:flex;flex-direction:column;align-items:center;}
+  .ba-block.before{background:#f3ebe3;}.ba-block.after{background:#efeaff;}
+  .ba-word{position:absolute;top:26px;left:0;right:0;text-align:center;font-weight:800;letter-spacing:-0.045em;line-height:.85;font-size:clamp(64px,10vw,124px);pointer-events:none;user-select:none;z-index:0;}
+  .ba-block.before .ba-word{color:#e8d8c5;}.ba-block.after .ba-word{color:#dcd0fb;}
+  .ba-device{position:relative;z-index:1;width:212px;max-width:80%;margin-top:88px;border-radius:30px;overflow:hidden;box-shadow:0 26px 60px -24px rgba(15,23,42,.42);border:1px solid rgba(15,23,42,.05);transition:transform .55s cubic-bezier(.2,.8,.2,1);}
+  .ba-device img{display:block;width:100%;}
+  .ba-block.before:hover .ba-device{transform:translateY(-10px) rotate(-1.2deg);}.ba-block.after:hover .ba-device{transform:translateY(-10px) rotate(1.2deg);}
+  .ba-tagpill{position:relative;z-index:1;margin-top:24px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:999px;}
+  .ba-block.before .ba-tagpill{color:#8a6f55;background:#ecdfce;}.ba-block.after .ba-tagpill{color:#5b3fb0;background:#e3dbff;}
+  .ba-cap{position:relative;z-index:1;margin-top:12px;font-size:15px;line-height:1.5;text-align:center;max-width:30ch;}
+  .ba-block.before .ba-cap{color:#7a6650;}.ba-block.after .ba-cap{color:#5b3fb0;}
+  @media(max-width:860px){.ba-two{grid-template-columns:1fr;gap:18px;}}
+
+  /* accessibility audit */
+  .audit{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px;}
+  .ameter{border:1px solid var(--line);border-radius:16px;padding:22px;}
+  .ameter .pct{font-family:var(--font-display);font-weight:700;font-size:42px;line-height:1;letter-spacing:-0.04em;}
+  .ameter.pass .pct{color:var(--ok);}.ameter.warn .pct{color:var(--warn);}.ameter.fail .pct{color:var(--err);}
+  .ameter h4{margin:8px 0 4px;font-size:15px;color:var(--ink);}
+  .ameter p{margin:0;font-size:13.5px;color:var(--body);}
+  @media(max-width:680px){.audit{grid-template-columns:1fr;}}
+
+  .callout{margin-top:26px;border:1px solid var(--line);border-left:3px solid var(--accent-2);background:var(--soft);border-radius:12px;padding:18px 22px;font-size:15.5px;line-height:1.55;color:var(--ink);max-width:760px;}
+  .callout .clabel{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-2);font-weight:800;margin-bottom:6px;}
+
+  .proto-actions{display:flex;gap:12px;justify-content:flex-start;margin-top:24px;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:#fff;font-weight:600;font-size:14px;padding:11px 18px;border-radius:11px;border:1px solid var(--ink);transition:opacity .2s ease, transform .2s ease;}
+  .btn.ghost{background:#fff;color:var(--ink);border-color:var(--line);}
+  .btn:hover{opacity:.92;transform:translateY(-1px);}
+  .proto-hint{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:13.5px;color:var(--muted);background:#fff;border:1px solid var(--line);padding:7px 14px;border-radius:999px;}
+  .built{display:inline-flex;align-items:center;gap:9px;margin-top:16px;font-size:13px;font-weight:600;color:var(--ink);background:#fff;border:1px solid var(--line);padding:8px 14px;border-radius:999px;}
+  .built .spark{width:18px;height:18px;border-radius:6px;background:linear-gradient(135deg,#d97757,#cc785c);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:11px;}
+  .try-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:56px;align-items:center;position:relative;z-index:1;}
+  .try-grid .lead{margin:0;}
+  @media(max-width:920px){.try-grid{grid-template-columns:1fr;gap:30px;text-align:center;}.try-grid .proto-actions{justify-content:center;}}
+  .proto-stage{display:flex;justify-content:center;margin-top:4px;}
+  .proto-shell{background:linear-gradient(180deg,#eef1f6 0%, #e6eaf1 100%);border:1px solid var(--line);border-radius:30px;padding:26px;box-shadow:inset 0 1px 0 #fff, 0 30px 70px -34px rgba(15,23,42,.4);max-width:100%;}
+  .proto-frame{width:415px;height:852px;border:0;background:transparent;max-width:100%;display:block;}
+  @media(max-width:480px){.proto-shell{padding:12px;border-radius:22px;}.proto-frame{height:820px;}}
+
+  .out{display:grid;grid-template-columns:1fr 1.2fr;gap:48px;align-items:start;}
+  .badge-ok{display:inline-flex;align-items:center;gap:10px;font-weight:800;color:var(--ok);background:#eaf6ef;border:1px solid #bfe3cf;padding:12px 18px;border-radius:14px;font-size:18px;}
+  ul.clean{list-style:none;padding:0;margin:20px 0 0;}
+  ul.clean li{position:relative;padding:10px 0 10px 30px;border-top:1px solid var(--line);font-size:16px;color:var(--ink);}
+  ul.clean li:before{content:"";position:absolute;left:2px;top:17px;width:9px;height:9px;border-radius:9px;background:rgba(0,0,0,0.05);}
+  @media(max-width:860px){.out{grid-template-columns:1fr;gap:24px;}}
+
+  .refl{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:30px;}
+  .refl div{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:22px 24px;}
+  .refl h3{font-size:16px;margin:0 0 6px;}.refl p{margin:0;font-size:15px;}
+  @media(max-width:760px){.refl{grid-template-columns:1fr;}}
+
+  footer{padding:60px 0 80px;text-align:center;color:var(--muted);font-size:14px;}
+  footer .big{font-size:24px;color:var(--ink);font-weight:800;margin-bottom:6px;}
+</style>
+</head>
+<body>
+<a href="#problem" class="skip">Skip to content</a>
+
+<aside class="sidenav" aria-label="Section navigation">
+  <a href="#problem"><span class="dot"></span><span class="label">Problem</span></a>
+  <a href="#research"><span class="dot"></span><span class="label">Research</span></a>
+  <a href="#approach"><span class="dot"></span><span class="label">Approach</span></a>
+  <a href="#flow"><span class="dot"></span><span class="label">Flow</span></a>
+  <a href="#design"><span class="dot"></span><span class="label">Final design</span></a>
+  <a href="#beforeafter"><span class="dot"></span><span class="label">Before / after</span></a>
+  <a href="#a11y"><span class="dot"></span><span class="label">Accessibility</span></a>
+  <a href="#try"><span class="dot"></span><span class="label">Try it</span></a>
+  <a href="#outcome"><span class="dot"></span><span class="label">Outcome</span></a>
+</aside>
+
+<nav class="topbar"><div class="wrap">
+  <span class="brand">Jeury Santos Avila</span>
+  <div class="navlinks">
+    <a href="#problem">Problem</a>
+    <a href="#approach">Approach</a>
+    <a href="#flow">Flow</a>
+    <a href="#design">Final design</a>
+    <a href="#try">Try it</a>
+    <a href="#outcome">Outcome</a>
+  </div>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="aurora" aria-hidden="true"><span class="b1"></span><span class="b2"></span><span class="b3"></span></div>
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Meta Ads · BizComm · Product design case study</span>
+      <h1>MobileSite Contact Collection</h1>
+      <p class="lede">Small-business advertisers were missing the alerts that matter. I designed a mobile-web flow to collect and verify a contact — email, phone, or WhatsApp — in under two minutes.</p>
+      <div class="meta">
+        <span class="chip">Product Designer · end-to-end</span>
+        <span class="chip">Mobile web</span>
+        <span class="chip">H1 2026</span>
+        <span class="chip ok">✓ Ready for eng handoff</span>
+      </div>
+    </div>
+    <div class="stage" data-parallax="0.05">
+      <figure class="device d-back"><img src="images/email-input.png" alt="Email input screen"/></figure>
+      <figure class="device d-front"><img src="images/landing-empty.png" alt="Contact info landing"/></figure>
+    </div>
+  </div>
+</header>
+
+<!-- OVERVIEW -->
+<section>
+  <div class="wrap">
+    <div class="ovgrid">
+      <div><h4>Role</h4><p>Product Designer — end-to-end ownership</p></div>
+      <div><h4>Platform</h4><p>MobileSite (mobile web), 375×812</p></div>
+      <div><h4>Team</h4><p>Business Communications (BizComm), Meta Ads</p></div>
+      <div><h4>Status</h4><p>Ready for engineering handoff</p></div>
+    </div>
+    <div style="margin-top:34px;">
+      <h4 style="font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 12px;font-weight:700;">What I drove</h4>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;">
+        <span class="chip">Sequential-channel flow</span>
+        <span class="chip">21 production-ready screens</span>
+        <span class="chip">Regional consent system</span>
+        <span class="chip">210-point WCAG audit</span>
+        <span class="chip">Coded prototype</span>
+      </div>
+    </div>
+    <div class="goal" style="margin-top:40px;">
+      <p class="kicker">In one line</p>
+      <p>In H1 2026, Meta's MobileSite had no structured way for advertisers to give and verify a contact — so account-critical alerts went undelivered. As the end-to-end designer, I built a mobile-first flow to close that gap. <em>This is my part in that.</em></p>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="wrap two">
+    <div>
+      <p class="kicker">The problem</p>
+      <h2>Alerts that never arrived</h2>
+      <p class="lead">When I picked this up, advertisers on mobile web had no structured way to provide or verify contact info — so the messages they couldn't afford to miss simply didn't land.</p>
+      <p class="body"><b>For advertisers:</b> notices about restrictions, payment failures, and policy violations went undelivered — leading to silent ad pauses, wasted spend, and angry escalations. <b>For Meta:</b> low contact coverage on mobile meant poor deliverability for legally-required and time-sensitive alerts. And I couldn't just reuse the desktop flow — mobile web has a smaller viewport, touch input, and a user base of on-the-go single-operator businesses.</p>
+    </div>
+    <figure class="device" style="position:static;transform:none;max-width:290px;margin:0 auto;"><img src="images/landing-empty.png" alt="Contact info with no channels added"/></figure>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="wrap">
+    <p class="kicker">Research &amp; discovery</p>
+    <h2>What the data and the audit told me</h2>
+    <p class="lead">I grounded the work in delivery data and a competitive audit before drawing a single screen.</p>
+    <div class="stats">
+      <div class="stat"><div class="figure">~2.7M</div><p><b>0.54%</b> of AMD accounts are eligible for 2+ simultaneous banners — making contact delivery critical for overflow.</p></div>
+      <div class="stat"><div class="figure">0.08%</div><p>click rate on legacy banner pagination — discoverability of secondary messages was effectively zero.</p></div>
+      <div class="stat"><div class="figure">&lt;2 min</div><p>target completion — these are single-operator businesses checking ads between tasks.</p></div>
+    </div>
+    <p class="body">My competitive audit of Shopify, Google Ads (mobile), and Stripe converged on three patterns I carried in: <b>inline over modals</b>, <b>sequential single-channel</b> steps, and <b>progressive disclosure</b> to cut cognitive load. The desktop flow's modals were exactly what to avoid on mobile.</p>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section id="approach">
+  <div class="wrap">
+    <p class="kicker">Design approach</p>
+    <h2>Five decisions — and why I made them</h2>
+    <p class="lead">The whole flow comes down to a handful of calls that protect momentum and respect the advertiser's time and agency.</p>
+    <div class="cards">
+      <div class="card"><div class="n">1</div><h3>Sequential, not all-at-once</h3><p>Each channel is its own focused screen — its own validation, error handling, and success — instead of one long form.</p></div>
+      <div class="card"><div class="n">2</div><h3>Inline cards, no modals</h3><p>Every step lives in a card on the page, keeping users grounded and avoiding modal a11y/usability traps on mobile.</p></div>
+      <div class="card"><div class="n">3</div><h3>"Skip" as a first-class action</h3><p>Visible at every step — it respects agency and keeps momentum by advancing to the next unverified channel.</p></div>
+      <div class="card"><div class="n">4</div><h3>Auto-advance on verify</h3><p>A confirmed code shows a success toast and moves to the next channel — removing a decision point.</p></div>
+      <div class="card"><div class="n">5</div><h3>Regional consent, one flow</h3><p>The same flow handles non-strict (US, default opt-in) and strict (GDPR, explicit per-channel consent) by toggling the opt-in UI at the component level.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW -->
+<section id="flow">
+  <div class="wrap">
+    <p class="kicker">The flow</p>
+    <h2>One engine, three channels, 21 screens</h2>
+    <p class="lead">Email, phone, and WhatsApp run through the same Landing → Input → Verify → Completion pipeline — each channel parameterized, with empty / filled / loading / success / error states. Here's the path an advertiser walks:</p>
+    <div class="steps">
+      <div class="step"><div class="sn">1</div><h4>Landing</h4><p>A notification brings them to Contact info — email, phone, and WhatsApp status at a glance.</p></div>
+      <div class="step"><div class="sn">2</div><h4>Input</h4><p>A focused screen per channel: enter the contact, opt in per region, Continue or Skip.</p></div>
+      <div class="step"><div class="sn">3</div><h4>Verify</h4><p>Enter the code; it validates, shows a success toast, and auto-advances to the next channel.</p></div>
+      <div class="step"><div class="sn">4</div><h4>Completion</h4><p>Partial or full — the advertiser is now reachable on every channel they verified.</p></div>
+    </div>
+    <div class="canvas" id="flowCanvas">
+      <div class="canvas-stage" id="flowStage"><img src="images/flow-board.png" alt="End-to-end MobileSite contact-collection flow board" draggable="false"/></div>
+      <span class="canvas-hint">Drag to pan · pinch or ⌃-scroll to zoom · double-click to reset</span>
+      <div class="canvas-ctrl">
+        <button type="button" aria-label="Zoom out" onclick="flowZoom(-1)">−</button>
+        <button type="button" class="reset" onclick="flowReset()">Reset</button>
+        <button type="button" aria-label="Zoom in" onclick="flowZoom(1)">+</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL DESIGN -->
+<section id="design">
+  <div class="wrap">
+    <p class="kicker">Final design</p>
+    <h2>Calm, sequential, completable in two minutes</h2>
+    <p class="lead">Built entirely on Meta's Geo Design System — one focused task per screen, a visible Skip, and a success toast that carries the user forward.</p>
+    <div class="gallery">
+      <figure class="shot"><div class="device"><img src="images/landing-empty.png" alt="Landing"/></div><figcaption><b>Landing.</b> Channel status at a glance — tap any to start.</figcaption></figure>
+      <figure class="shot"><div class="device"><img src="images/email-input.png" alt="Email input"/></div><figcaption><b>Input.</b> One channel, one screen — with regional opt-in.</figcaption></figure>
+      <figure class="shot"><div class="device"><img src="images/verify-empty.png" alt="Verification code"/></div><figcaption><b>Verify.</b> Code entry with resend and inline errors.</figcaption></figure>
+      <figure class="shot"><div class="device"><img src="images/verify-success.png" alt="Verification success"/></div><figcaption><b>Success.</b> Toast confirms, then auto-advances.</figcaption></figure>
+      <figure class="shot"><div class="device"><img src="images/completion-full.png" alt="Completion"/></div><figcaption><b>Completion.</b> Reachable on every verified channel.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section id="beforeafter">
+  <div class="wrap" style="text-align:center;">
+    <p class="kicker">Before &amp; after</p>
+    <h2>From unreachable to verified</h2>
+    <p class="lead" style="margin:18px auto 0;">The outcome the whole flow exists to produce — an advertiser who can actually be reached.</p>
+    <div class="ba-two">
+      <div class="ba-block before">
+        <span class="ba-word" data-parallax="0.04">Before</span>
+        <div class="ba-device"><img src="images/landing-empty.png" alt="No contact channels"/></div>
+        <span class="ba-tagpill">Unreachable</span>
+        <p class="ba-cap">No verified contact — critical alerts silently fail to deliver.</p>
+      </div>
+      <div class="ba-block after">
+        <span class="ba-word" data-parallax="0.04">After</span>
+        <div class="ba-device"><img src="images/completion-full.png" alt="All channels verified"/></div>
+        <span class="ba-tagpill">Reachable</span>
+        <p class="ba-cap">Channels verified — notifications now actually land.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESSIBILITY -->
+<section id="a11y">
+  <div class="wrap">
+    <p class="kicker">Accessibility</p>
+    <h2>A 210-point audit, documented in the file</h2>
+    <p class="lead">I ran a WCAG 2.1 AA pass across all 21 screens — 10 criteria each — and wrote the findings into the Figma file so engineering inherits them.</p>
+    <div class="audit">
+      <div class="ameter pass"><div class="pct">67%</div><h4>Pass (~140)</h4><p>Contrast ≥4.5:1, text ≥12px, logical reading order, reduced-motion-safe toasts.</p></div>
+      <div class="ameter warn"><div class="pct">32%</div><h4>Warn (~67)</h4><p>Sub-44px touch targets, missing custom focus styles, icons needing aria labels.</p></div>
+      <div class="ameter fail"><div class="pct">1%</div><h4>Fail (3)</h4><p>Disabled CTA at 1.5:1 — below the 3:1 non-text minimum.</p></div>
+    </div>
+    <div class="callout">
+      <span class="clabel">The fail I flagged — and the fix</span>
+      The disabled Continue button used <b>#C3DCF5 on white (1.5:1)</b>, failing WCAG 1.4.11. I documented the fix — darken to ~#7BAFD4 or add a visible border — rather than leave it for engineering to discover. Surfacing the failure is part of the craft.
+    </div>
+  </div>
+</section>
+
+<!-- TRY IT LIVE -->
+<section id="try" style="background:var(--soft);overflow:hidden;">
+  <div class="aurora" aria-hidden="true"><span class="b1"></span><span class="b2"></span><span class="b3"></span></div>
+  <div class="wrap">
+    <div class="try-grid">
+      <div>
+        <p class="kicker">Try it live</p>
+        <h2>The real, coded flow</h2>
+        <p class="lead">A working prototype that matches the Figma pixel-for-pixel. Add a channel, enter a code, and watch it auto-advance — Skip is available at every step.</p>
+        <div class="proto-actions">
+          <button class="btn ghost" type="button" onclick="restartProto()">↻ Restart</button>
+          <a class="btn" href="prototype/index.html" target="_blank" rel="noopener">Open full screen ↗</a>
+        </div>
+        <div><span class="proto-hint">📱 Tap and scroll inside the phone</span></div>
+        <div><span class="built"><span class="spark">✳</span> This prototype was built with Claude Code</span></div>
+      </div>
+      <div class="proto-stage">
+        <div class="proto-shell">
+          <iframe id="protoFrame" class="proto-frame" src="prototype/index.html" title="MobileSite Contact Collection — interactive prototype" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>function restartProto(){var f=document.getElementById('protoFrame');f.src=f.src;}</script>
+</section>
+
+<!-- OUTCOME -->
+<section id="outcome">
+  <div class="wrap out">
+    <div>
+      <p class="kicker">Outcome</p>
+      <span class="badge-ok">✓ Ready for engineering handoff</span>
+      <p class="body">I shipped a complete, inspectable design — and a coded prototype so engineering aligns on real behavior, not static comps.</p>
+      <h4 style="font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:22px 0 12px;font-weight:700;">How success is measured</h4>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;">
+        <span class="chip">↑ Contact coverage</span>
+        <span class="chip">↑ Verification completion</span>
+        <span class="chip">↑ Notification deliverability</span>
+      </div>
+    </div>
+    <ul class="clean">
+      <li><b>21 production-ready screens</b> with a consistent naming convention.</li>
+      <li><b>201 layers renamed</b> + <b>39 hidden frames removed</b> for clean dev inspection.</li>
+      <li><b>4 error scenarios × 3 channels</b> — wrong code, expired/resend, empty/disabled, invalid format.</li>
+      <li><b>7 regional consent variants</b> covering strict and non-strict permutations.</li>
+      <li><b>210-point a11y audit</b> documented in-file.</li>
+      <li><b>Coded prototype</b> matching the design pixel-for-pixel.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- REFLECTIONS -->
+<section style="border-bottom:none;">
+  <div class="wrap">
+    <p class="kicker">Reflections</p>
+    <h2>What I'd carry forward</h2>
+    <div class="refl">
+      <div><h3>Design the error states first</h3><p>I did the happy path first; some error patterns didn't perfectly mirror the input screens. Next time I'd define each screen's error state alongside it.</p></div>
+      <div><h3>Co-design touch targets with eng</h3><p>The 36px button height is a Geo constraint. I'd push earlier for a mobile override to clear the 44px minimum.</p></div>
+      <div><h3>Add transition states</h3><p>The flow jumps between screens — a brief skeleton or crossfade would make progress legible.</p></div>
+      <div><h3>One flow beats many</h3><p>Toggling consent at the component level meant one flow served every region — far less to build, test, and maintain.</p></div>
+    </div>
+    <div class="callout">
+      <span class="clabel">My one takeaway</span>
+      Constraints were the design. Respecting the mobile viewport, the two-minute attention budget, and regional law is what shaped every call — and made the flow simpler, not poorer. I now reach for the constraints first.
+    </div>
+    <div class="callout" style="border-left-color:var(--blue);margin-top:14px;">
+      <span class="clabel" style="color:var(--blue);">What's next</span>
+      Fix the disabled-CTA contrast, ship the eng-flagged focus/aria/touch-target items, then instrument coverage + completion and tune copy where advertisers drop. The bigger win is reusing this verification engine across surfaces — it's already the flow AMA hands off to.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="big">Let's talk</div>
+    <div style="margin:6px 0 18px;">Open to product design roles — happy to walk through the thinking behind this work.</div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a class="btn" href="mailto:hello@example.com">Email me ↗</a>
+      <a class="btn ghost" href="#" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="btn ghost" href="#" target="_blank" rel="noopener">Portfolio ↗</a>
+    </div>
+    <div style="margin-top:26px;color:var(--muted);">Jeury Santos Avila · MobileSite Contact Collection · 2026</div>
+  </div>
+</footer>
+
+<script>
+  // scroll-spy
+  (function(){
+    var links=[].slice.call(document.querySelectorAll('.sidenav a'));
+    var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a;});
+    var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(l){l.classList.remove('active');});if(map[e.target.id])map[e.target.id].classList.add('active');}});},{rootMargin:"-45% 0px -50% 0px",threshold:0});
+    ['problem','research','approach','flow','design','beforeafter','a11y','try','outcome'].forEach(function(id){var el=document.getElementById(id);if(el)obs.observe(el);});
+  })();
+
+  // reveal
+  (function(){
+    var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var blocks=[].slice.call(document.querySelectorAll('section > .wrap'));
+    var hero=document.querySelector('.hero .wrap');
+    if(reduce){blocks.forEach(function(b){b.classList.add('in');});if(hero)hero.classList.add('in');return;}
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -12% 0px',threshold:0.05});
+    blocks.forEach(function(b){io.observe(b);});
+    if(hero)requestAnimationFrame(function(){hero.classList.add('in');});
+  })();
+
+  // parallax
+  (function(){
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    var els=[].slice.call(document.querySelectorAll('[data-parallax]'));if(!els.length)return;
+    var ticking=false;
+    function update(){var vh=window.innerHeight;for(var i=0;i<els.length;i++){var el=els[i],r=el.getBoundingClientRect();var off=(r.top+r.height/2)-vh/2;var sp=parseFloat(el.getAttribute('data-parallax'))||0.05;el.style.transform='translate3d(0,'+(-off*sp).toFixed(1)+'px,0)';}ticking=false;}
+    function onScroll(){if(!ticking){ticking=true;requestAnimationFrame(update);}}
+    window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll);update();
+  })();
+
+  // flow canvas — pan + zoom
+  (function(){
+    var c=document.getElementById('flowCanvas');if(!c)return;
+    var stage=document.getElementById('flowStage'),img=stage.querySelector('img');
+    var scale=1,x=0,y=0,MIN=0.1,MAX=6,dragging=false,sx=0,sy=0,ox=0,oy=0;
+    function apply(){stage.style.transform='translate('+x+'px,'+y+'px) scale('+scale+')';}
+    function fitView(){var cw=c.clientWidth,ch=c.clientHeight,iw=img.naturalWidth||3800,ih=img.naturalHeight||2182;scale=Math.min(cw/iw,ch/ih)*0.96;x=(cw-iw*scale)/2;y=(ch-ih*scale)/2;apply();}
+    function zoomAt(f,clientX,clientY){var ns=Math.max(MIN,Math.min(MAX,scale*f));var r=c.getBoundingClientRect();var cx=clientX-r.left,cy=clientY-r.top;x=cx-(cx-x)*(ns/scale);y=cy-(cy-y)*(ns/scale);scale=ns;apply();}
+    c.addEventListener('wheel',function(e){e.preventDefault();if(e.ctrlKey||e.metaKey){zoomAt(Math.exp(-e.deltaY*0.01),e.clientX,e.clientY);}else{x-=e.deltaX;y-=e.deltaY;apply();}},{passive:false});
+    c.addEventListener('pointerdown',function(e){dragging=true;c.classList.add('grabbing');try{c.setPointerCapture(e.pointerId);}catch(_){}sx=e.clientX;sy=e.clientY;ox=x;oy=y;});
+    c.addEventListener('pointermove',function(e){if(!dragging)return;x=ox+(e.clientX-sx);y=oy+(e.clientY-sy);apply();});
+    window.addEventListener('pointerup',function(){dragging=false;c.classList.remove('grabbing');});
+    c.addEventListener('dblclick',function(e){e.preventDefault();fitView();});
+    window.flowZoom=function(d){var r=c.getBoundingClientRect();zoomAt(d>0?1.3:1/1.3,r.left+r.width/2,r.top+r.height/2);};
+    window.flowReset=function(){fitView();};
+    if(img.complete&&img.naturalWidth)fitView();else img.addEventListener('load',fitView);
+    window.addEventListener('resize',fitView);
+  })();
+</script>
+</body>
+</html>
