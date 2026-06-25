@@ -1,73 +1,575 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>jeury.agent — demo</title>
-
-<!-- Fonts used by the widget -->
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Inter:wght@300;400;500&family=DM+Serif+Display:ital@1&display=swap" rel="stylesheet">
-
-<!-- The feature: one CSS file, one JS file -->
-<link rel="stylesheet" href="agent.css">
-
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Jeury Santos Avila — Product Designer · Meta</title>
+<meta name="description" content="Jeury Santos Avila — Product Designer at Meta (Ads Manager App / BizComm). I design the systems that keep advertisers reachable."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
 <style>
-  /* Demo page chrome only — not part of the feature */
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    min-height: 100vh;
-    background: #0C0C0B;
-    font-family: 'Inter', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1.2rem;
-    text-align: center;
-    padding: 2rem;
+  :root{
+    /* dark shell */
+    --bg:#06080b; --bg-elevated:#0d1117;
+    --surface-glass:rgba(255,255,255,0.04);
+    --hairline-dark:rgba(255,255,255,0.09);
+    /* text on dark */
+    --text:#f2f5f7; --text-soft:#aab4bd; --text-muted:#6b7682;
+    /* accents */
+    --accent:#1de9b6; --accent-deep:#0fb592; --accent-2:#ffb454;
+    --cs-ama:#0a9bd6; --cs-mobile:#7d5cff;
+    /* light sections */
+    --ink:#0f1419; --ink-soft:#424b54; --ink-muted:#6b7682;
+    --paper:#ffffff; --paper-2:#f5f7f9; --hairline:rgba(15,20,25,0.10);
+    /* type */
+    --font-display:'Space Grotesk',sans-serif;
+    --font-body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --maxw:1180px;
+    /* easings */
+    --ease-out-expo:cubic-bezier(0.16,1,0.3,1);
+    --ease-out-quint:cubic-bezier(0.22,1,0.36,1);
+    --ease-in-out-cine:cubic-bezier(0.83,0,0.17,1);
+    --ease-spring:cubic-bezier(0.34,1.56,0.64,1);
+    --ease-smooth:cubic-bezier(0.4,0,0.2,1);
+    --d-fast:220ms; --d-base:480ms; --d-slow:900ms; --d-hero:1100ms;
   }
-  h1 {
-    font-family: 'DM Serif Display', serif;
-    font-style: italic;
-    font-size: clamp(2.4rem, 7vw, 4.5rem);
-    color: #F6F4F0;
-    font-weight: 400;
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.6;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;}
+  h1,h2,h3{font-family:var(--font-display);line-height:1.04;letter-spacing:-0.03em;margin:0;color:inherit;}
+  a{color:inherit;text-decoration:none;}
+  img{display:block;max-width:100%;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+
+  /* ---- a11y ---- */
+  .skip{position:absolute;left:-9999px;top:0;z-index:300;background:var(--accent);color:#04110d;padding:10px 16px;border-radius:0 0 10px 0;font-weight:600;}
+  .skip:focus{left:0;}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px;}
+
+  /* ---- grain ---- */
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:400;opacity:.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+  /* ---- custom cursor ---- */
+  .cursor{position:fixed;top:0;left:0;width:34px;height:34px;border:1px solid rgba(29,233,182,.6);border-radius:50%;
+    pointer-events:none;z-index:500;transform:translate(-50%,-50%);transition:width .25s,height .25s,background .25s,border-color .25s;mix-blend-mode:difference;}
+  .cursor.big{width:64px;height:64px;background:rgba(29,233,182,.12);border-color:transparent;}
+  @media(hover:none),(pointer:coarse){.cursor{display:none;}}
+
+  /* ---- nav ---- */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:200;transition:background .4s var(--ease-smooth),backdrop-filter .4s var(--ease-smooth),border-color .4s;
+    border-bottom:1px solid transparent;}
+  .nav.scrolled{background:rgba(8,10,13,.62);backdrop-filter:blur(18px) saturate(160%);border-bottom-color:rgba(255,255,255,.07);}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;}
+  .brand{display:flex;align-items:center;gap:11px;}
+  .brand-chip{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font-family:var(--font-display);
+    font-weight:700;font-size:13px;letter-spacing:-.02em;color:#04110d;
+    background:linear-gradient(135deg,var(--accent),var(--accent-deep));box-shadow:0 0 18px rgba(29,233,182,.5);}
+  .brand-name{font-family:var(--font-display);font-weight:600;font-size:15px;letter-spacing:-.01em;color:var(--text);}
+  .brand-name .dim{color:var(--text-muted);}
+  .navlinks{display:flex;align-items:center;gap:30px;}
+  .navlinks a{font-size:14px;font-weight:500;color:var(--text-soft);transition:color .25s;}
+  .navlinks a:hover{color:var(--text);}
+  .nav-cta{font-size:14px;font-weight:600;color:var(--accent)!important;border:1px solid rgba(29,233,182,.35);
+    padding:8px 16px;border-radius:999px;transition:all .3s var(--ease-spring);}
+  .nav-cta:hover{background:rgba(29,233,182,.1);box-shadow:0 0 24px rgba(29,233,182,.3);}
+  @media(max-width:820px){.navlinks a:not(.nav-cta){display:none;}}
+
+  /* ---- buttons ---- */
+  .btn{position:relative;display:inline-flex;align-items:center;gap:9px;font-family:var(--font-body);font-weight:600;font-size:15px;
+    padding:14px 26px;border-radius:999px;cursor:pointer;border:none;transition:transform .3s var(--ease-spring),box-shadow .3s,background .3s;}
+  .btn-primary{background:var(--bg-elevated);color:var(--accent);border:1px solid rgba(29,233,182,.4);}
+  .btn-primary::before{content:"";position:absolute;inset:-2px;border-radius:inherit;z-index:-1;
+    background:conic-gradient(from 0deg,var(--accent),var(--cs-mobile),var(--accent-2),var(--accent));
+    filter:blur(9px);opacity:.5;animation:spin 7s linear infinite;}
+  .btn-primary:hover{box-shadow:0 12px 50px -10px rgba(29,233,182,.5);}
+  @keyframes spin{to{transform:rotate(1turn);}}
+  .btn-ghost{background:transparent;color:var(--text-soft);}
+  .btn-ghost:hover{color:var(--text);}
+  .arrow{transition:transform .3s var(--ease-spring);}
+  .btn:hover .arrow{transform:translateX(4px);}
+
+  /* ---- reveal ---- */
+  [data-reveal]{opacity:0;transform:translateY(38px);transition:opacity var(--d-base) var(--ease-out-quint),transform var(--d-base) var(--ease-out-quint);transition-delay:calc(var(--i,0) * 85ms);will-change:transform,opacity;}
+  [data-reveal].in{opacity:1;transform:none;}
+  [data-parallax]{will-change:transform;}
+
+  /* ================= HERO ================= */
+  .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;
+    background:radial-gradient(120% 90% at 50% -10%,rgba(29,233,182,.18) 0%,transparent 52%),
+      radial-gradient(80% 70% at 82% 18%,rgba(125,92,255,.16) 0%,transparent 58%),
+      radial-gradient(70% 60% at 10% 32%,rgba(10,155,214,.14) 0%,transparent 58%),
+      var(--bg);}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(110% 100% at 50% 30%,transparent 38%,var(--bg) 100%);}
+  .aurora{position:absolute;inset:0;z-index:0;pointer-events:none;}
+  .blob{position:absolute;border-radius:50%;filter:blur(85px);opacity:.5;will-change:transform;}
+  .blob-1{width:520px;height:520px;background:var(--accent);top:-140px;left:50%;transform:translateX(-50%);animation:drift 19s ease-in-out infinite alternate;}
+  .blob-2{width:440px;height:440px;background:var(--cs-mobile);bottom:-120px;right:-80px;animation:drift 23s -6s ease-in-out infinite alternate;}
+  .blob-3{width:400px;height:400px;background:var(--cs-ama);top:34%;left:-100px;animation:drift 27s -12s ease-in-out infinite alternate;}
+  @keyframes drift{to{transform:translate(46px,-34px) scale(1.1);}}
+  .hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.08fr .92fr;gap:48px;align-items:center;
+    padding-top:120px;padding-bottom:80px;width:100%;}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:600;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent);}
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);}
+  .hero h1{font-size:clamp(2.8rem,7vw,6rem);font-weight:700;margin:22px 0 0;letter-spacing:-.035em;}
+  .hero h1 .line{display:block;overflow:hidden;}
+  .hero h1 .line>span{display:block;transform:translateY(110%);}
+  .grad{background:linear-gradient(100deg,var(--text) 18%,var(--accent) 52%,var(--accent-2) 84%);
+    background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:sheen 9s ease-in-out infinite alternate;}
+  @keyframes sheen{to{background-position:100% 0;}}
+  .hero .lede{font-size:clamp(1.05rem,1.3vw,1.2rem);color:var(--text-soft);margin:26px 0 0;max-width:46ch;line-height:1.6;}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px;}
+  .hero-visual{position:relative;height:540px;}
+  .device{position:absolute;border-radius:34px;overflow:hidden;background:#0d1117;border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 40px 90px -30px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.04) inset;}
+  .device::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.12),transparent 40%);pointer-events:none;}
+  .d-front{width:270px;right:24px;top:24px;transform:rotate(2.4deg);z-index:2;}
+  .d-back{width:248px;left:0;top:96px;transform:rotate(-5deg);z-index:1;opacity:.95;}
+  .vfloat{position:absolute;z-index:3;background:var(--surface-glass);backdrop-filter:blur(14px) saturate(150%);
+    border:1px solid var(--hairline-dark);border-radius:14px;padding:12px 15px;display:flex;align-items:center;gap:10px;
+    box-shadow:0 20px 50px -18px rgba(0,0,0,.8);}
+  .vfloat .ico{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-size:15px;background:rgba(29,233,182,.16);color:var(--accent);}
+  .vfloat .t1{font-size:13px;font-weight:600;color:var(--text);}
+  .vfloat .t2{font-size:11px;color:var(--text-muted);}
+  .vf-1{left:-12px;top:54px;animation:bob 6s ease-in-out infinite;}
+  .vf-2{right:-6px;bottom:64px;animation:bob 7s -2s ease-in-out infinite;}
+  @keyframes bob{50%{transform:translateY(-12px);}}
+  .scroll-hint{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;
+    align-items:center;gap:8px;color:var(--text-muted);font-size:11px;letter-spacing:.16em;text-transform:uppercase;}
+  .mouse{width:22px;height:34px;border:1.5px solid var(--text-muted);border-radius:12px;position:relative;}
+  .mouse::after{content:"";position:absolute;left:50%;top:7px;width:3px;height:7px;border-radius:2px;background:var(--accent);transform:translateX(-50%);animation:wheel 1.8s ease-in-out infinite;}
+  @keyframes wheel{0%{opacity:0;transform:translate(-50%,0);}30%{opacity:1;}100%{opacity:0;transform:translate(-50%,10px);}}
+  @media(max-width:920px){
+    .hero .wrap{grid-template-columns:1fr;gap:6px;padding-top:108px;}
+    .hero-visual{height:440px;margin-top:18px;}
+    .d-front{right:auto;left:50%;transform:translateX(-26%) rotate(2deg);}
+    .d-back{left:50%;transform:translateX(-80%) rotate(-5deg);}
+    .scroll-hint{display:none;}
   }
-  h1 .blue { color: #5A8AE0; }
-  p {
-    color: rgba(246, 244, 240, 0.6);
-    font-size: 0.9rem;
-    max-width: 460px;
-    line-height: 1.7;
+
+  /* hero entrance */
+  .is-loaded .hero h1 .line>span{animation:rise var(--d-slow) var(--ease-out-expo) forwards;}
+  .is-loaded .hero h1 .line:nth-child(1)>span{animation-delay:.30s;}
+  .is-loaded .hero h1 .line:nth-child(2)>span{animation-delay:.42s;}
+  .is-loaded .hero h1 .line:nth-child(3)>span{animation-delay:.54s;}
+  @keyframes rise{to{transform:translateY(0);}}
+  .fade-up{opacity:0;transform:translateY(18px);}
+  .is-loaded .fade-up{animation:fadeUp .7s var(--ease-out-quint) forwards;}
+  .is-loaded .eyebrow.fade-up{animation-delay:.15s;}
+  .is-loaded .lede.fade-up{animation-delay:.7s;}
+  .is-loaded .hero-cta.fade-up{animation-delay:.84s;}
+  @keyframes fadeUp{to{opacity:1;transform:none;}}
+
+  /* ================= MARQUEE ================= */
+  .marquee{position:relative;z-index:2;background:var(--bg);border-top:1px solid var(--hairline-dark);border-bottom:1px solid var(--hairline-dark);
+    padding:22px 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);}
+  .mtrack{display:flex;gap:0;width:max-content;animation:scrollX 28s linear infinite;}
+  .marquee:hover .mtrack{animation-play-state:paused;}
+  @keyframes scrollX{to{transform:translateX(-50%);}}
+  .mitem{display:inline-flex;align-items:center;font-family:var(--font-display);font-weight:500;font-size:clamp(1rem,1.5vw,1.35rem);
+    color:var(--text-soft);padding:0 28px;white-space:nowrap;}
+  .mitem::after{content:"●";color:var(--accent);font-size:8px;margin-left:28px;opacity:.7;}
+
+  /* ================= LIGHT SECTIONS ================= */
+  .light{background:var(--paper);color:var(--ink);}
+  .light h2{color:var(--ink);}
+  section{position:relative;padding:120px 0;}
+  @media(max-width:760px){section{padding:80px 0;}}
+  .sec-eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-deep);margin:0 0 18px;}
+  .light .sec-eyebrow{color:var(--accent-deep);}
+  h2{font-size:clamp(1.9rem,4vw,3.2rem);font-weight:600;letter-spacing:-.025em;}
+
+  /* about */
+  .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:start;}
+  .about p{font-size:clamp(1.05rem,1.4vw,1.3rem);color:var(--ink-soft);line-height:1.65;margin:0;}
+  .about p strong{color:var(--ink);font-weight:600;}
+  @media(max-width:820px){.about-grid{grid-template-columns:1fr;gap:24px;}}
+
+  /* ================= WORK (dark cinematic) ================= */
+  .work{background:var(--bg);color:var(--text);padding-top:130px;}
+  .work .sticky-head{position:sticky;top:0;z-index:5;padding:30px 0 26px;background:linear-gradient(var(--bg),var(--bg) 70%,transparent);}
+  .work h2{color:var(--text);}
+  .work-sub{color:var(--text-soft);font-size:1.05rem;margin:14px 0 0;max-width:52ch;}
+  .cases{display:flex;flex-direction:column;gap:96px;margin-top:64px;}
+  .case-card{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:24px;overflow:hidden;cursor:pointer;
+    border:1px solid var(--hairline-dark);background:var(--bg-elevated);
+    box-shadow:0 1px 0 rgba(255,255,255,.05) inset,0 30px 70px -28px rgba(0,0,0,.9);
+    transition:transform .5s var(--ease-out-quint),box-shadow .5s,border-color .5s;
+    clip-path:inset(0 0 100% 0);opacity:0;}
+  .case-card.in{clip-path:inset(0 0 0% 0);opacity:1;}
+  .case-card:nth-child(2){clip-path:inset(0 100% 0 0);}
+  .case-card:nth-child(2).in{clip-path:inset(0 0% 0 0);}
+  .case-card .media{position:relative;overflow:hidden;min-height:420px;background:#0a0c10;}
+  .case-card .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;
+    transform:scale(1.18);transition:transform 1.2s var(--ease-out-expo);}
+  .case-card.in .media img{transform:scale(1);}
+  .case-card .media::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 40%,rgba(6,8,11,.4));}
+  .case-card .body{padding:46px 44px;display:flex;flex-direction:column;justify-content:center;
+    opacity:0;transform:translateY(22px);transition:opacity .6s var(--ease-out-quint) .35s,transform .6s var(--ease-out-quint) .35s;}
+  .case-card.in .body{opacity:1;transform:none;}
+  .case-card:nth-child(even){grid-template-columns:1fr 1fr;}
+  .case-card:nth-child(even) .media{order:2;}
+  .case-tag{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--cs);margin:0 0 16px;}
+  .case-num{position:absolute;top:24px;right:30px;font-family:var(--font-display);font-weight:700;font-size:14px;color:var(--text-muted);z-index:3;}
+  .case-card h3{font-size:clamp(1.5rem,2.4vw,2.1rem);font-weight:600;color:var(--text);letter-spacing:-.025em;}
+  .case-desc{color:var(--text-soft);font-size:1.02rem;margin:16px 0 0;line-height:1.6;}
+  .case-status{display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-size:13.5px;font-weight:600;color:var(--text);
+    background:color-mix(in srgb,var(--cs) 16%,transparent);border:1px solid color-mix(in srgb,var(--cs) 38%,transparent);
+    padding:8px 14px;border-radius:999px;align-self:flex-start;}
+  .case-status .pdot{width:7px;height:7px;border-radius:50%;background:var(--cs);box-shadow:0 0 10px var(--cs);}
+  .case-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;}
+  .case-chips span{font-size:11.5px;color:var(--text-muted);border:1px solid var(--hairline-dark);padding:5px 11px;border-radius:999px;}
+  .case-link{display:inline-flex;align-items:center;gap:9px;margin-top:28px;font-weight:600;font-size:15px;color:var(--cs);align-self:flex-start;}
+  .case-teaser{font-style:italic;color:var(--text-muted);font-size:.96rem;margin:0 0 14px;border-left:2px solid var(--cs);padding-left:14px;}
+  .case-card::before{content:"";position:absolute;inset:0;border-radius:24px;pointer-events:none;z-index:4;
+    box-shadow:0 0 0 1px transparent inset;transition:box-shadow .5s;}
+  .case-card:hover{transform:translateY(-6px);border-color:color-mix(in srgb,var(--cs) 50%,transparent);
+    box-shadow:0 0 0 1px color-mix(in srgb,var(--cs) 30%,transparent),0 0 60px -12px color-mix(in srgb,var(--cs) 55%,transparent),0 40px 90px -30px rgba(0,0,0,.9);}
+  .case-card:hover .media img{transform:scale(1.06);}
+  .cases-bridge{text-align:center;font-family:var(--font-display);font-weight:500;font-size:clamp(1.1rem,2vw,1.5rem);
+    color:var(--text-soft);max-width:24ch;margin:8px auto 0;letter-spacing:-.02em;}
+  @media(max-width:820px){
+    .case-card,.case-card:nth-child(even){grid-template-columns:1fr;}
+    .case-card .media,.case-card:nth-child(even) .media{order:0;min-height:280px;}
+    .case-card .body{padding:34px 28px;}
   }
-  .hint {
-    font-family: 'Caveat', cursive;
-    font-size: 1.3rem;
-    color: #7DA4E8;
-    transform: rotate(-2deg);
+
+  /* ================= APPROACH ================= */
+  .approach{background:var(--paper-2);color:var(--ink);}
+  .principles{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:56px;
+    border:1px solid var(--hairline);border-radius:20px;overflow:hidden;background:var(--hairline);}
+  .principle{background:var(--paper);padding:38px 36px;transition:background .35s;}
+  .principle:hover{background:var(--paper-2);}
+  .principle .pn{font-family:var(--font-display);font-weight:700;font-size:14px;color:var(--accent-deep);}
+  .principle h3{font-size:1.4rem;font-weight:600;color:var(--ink);margin:14px 0 12px;letter-spacing:-.02em;}
+  .principle p{color:var(--ink-soft);font-size:1rem;margin:0;line-height:1.6;}
+  @media(max-width:760px){.principles{grid-template-columns:1fr;}}
+
+  /* ================= CONTACT ================= */
+  .contact{position:relative;background:var(--bg);color:var(--text);overflow:hidden;text-align:center;padding:150px 0;}
+  .contact .aurora .blob{opacity:.35;}
+  .contact .wrap{position:relative;z-index:2;}
+  .contact h2{font-size:clamp(2.2rem,5vw,4rem);color:var(--text);}
+  .contact .grad{display:inline-block;}
+  .contact p{color:var(--text-soft);font-size:1.15rem;max-width:46ch;margin:22px auto 0;}
+  .contact-cta{display:flex;justify-content:center;flex-wrap:wrap;gap:16px;margin-top:40px;}
+  .contact-links{display:flex;justify-content:center;flex-wrap:wrap;gap:26px;margin-top:34px;}
+  .contact-links a{font-size:14.5px;font-weight:500;color:var(--text-soft);
+    background:linear-gradient(currentColor,currentColor) no-repeat 0 100%/0 1px;transition:background-size .4s var(--ease-out-quint),color .3s;}
+  .contact-links a:hover{color:var(--text);background-size:100% 1px;}
+
+  /* ================= FOOTER ================= */
+  footer{background:var(--bg);color:var(--text-muted);border-top:1px solid var(--hairline-dark);padding:44px 0;}
+  footer .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px;font-size:13.5px;}
+  footer .fl{color:var(--text-soft);}
+  footer .fr{display:flex;flex-wrap:wrap;gap:20px;}
+  footer .fr a:hover{color:var(--text);}
+  footer .fbottom{margin-top:10px;width:100%;font-size:12px;color:var(--text-muted);}
+
+  /* ================= CLICK-TO-ENTER OVERLAY ================= */
+  .enter-overlay{position:fixed;z-index:9999;border-radius:20px;pointer-events:none;
+    transition:transform .8s var(--ease-in-out-cine),border-radius .8s var(--ease-in-out-cine),opacity .25s ease;transform-origin:center;}
+  .enter-title{position:fixed;left:50%;top:50%;z-index:10000;color:#fff;pointer-events:none;font-family:var(--font-display);
+    font-weight:700;font-size:clamp(1.6rem,5vw,3.4rem);letter-spacing:-.03em;opacity:0;transform:translate(-50%,-40%);
+    transition:opacity .45s ease .28s,transform .6s var(--ease-out-expo) .28s;text-align:center;}
+
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important;}
+    [data-reveal],.fade-up{opacity:1!important;transform:none!important;}
+    .hero h1 .line>span{transform:none!important;}
+    .case-card{clip-path:none!important;transform:none!important;opacity:1!important;}
+    .case-card .media img{transform:none!important;}
+    .case-card .body{opacity:1!important;transform:none!important;}
+    .cursor{display:none!important;}
   }
 </style>
 </head>
-<body>
+<body id="top">
+<a class="skip" href="#work">Skip to work</a>
+<div class="cursor" aria-hidden="true"></div>
 
-  <h1>jeury<span class="blue">.agent</span></h1>
-  <p>A tiny dock-summoned AI-persona widget. Frosted glass, typing effect, configurable Q&amp;A chips — built to drop into any site with two files.</p>
-  <p class="hint">click the sparkle below ✦</p>
+<!-- NAV -->
+<nav class="nav" aria-label="Primary">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Jeury Santos Avila — home">
+      <span class="brand-chip">JS</span>
+      <span class="brand-name">Jeury Santos <span class="dim">Avila</span></span>
+    </a>
+    <div class="navlinks">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#approach">Approach</a>
+      <a class="nav-cta" href="#contact">Get in touch</a>
+    </div>
+  </div>
+</nav>
 
-  <script src="agent.js"></script>
-  <script>
-    // Default config is Jeury's persona — override anything you like:
-    JeuryAgent.init({
-      // name: 'your.agent',
-      // tooltip: "Hi! I'm Your Name — well, the AI version ✦",
-      // greeting: 'Custom first message...',
-      // qa: [{ q: 'Chip label', a: 'Typed answer' }],
-      // typingSpeedMs: 18,
-      // nudgeAfterMs: 5000,
-      // renderDock: true,
-      // dockLinks: [],            // [] = sparkle only
-      // triggerSelector: '#myBtn' // use with renderDock: false
+<!-- HERO -->
+<header class="hero">
+  <div class="aurora" aria-hidden="true">
+    <span class="blob blob-1" data-parallax="0.06"></span>
+    <span class="blob blob-2" data-parallax="0.09"></span>
+    <span class="blob blob-3" data-parallax="0.12"></span>
+  </div>
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="eyebrow fade-up">Product Designer (lead) · Meta — Ads Manager App / BizComm</span>
+      <h1>
+        <span class="line"><span>I design the</span></span>
+        <span class="line"><span>systems that keep</span></span>
+        <span class="line"><span class="grad">advertisers reachable.</span></span>
+      </h1>
+      <p class="lede fade-up">I'm a product designer at Meta working on advertiser reachability — building contact and verification flows across the Ads Manager App and mobile web, so billing, policy, and performance alerts actually reach the people who run the business.</p>
+      <div class="hero-cta fade-up">
+        <a class="btn btn-primary" href="#work" data-magnetic>View the work <span class="arrow">→</span></a>
+        <a class="btn btn-ghost" href="#contact">Get in touch</a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="device d-back" data-parallax="0.04"><img src="case-study/images/home.png" alt=""/></div>
+      <div class="device d-front" data-parallax="0.02"><img src="case-study/images/contact-completed.png" alt=""/></div>
+      <div class="vfloat vf-1"><span class="ico">✓</span><div><div class="t1">Verified</div><div class="t2">Email · Phone · WhatsApp</div></div></div>
+      <div class="vfloat vf-2"><span class="ico">↑</span><div><div class="t1">In-app handoff</div><div class="t2">Native · holding</div></div></div>
+    </div>
+  </div>
+  <div class="scroll-hint" aria-hidden="true"><span class="mouse"></span>Scroll</div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="mtrack">
+    <span class="mitem">Meta · Ads Manager App</span><span class="mitem">BizComm / Advertiser Reachability</span><span class="mitem">Native + Mobile Web</span><span class="mitem">Contact &amp; Verification Flows</span><span class="mitem">End-to-end Prototyping</span><span class="mitem">Cross-functional Alignment</span><span class="mitem">Geo Design System</span>
+    <span class="mitem">Meta · Ads Manager App</span><span class="mitem">BizComm / Advertiser Reachability</span><span class="mitem">Native + Mobile Web</span><span class="mitem">Contact &amp; Verification Flows</span><span class="mitem">End-to-end Prototyping</span><span class="mitem">Cross-functional Alignment</span><span class="mitem">Geo Design System</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="light about" id="about">
+  <div class="wrap about-grid">
+    <div data-reveal>
+      <p class="sec-eyebrow">About</p>
+      <h2>I work where intent meets infrastructure.</h2>
+    </div>
+    <div class="about" data-reveal style="--i:1">
+      <p>I'm a product designer at Meta on the Ads Manager App, focused on a deceptively hard problem: making sure advertisers can actually be reached when it matters. My work lives at the seam between a <strong>native app where intent happens</strong> and a <strong>web verification stack that owns consent and compliance</strong> — so most of the craft is in continuity, truthful state, and decisions that hold up under cross-functional scrutiny. I lead these efforts end to end, from exploration and pattern research to working prototypes and the alignment that gets a design approved.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="work" id="work">
+  <div class="wrap">
+    <div class="sticky-head" data-reveal>
+      <p class="sec-eyebrow">Selected work</p>
+      <h2>Two surfaces. One reachability problem.</h2>
+      <p class="work-sub">Designed to feel like a single experience — the native entry point and the mobile-web flow it hands off to.</p>
+    </div>
+
+    <div class="cases">
+      <!-- CASE 01 — AMA -->
+      <article class="case-card" style="--cs:var(--cs-ama)" data-href="case-study/index.html" data-title="AMA Contact Collection" data-reveal>
+        <span class="case-num">01 / AMA</span>
+        <div class="media"><img src="case-study/images/contact-completed.png" alt="AMA contact collection screen"/></div>
+        <div class="body">
+          <p class="case-teaser">The native app is the durable host. The web view is a transient task.</p>
+          <p class="case-tag">AMA · Ads Manager App · Native</p>
+          <h3>Contact Collection — New Contact Entry Point</h3>
+          <p class="case-desc">Advertisers weren't giving Meta verified ways to reach them, so account-critical notifications quietly failed. I designed a native entry point in AMA that reuses Meta's web verification stack — the native screen holds in place while a Facebook in-app browser slides up to add and verify, so the seam never feels broken.</p>
+          <span class="case-status"><span class="pdot"></span>Final design approved · alignment locked with the AMA team</span>
+          <div class="case-chips"><span>Exploration → alignment</span><span>End-to-end prototype</span><span>FB / IG / iOS conventions</span></div>
+          <span class="case-link">Read the AMA case study <span class="arrow">→</span></span>
+        </div>
+      </article>
+
+      <!-- CASE 02 — MobileSite -->
+      <article class="case-card" style="--cs:var(--cs-mobile)" data-href="case-study/mobilesite-case-study/index.html" data-title="MobileSite Contact Collection" data-reveal>
+        <span class="case-num">02 / MSITE</span>
+        <div class="media"><img src="case-study/mobilesite-case-study/images/landing-pending.png" alt="MobileSite contact collection screen"/></div>
+        <div class="body">
+          <p class="case-teaser">Same story, other surface — the flow AMA hands off to.</p>
+          <p class="case-tag">Meta Ads · BizComm · Mobile Web (msite)</p>
+          <h3>MobileSite Contact Collection</h3>
+          <p class="case-desc">The mobile-web half of the reachability story: the add-and-verify flow that AMA's native entry point opens into. I took it from research through final design — flow canvas, before/after, and a full accessibility audit — to a build that's ready for engineering handoff.</p>
+          <span class="case-status"><span class="pdot"></span>H1 2026 · Ready for eng handoff · live embedded prototype</span>
+          <div class="case-chips"><span>Research → final design</span><span>Before / after</span><span>Accessibility audit</span></div>
+          <span class="case-link">Read the MobileSite case study <span class="arrow">→</span></span>
+        </div>
+      </article>
+    </div>
+
+    <p class="cases-bridge" data-reveal>One reachability problem, designed end to end.</p>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section class="approach" id="approach">
+  <div class="wrap">
+    <div data-reveal>
+      <p class="sec-eyebrow">Approach</p>
+      <h2>How I work.</h2>
+    </div>
+    <div class="principles">
+      <div class="principle" data-reveal style="--i:0"><span class="pn">01</span><h3>Decide the variables separately.</h3><p>Affordance and status are different questions — I isolate each, weigh it against real principles (Fitts, Norman, Jakob), then decide deliberately instead of by default.</p></div>
+      <div class="principle" data-reveal style="--i:1"><span class="pn">02</span><h3>Convention informs; the team decides.</h3><p>I bring the platform research — what FB, IG, and iOS actually do — so trade-offs are understood, not assumed. The pattern analysis earns the decision; it doesn't override it.</p></div>
+      <div class="principle" data-reveal style="--i:2"><span class="pn">03</span><h3>Prototype the seams.</h3><p>The handoffs are where products break. I build the full flow end to end — backdrops, state machines, error states — so eng and content align on real behavior, not static comps.</p></div>
+      <div class="principle" data-reveal style="--i:3"><span class="pn">04</span><h3>Keep state truthful.</h3><p>Not added → Pending confirmation → Verified. State should always tell the user exactly where they are, and pull them back to finish what they started.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="aurora" aria-hidden="true">
+    <span class="blob blob-1"></span><span class="blob blob-2"></span><span class="blob blob-3"></span>
+  </div>
+  <div class="wrap">
+    <p class="sec-eyebrow" style="color:var(--accent)" data-reveal>Contact</p>
+    <h2 data-reveal>Let's make sure the<br><span class="grad">message gets through.</span></h2>
+    <p data-reveal style="--i:1">Open to conversations about product design in advertising, communication, and the systems that connect them.</p>
+    <div class="contact-cta" data-reveal style="--i:2">
+      <a class="btn btn-primary" href="mailto:jeurysantos1@gmail.com" data-magnetic>Email me <span class="arrow">→</span></a>
+    </div>
+    <div class="contact-links" data-reveal style="--i:3">
+      <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a href="#" id="resume-link">Resume ↗</a>
+      <a href="mailto:jeurysantos1@gmail.com">jeurysantos1@gmail.com</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <span class="fl">Jeury Santos Avila — Product Designer, Meta</span>
+    <span class="fr">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#approach">Approach</a>
+      <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:jeurysantos1@gmail.com">Email</a>
+    </span>
+    <span class="fbottom">© 2026 Jeury Santos Avila. Designed &amp; built by me. · Ads Manager App · BizComm · Advertiser reachability.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* hero entrance after fonts */
+  function load(){ document.body.classList.add('is-loaded'); }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(load); else addEventListener('load', load);
+  setTimeout(load, 1200); // safety
+
+  /* reveal observer */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:0.18, rootMargin:'0px 0px -8% 0px' });
+  document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); });
+
+  /* nav scrolled */
+  var nav = document.querySelector('.nav');
+  function onScrollNav(){ nav.classList.toggle('scrolled', scrollY > 40); }
+  addEventListener('scroll', onScrollNav, { passive:true }); onScrollNav();
+
+  if(!REDUCE){
+    /* parallax */
+    var layers = [].slice.call(document.querySelectorAll('[data-parallax]'));
+    var ticking = false;
+    function update(){
+      var vh = innerHeight, y = scrollY;
+      layers.forEach(function(el){
+        var sp = parseFloat(el.dataset.parallax);
+        var rect = el.getBoundingClientRect();
+        var offset = rect.top + y - vh/2;
+        el.style.transform = 'translate3d(0,' + (-offset*sp) + 'px,0)';
+      });
+      ticking = false;
+    }
+    addEventListener('scroll', function(){ if(!ticking){ requestAnimationFrame(update); ticking=true; } }, { passive:true });
+    update();
+
+    /* magnetic buttons */
+    document.querySelectorAll('[data-magnetic]').forEach(function(btn){
+      btn.addEventListener('pointermove', function(e){
+        var r = btn.getBoundingClientRect();
+        var x = (e.clientX - r.left - r.width/2)*0.25;
+        var y = (e.clientY - r.top - r.height/2)*0.35;
+        btn.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+      });
+      btn.addEventListener('pointerleave', function(){ btn.style.transform=''; });
     });
-  </script>
+
+    /* card 3D tilt */
+    document.querySelectorAll('.case-card').forEach(function(card){
+      card.addEventListener('pointermove', function(e){
+        if(matchMedia('(pointer:coarse)').matches) return;
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left)/r.width - .5;
+        var py = (e.clientY - r.top)/r.height - .5;
+        card.style.transform = 'perspective(1100px) rotateY(' + (px*4) + 'deg) rotateX(' + (-py*4) + 'deg) translateY(-6px)';
+      });
+      card.addEventListener('pointerleave', function(){ card.style.transform=''; });
+    });
+
+    /* custom cursor */
+    var cur = document.querySelector('.cursor'), cx=0,cy=0,tx=0,ty=0;
+    addEventListener('pointermove', function(e){ tx=e.clientX; ty=e.clientY; });
+    (function loop(){ cx+=(tx-cx)*.2; cy+=(ty-cy)*.2; cur.style.transform='translate('+cx+'px,'+cy+'px) translate(-50%,-50%)'; requestAnimationFrame(loop); })();
+    document.querySelectorAll('a,button,.case-card').forEach(function(el){
+      el.addEventListener('pointerenter', function(){ cur.classList.add('big'); });
+      el.addEventListener('pointerleave', function(){ cur.classList.remove('big'); });
+    });
+  }
+
+  /* click-to-enter transition */
+  function enterCase(card){
+    var href = card.dataset.href;
+    if(REDUCE){ location.href = href; return; }
+    var r = card.getBoundingClientRect();
+    var cs = getComputedStyle(card).getPropertyValue('--cs').trim() || '#1de9b6';
+    var ov = document.createElement('div');
+    ov.className = 'enter-overlay';
+    ov.style.left = r.left+'px'; ov.style.top = r.top+'px';
+    ov.style.width = r.width+'px'; ov.style.height = r.height+'px';
+    ov.style.background = 'linear-gradient(140deg,' + cs + ',#06080b)';
+    document.body.appendChild(ov);
+
+    var sx = innerWidth/r.width, sy = innerHeight/r.height;
+    var s = Math.max(sx,sy)*1.15;
+    var txm = innerWidth/2 - (r.left + r.width/2);
+    var tym = innerHeight/2 - (r.top + r.height/2);
+
+    var title = document.createElement('div');
+    title.className = 'enter-title';
+    title.textContent = card.dataset.title;
+    document.body.appendChild(title);
+
+    requestAnimationFrame(function(){
+      ov.style.transform = 'translate(' + txm + 'px,' + tym + 'px) scale(' + s + ')';
+      ov.style.borderRadius = '0px';
+      title.style.opacity = '1';
+      title.style.transform = 'translate(-50%,-50%)';
+    });
+    var went = false, go = function(){ if(!went){ went = true; location.href = href; } };
+    ov.addEventListener('transitionend', function(e){ if(e.propertyName==='transform') go(); }, { once:true });
+    setTimeout(go, 950);
+  }
+  document.querySelectorAll('.case-card').forEach(function(card){
+    card.addEventListener('click', function(){ enterCase(card); });
+    card.setAttribute('role','link');
+    card.setAttribute('tabindex','0');
+    card.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); enterCase(card); } });
+  });
+})();
+</script>
 </body>
 </html>

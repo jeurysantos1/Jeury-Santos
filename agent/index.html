@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>jeury.agent — demo</title>
+
+<!-- Fonts used by the widget -->
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Inter:wght@300;400;500&family=DM+Serif+Display:ital@1&display=swap" rel="stylesheet">
+
+<!-- The feature: one CSS file, one JS file -->
+<link rel="stylesheet" href="agent.css">
+
+<style>
+  /* Demo page chrome only — not part of the feature */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    background: #0C0C0B;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    text-align: center;
+    padding: 2rem;
+  }
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(2.4rem, 7vw, 4.5rem);
+    color: #F6F4F0;
+    font-weight: 400;
+  }
+  h1 .blue { color: #5A8AE0; }
+  p {
+    color: rgba(246, 244, 240, 0.6);
+    font-size: 0.9rem;
+    max-width: 460px;
+    line-height: 1.7;
+  }
+  .hint {
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    color: #7DA4E8;
+    transform: rotate(-2deg);
+  }
+</style>
+</head>
+<body>
+
+  <h1>jeury<span class="blue">.agent</span></h1>
+  <p>A tiny dock-summoned AI-persona widget. Frosted glass, typing effect, configurable Q&amp;A chips — built to drop into any site with two files.</p>
+  <p class="hint">click the sparkle below ✦</p>
+
+  <script src="agent.js"></script>
+  <script>
+    // Default config is Jeury's persona — override anything you like:
+    JeuryAgent.init({
+      // name: 'your.agent',
+      // tooltip: "Hi! I'm Your Name — well, the AI version ✦",
+      // greeting: 'Custom first message...',
+      // qa: [{ q: 'Chip label', a: 'Typed answer' }],
+      // typingSpeedMs: 18,
+      // nudgeAfterMs: 5000,
+      // renderDock: true,
+      // dockLinks: [],            // [] = sparkle only
+      // triggerSelector: '#myBtn' // use with renderDock: false
+    });
+  </script>
+</body>
+</html>
