@@ -121,11 +121,15 @@
   .hero .lede{font-size:clamp(1.05rem,1.3vw,1.22rem);color:var(--text-soft);margin:28px 0 0;max-width:48ch;line-height:1.6;}
   .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px;}
   .hero-visual{position:relative;}
-  .portrait-wrap{position:relative;width:min(100%,420px);margin-left:auto;}
-  .portrait-wrap::before{content:"";position:absolute;inset:-28px;z-index:0;border-radius:50px;background:conic-gradient(from 0deg,var(--accent),var(--cs-mobile),var(--accent-2),var(--accent));filter:blur(42px);opacity:.45;animation:spin 12s linear infinite;}
-  .portrait{position:relative;z-index:1;border-radius:30px;overflow:hidden;border:1px solid var(--border);box-shadow:0 40px 90px -30px rgba(0,0,0,.7);background:#0d1117;}
-  .portrait img{width:100%;height:auto;display:block;}
-  .portrait::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(160deg,rgba(255,255,255,.10),transparent 42%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);}
+  .portrait-wrap{position:relative;width:min(100%,440px);margin-left:auto;}
+  /* soft aura halo behind the cutout */
+  .portrait-wrap::before{content:"";position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:115%;height:78%;z-index:0;border-radius:50%;
+    background:radial-gradient(circle at 50% 50%,color-mix(in srgb,var(--accent) 55%,transparent),color-mix(in srgb,var(--cs-mobile) 38%,transparent) 46%,transparent 70%);
+    filter:blur(50px);opacity:.5;animation:bob 9s ease-in-out infinite;}
+  .portrait{position:relative;z-index:1;background:transparent;}
+  .portrait img{width:100%;height:auto;display:block;filter:drop-shadow(0 26px 46px rgba(0,0,0,.45));}
+  [data-theme="light"] .portrait img{filter:drop-shadow(0 26px 40px rgba(15,23,42,.28));}
+  [data-theme="light"] .portrait-wrap::before{opacity:.38;}
   .vfloat{position:absolute;z-index:3;background:var(--card-bg);backdrop-filter:blur(14px) saturate(150%);border:1px solid var(--border);border-radius:14px;padding:12px 15px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow);}
   .vfloat .ico{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-size:15px;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent-ui);}
   .vfloat .t1{font-size:13px;font-weight:600;color:var(--text);}
