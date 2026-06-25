@@ -101,6 +101,18 @@
   .card .n{font-family:var(--font-display);font-weight:700;font-size:14px;color:var(--blue);}
   .card p{margin:8px 0 0;font-size:15px;}
   @media(max-width:860px){.cards{grid-template-columns:1fr;}}
+  /* exploration options */
+  .opts{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px;align-items:start;}
+  @media(max-width:860px){.opts{grid-template-columns:1fr;}}
+  .opt{position:relative;background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;transition:transform .25s ease,box-shadow .25s ease;}
+  .opt:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+  .opt-tag{font-family:var(--font-display);font-weight:700;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+  .opt h3{font-size:20px;margin:10px 0 0;}
+  .opt p{font-size:15px;margin:10px 0 0;color:var(--body);}
+  .opt p b{color:var(--ink);}
+  .opt.sel{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue),0 24px 50px -24px rgba(26,115,232,.55);background:linear-gradient(180deg,#f3f8fe,#fff);}
+  .opt.sel .opt-tag{color:var(--blue);}
+  .opt.sel::after{content:"✓";position:absolute;top:16px;right:16px;width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:14px;font-weight:700;}
 
   /* goal callout */
   .goal{background:var(--ink);color:#fff;border-radius:var(--r);padding:40px;}
@@ -165,6 +177,7 @@
   <a href="#research"><span class="dot"></span><span class="label">Research</span></a>
   <a href="#insight"><span class="dot"></span><span class="label">Insight</span></a>
   <a href="#strategy"><span class="dot"></span><span class="label">Strategy</span></a>
+  <a href="#explore"><span class="dot"></span><span class="label">Exploration</span></a>
   <a href="#design"><span class="dot"></span><span class="label">Final design</span></a>
   <a href="#iterations"><span class="dot"></span><span class="label">Iterations</span></a>
   <a href="#outcome"><span class="dot"></span><span class="label">Outcome</span></a>
@@ -313,16 +326,33 @@
   </div>
 </section>
 
-<!-- HYPOTHESES -->
-<section>
+<!-- EXPLORATION -->
+<section id="explore">
   <div class="wrap">
-    <p class="kicker">Hypotheses we tested</p>
-    <h2>Minimalist or detailed?</h2>
-    <div class="two" style="margin-top:8px;">
-      <div class="card"><span class="n">A · Detailed</span><h3 style="margin-top:8px;">Every metric</h3><p>Forecast Tier, Forecast YTC, Forecast DIF — everything available.</p></div>
-      <div class="card"><span class="n">B · Minimalist</span><h3 style="margin-top:8px;">Current pacing + gap</h3><p>Only pacing and gap-to-next-tier, to reduce cognitive load.</p></div>
+    <p class="kicker">How we got here</p>
+    <h2>Three directions, one decision</h2>
+    <p class="lead">Before committing, I tested how much the dashboard should carry — would a minimalist view drive faster action, or do sellers need the detail to trust the data?</p>
+    <div class="opts">
+      <div class="opt">
+        <span class="opt-tag">Option A</span>
+        <h3>Detailed</h3>
+        <p>Every metric on screen — Forecast Tier, Forecast YTC, Forecast DIF.</p>
+        <p class="opt-note"><b>Trade-off:</b> complete, but cognitively heavy — the signal gets lost in the noise.</p>
+      </div>
+      <div class="opt">
+        <span class="opt-tag">Option B</span>
+        <h3>Minimalist</h3>
+        <p>Only what's urgent — current pacing and gap-to-next-tier.</p>
+        <p class="opt-note"><b>Trade-off:</b> calm and fast, but too thin for sellers to fully trust the numbers.</p>
+      </div>
+      <div class="opt sel">
+        <span class="opt-tag">Option C · Selected</span>
+        <h3>Hybrid</h3>
+        <p>Defaults to <b>All Metrics</b>, but visual hierarchy surfaces pacing and milestone progress while de-emphasizing the rest.</p>
+        <p class="opt-note"><b>Why it won:</b> detail on demand, clarity at a glance — sellers trust it and still act fast.</p>
+      </div>
     </div>
-    <p class="body"><b>Finding — a hybrid.</b> Sellers preferred the detailed view to trust the data, so the interface defaults to "All Metrics" — but visual hierarchy highlights the signals that matter (pacing, milestone progress) and de-emphasizes the rest. The second test confirmed reframing "Credits at Risk" from a red alert into a neutral metric reduced anxiety.</p>
+    <p class="body"><b>One more test.</b> Reframing "Credits at Risk" from a red alert into a neutral metric measurably reduced anxiety — confirming the second hypothesis.</p>
   </div>
 </section>
 
@@ -410,7 +440,7 @@
   var spy=new IntersectionObserver(function(entries){
     entries.forEach(function(e){ if(e.isIntersecting){ var id=e.target.id; Object.keys(links).forEach(function(k){ links[k].classList.toggle('active', k===id); }); } });
   }, { rootMargin:'-45% 0px -45% 0px' });
-  ['beforeafter','problem','research','insight','strategy','design','iterations','outcome'].forEach(function(id){ var el=document.getElementById(id); if(el) spy.observe(el); });
+  ['beforeafter','problem','research','insight','strategy','explore','design','iterations','outcome'].forEach(function(id){ var el=document.getElementById(id); if(el) spy.observe(el); });
 })();
 </script>
 </body>
