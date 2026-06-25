@@ -6,7 +6,7 @@
 <title>MobileSite Contact Collection — Case Study · Jeury Santos Avila</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add('js');</script>
 <style>
   :root{
@@ -46,7 +46,8 @@
   /* nav */
   nav.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line);}
   nav.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;}
-  .brand{font-weight:700;color:var(--ink);}
+  .brand{font-family:'Caveat',cursive;font-weight:700;font-size:28px;line-height:1;color:var(--ink);text-decoration:none;transition:color .3s,filter .3s;}
+  .brand:hover{color:var(--blue);filter:drop-shadow(0 0 12px rgba(109,74,255,.35));}
   .navlinks{display:flex;gap:24px;font-size:14px;font-weight:500;}
   .navlinks a{color:var(--body);}.navlinks a:hover{color:var(--ink);}
   @media(max-width:720px){.navlinks{display:none;}}
@@ -218,7 +219,7 @@
 </aside>
 
 <nav class="topbar"><div class="wrap">
-  <span class="brand">Jeury Santos Avila</span>
+  <a class="brand" href="../../index.html" aria-label="Back to home">jeurysantos</a>
   <div class="navlinks">
     <a href="#problem">Problem</a>
     <a href="#approach">Approach</a>
