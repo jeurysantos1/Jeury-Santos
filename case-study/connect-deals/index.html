@@ -110,6 +110,9 @@
   .opt h3{font-size:20px;margin:10px 0 0;}
   .opt p{font-size:15px;margin:10px 0 0;color:var(--body);}
   .opt p b{color:var(--ink);}
+  .opt-img{aspect-ratio:4/3;border-radius:10px;margin:0 0 16px;border:1px dashed #c9d2db;background:repeating-linear-gradient(45deg,#f6f8fa,#f6f8fa 12px,#eef1f5 12px,#eef1f5 24px);display:grid;place-items:center;color:var(--muted);font-size:12.5px;font-weight:600;letter-spacing:.04em;}
+  .opt-img img{width:100%;height:100%;object-fit:cover;border-radius:10px;}
+  .opt.sel .opt-img{border-color:color-mix(in srgb,var(--blue) 45%,transparent);}
   .opt.sel{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue),0 24px 50px -24px rgba(26,115,232,.55);background:linear-gradient(180deg,#f3f8fe,#fff);}
   .opt.sel .opt-tag{color:var(--blue);}
   .opt.sel::after{content:"✓";position:absolute;top:16px;right:16px;width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:14px;font-weight:700;}
@@ -322,37 +325,35 @@
         </ul>
       </div>
     </div>
-    <figure><img src="images/s37_0.png" alt="Spend deep-dive with donut charts and dynamic filtering by platform, product area, and YouTube product type" loading="lazy"/><figcaption>Visuals over tables: a spend deep-dive with donut segmentation, horizontal milestone timeline, and one-click filtering.</figcaption></figure>
-  </div>
-</section>
-
-<!-- EXPLORATION -->
-<section id="explore">
-  <div class="wrap">
-    <p class="kicker">How we got here</p>
-    <h2>Three directions, one decision</h2>
-    <p class="lead">Before committing, I tested how much the dashboard should carry — would a minimalist view drive faster action, or do sellers need the detail to trust the data?</p>
-    <div class="opts">
-      <div class="opt">
-        <span class="opt-tag">Option A</span>
-        <h3>Detailed</h3>
-        <p>Every metric on screen — Forecast Tier, Forecast YTC, Forecast DIF.</p>
-        <p class="opt-note"><b>Trade-off:</b> complete, but cognitively heavy — the signal gets lost in the noise.</p>
+    <div id="explore" style="margin-top:72px;">
+      <p class="kicker">How we got here</p>
+      <h2>Three directions, one decision</h2>
+      <p class="lead">Before committing, I tested how much the dashboard should carry — would a minimalist view drive faster action, or do sellers need the detail to trust the data?</p>
+      <div class="opts">
+        <div class="opt">
+          <div class="opt-img" aria-hidden="true">Option A — image</div>
+          <span class="opt-tag">Option A</span>
+          <h3>Detailed</h3>
+          <p>Every metric on screen — Forecast Tier, Forecast YTC, Forecast DIF.</p>
+          <p class="opt-note"><b>Trade-off:</b> complete, but cognitively heavy — the signal gets lost in the noise.</p>
+        </div>
+        <div class="opt">
+          <div class="opt-img" aria-hidden="true">Option B — image</div>
+          <span class="opt-tag">Option B</span>
+          <h3>Minimalist</h3>
+          <p>Only what's urgent — current pacing and gap-to-next-tier.</p>
+          <p class="opt-note"><b>Trade-off:</b> calm and fast, but too thin for sellers to fully trust the numbers.</p>
+        </div>
+        <div class="opt sel">
+          <div class="opt-img" aria-hidden="true">Option C — image</div>
+          <span class="opt-tag">Option C · Selected</span>
+          <h3>Hybrid</h3>
+          <p>Defaults to <b>All Metrics</b>, but visual hierarchy surfaces pacing and milestone progress while de-emphasizing the rest.</p>
+          <p class="opt-note"><b>Why it won:</b> detail on demand, clarity at a glance — sellers trust it and still act fast.</p>
+        </div>
       </div>
-      <div class="opt">
-        <span class="opt-tag">Option B</span>
-        <h3>Minimalist</h3>
-        <p>Only what's urgent — current pacing and gap-to-next-tier.</p>
-        <p class="opt-note"><b>Trade-off:</b> calm and fast, but too thin for sellers to fully trust the numbers.</p>
-      </div>
-      <div class="opt sel">
-        <span class="opt-tag">Option C · Selected</span>
-        <h3>Hybrid</h3>
-        <p>Defaults to <b>All Metrics</b>, but visual hierarchy surfaces pacing and milestone progress while de-emphasizing the rest.</p>
-        <p class="opt-note"><b>Why it won:</b> detail on demand, clarity at a glance — sellers trust it and still act fast.</p>
-      </div>
+      <p class="body"><b>One more test.</b> Reframing "Credits at Risk" from a red alert into a neutral metric measurably reduced anxiety — confirming the second hypothesis.</p>
     </div>
-    <p class="body"><b>One more test.</b> Reframing "Credits at Risk" from a red alert into a neutral metric measurably reduced anxiety — confirming the second hypothesis.</p>
   </div>
 </section>
 
