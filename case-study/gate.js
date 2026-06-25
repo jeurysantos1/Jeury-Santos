@@ -30,9 +30,9 @@
     'border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:42px 36px;text-align:center;color:#f3f6f8;' +
     'box-shadow:0 50px 110px -40px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.08);' +
     'animation:jgcardIn .65s cubic-bezier(.2,.85,.25,1) both;}' +
-    '.jg-card::before{content:"";position:absolute;inset:-2px;z-index:-1;border-radius:26px;' +
-    'background:conic-gradient(from 0deg,#1de9b6,#7d5cff,#ffb454,#0a9bd6,#1de9b6);filter:blur(16px);opacity:.7;' +
-    'animation:jgspin 7s linear infinite;}' +
+    '.jg-card::before{content:"";position:absolute;inset:-4px;z-index:-1;border-radius:28px;' +
+    'background:conic-gradient(from 0deg,#1de9b6,#7d5cff,#0a9bd6,#1de9b6);filter:blur(34px);opacity:.28;' +
+    'animation:jgspin 30s linear infinite;}' +
     '@keyframes jgspin{to{transform:rotate(1turn);}}' +
     '@keyframes jgcardIn{from{opacity:0;transform:translateY(26px) scale(.93);}to{opacity:1;transform:none;}}' +
     '.jg-lock{width:62px;height:62px;margin:0 auto;border-radius:18px;display:grid;place-items:center;font-size:28px;' +
