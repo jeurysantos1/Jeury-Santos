@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Royal Caribbean — e-Commerce Design System · Jeury Santos</title>
+<meta name="description" content="Evolving Royal Caribbean's legacy design system into a modern, scalable, multi-brand system with governance and accessibility baked in. A case study by Jeury Santos."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+  :root{
+    --ink:#0f1419; --body:#48535b; --muted:#5c6770;
+    --line:#e7eaee; --bg:#ffffff; --soft:#f6f8fa;
+    --blue:#1f6fd6; --accent:#1f6fd6; --accent-2:#c2761f;
+    --ok:#137333; --maxw:1120px; --r:20px;
+    --shadow:0 30px 70px -28px rgba(15,23,42,.38), 0 10px 26px -12px rgba(15,23,42,.16);
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --font-display:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:var(--font);color:var(--body);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  h1,h2,h3{color:var(--ink);line-height:1.12;letter-spacing:-0.02em;margin:0;}
+  h1,h2,footer .big{font-family:var(--font-display);letter-spacing:-0.035em;}
+  a{color:var(--blue);text-decoration:none;}
+  img{display:block;max-width:100%;}
+  .skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--ink);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;font-weight:600;font-size:14px;}
+  .skip:focus{left:0;}
+  a:focus-visible,button:focus-visible,.sidenav a:focus-visible{outline:3px solid rgba(31,111,214,.5);outline-offset:3px;border-radius:6px;}
+  body{counter-reset:sec;}
+  section{position:relative;padding:104px 0;border-bottom:1px solid var(--line);}
+  @media(max-width:760px){section{padding:64px 0;}}
+  section>.wrap{position:relative;z-index:2;}
+  section::before{counter-increment:sec;content:counter(sec,decimal-leading-zero);position:absolute;top:18px;right:5%;z-index:0;font-family:var(--font-display);font-weight:700;font-size:clamp(72px,9vw,150px);line-height:1;color:var(--accent-2);opacity:.06;pointer-events:none;}
+  @media(max-width:760px){section::before{right:16px;font-size:64px;}}
+  .js section>.wrap, .js .hero .wrap{opacity:0;transform:translateY(28px);transition:opacity .8s ease, transform .85s cubic-bezier(.2,.85,.25,1);}
+  .js section>.wrap.in, .js .hero .wrap.in{opacity:1;transform:none;}
+  [data-parallax]{will-change:transform;}
+  @media(prefers-reduced-motion:reduce){.js section>.wrap,.js .hero .wrap{opacity:1!important;transform:none!important;transition:none;}[data-parallax]{transform:none!important;}}
+  nav.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line);}
+  nav.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;}
+  .brand{font-family:'Caveat',cursive;font-weight:700;font-size:28px;line-height:1;color:var(--ink);text-decoration:none;transition:color .3s,filter .3s;}
+  .brand:hover{background:linear-gradient(100deg,#1de9b6,#7d5cff,#ffb454);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;filter:drop-shadow(0 0 12px rgba(125,92,255,.4));}
+  .navlinks{display:flex;gap:24px;font-size:14px;font-weight:500;}
+  .navlinks a{color:var(--body);}.navlinks a:hover{color:var(--ink);}
+  @media(max-width:720px){.navlinks{display:none;}}
+  .sidenav{position:fixed;left:18px;top:50%;transform:translateY(-50%);z-index:60;display:none;flex-direction:column;gap:2px;padding:10px 8px;border-radius:20px;background:rgba(255,255,255,.55);-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);border:1px solid rgba(255,255,255,.6);box-shadow:0 18px 46px -18px rgba(15,23,42,.34);}
+  .sidenav a{position:relative;display:flex;align-items:center;padding:9px 10px;border-radius:12px;color:var(--body);transition:background .28s ease,transform .28s cubic-bezier(.2,.8,.2,1);}
+  .sidenav a .dot{width:7px;height:7px;border-radius:50%;background:#c1c9d2;flex-shrink:0;transition:all .28s cubic-bezier(.2,.8,.2,1);}
+  .sidenav a .label{max-width:0;overflow:hidden;white-space:nowrap;opacity:0;font-size:13.5px;font-weight:600;transition:max-width .42s cubic-bezier(.2,.8,.2,1),opacity .26s ease,margin-left .42s cubic-bezier(.2,.8,.2,1);}
+  .sidenav:hover a .label{max-width:200px;opacity:1;margin-left:12px;}
+  .sidenav a:hover{background:rgba(31,111,214,.10);transform:translateX(3px);}
+  .sidenav a:hover .dot,.sidenav a.active .dot{background:var(--blue);transform:scale(1.4);box-shadow:0 0 0 4px rgba(31,111,214,.16);}
+  .sidenav a.active{color:var(--ink);}
+  @media(min-width:1180px){.sidenav{display:flex;} .topbar .navlinks{display:none;}}
+  .hero{position:relative;overflow:hidden;background:radial-gradient(1100px 500px at 80% -8%,rgba(31,111,214,.13),transparent 60%),radial-gradient(900px 480px at 0% 12%,rgba(0,150,200,.08),transparent 55%),linear-gradient(180deg,#fbfcfe 0%,#f3f6fb 100%);border-bottom:1px solid var(--line);}
+  .hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.02fr .98fr;gap:48px;align-items:center;padding-top:96px;padding-bottom:100px;}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--blue);background:#e8f1fc;border:1px solid #d2e3f8;padding:6px 12px;border-radius:999px;}
+  .hero h1{font-size:clamp(40px,6vw,72px);font-weight:700;margin:20px 0 0;}
+  .hero .lede{font-size:19px;color:var(--body);margin:18px 0 0;max-width:42ch;}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+  .chip{font-size:12.5px;font-weight:600;color:var(--ink);background:#fff;border:1px solid var(--line);padding:7px 12px;border-radius:999px;box-shadow:0 1px 2px rgba(15,23,42,.04);}
+  .hero-shot{border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:#fff;transform:rotate(-.6deg);}
+  @media(max-width:920px){.hero .wrap{grid-template-columns:1fr;gap:30px;}.hero h1{font-size:38px;}}
+  .kicker{font-size:13px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--blue);margin:0 0 14px;}
+  h2{font-size:clamp(28px,4vw,40px);font-weight:700;}
+  .lead{font-size:20px;color:var(--ink);max-width:62ch;margin:18px 0 0;font-weight:500;}
+  p.body{font-size:17px;max-width:64ch;margin:16px 0 0;}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+  @media(max-width:860px){.two{grid-template-columns:1fr;gap:28px;}}
+  figure{margin:34px 0 0;}
+  figure img{border-radius:14px;border:1px solid var(--line);box-shadow:var(--shadow);background:#fff;width:100%;}
+  figcaption{font-size:13.5px;color:var(--muted);margin-top:12px;text-align:center;}
+  .ovgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
+  .ovgrid h4{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px;font-weight:700;}
+  .ovgrid p{margin:0;color:var(--ink);font-weight:600;font-size:15.5px;}
+  @media(max-width:760px){.ovgrid{grid-template-columns:1fr 1fr;gap:22px;}}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;transition:transform .25s ease,box-shadow .25s ease;}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+  .card h3{font-size:18px;margin:0 0 8px;}
+  .card .n{font-family:var(--font-display);font-weight:700;font-size:14px;color:var(--blue);}
+  .card p{margin:8px 0 0;font-size:15px;}
+  @media(max-width:860px){.cards{grid-template-columns:1fr;}}
+  .goal{background:var(--ink);color:#fff;border-radius:var(--r);padding:40px;}
+  .goal .kicker{color:#8ab4f8;}
+  .goal p{font-size:24px;line-height:1.4;color:#fff;font-weight:600;margin:0;max-width:50ch;letter-spacing:-0.01em;}
+  .flow{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px;align-items:stretch;}
+  .flow .step{flex:1 1 150px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;position:relative;}
+  .flow .step .s{font-family:var(--font-display);font-weight:700;color:var(--blue);font-size:13px;}
+  .flow .step h4{margin:8px 0 0;font-size:15.5px;color:var(--ink);}
+  ul.clean{list-style:none;padding:0;margin:18px 0 0;}
+  ul.clean li{position:relative;padding:0 0 0 26px;margin:0 0 14px;font-size:16px;color:var(--ink);}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:8px;height:8px;border-radius:8px;background:var(--blue);}
+  footer{background:var(--ink);color:#cdd6df;padding:64px 0;border:none;}
+  footer .big{font-size:clamp(28px,4vw,42px);color:#fff;font-weight:700;}
+  footer .frow{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px;}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;padding:12px 20px;border-radius:999px;border:1px solid rgba(255,255,255,.25);color:#fff;}
+  .btn.solid{background:#fff;color:var(--ink);border-color:#fff;}
+  .foot-note{margin-top:28px;font-size:13px;color:#8a96a3;}
+</style>
+</head>
+<body>
+<a href="#challenge" class="skip">Skip to content</a>
+<aside class="sidenav" aria-label="Section navigation">
+  <a href="#challenge"><span class="dot"></span><span class="label">Challenge</span></a>
+  <a href="#role"><span class="dot"></span><span class="label">My role</span></a>
+  <a href="#method"><span class="dot"></span><span class="label">Methodology</span></a>
+  <a href="#component"><span class="dot"></span><span class="label">Component deep-dive</span></a>
+  <a href="#governance"><span class="dot"></span><span class="label">Governance</span></a>
+  <a href="#impact"><span class="dot"></span><span class="label">Impact</span></a>
+</aside>
+<nav class="topbar"><div class="wrap">
+  <a class="brand" href="../../index.html" aria-label="Back to home">jeurysantos</a>
+  <div class="navlinks">
+    <a href="#challenge">Challenge</a>
+    <a href="#role">Role</a>
+    <a href="#method">Methodology</a>
+    <a href="#governance">Governance</a>
+    <a href="#impact">Impact</a>
+  </div>
+</div></nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Royal Caribbean · UX Designer / Design Systems</span>
+      <h1>A design system built to scale.</h1>
+      <p class="lede">As Royal Caribbean rebranded its e-commerce experience, I helped evolve a legacy design system into a modern, scalable, multi-brand system — owning core UI components end to end, with governance and accessibility baked in.</p>
+      <div class="meta">
+        <span class="chip">e-Commerce · Design System</span>
+        <span class="chip">Figma → Storybook</span>
+        <span class="chip">Multi-brand · Governance</span>
+      </div>
+    </div>
+    <div class="hero-shot" data-parallax="0.03">
+      <img src="images/s60_0.png" alt="Royal Caribbean design system — a page-loader component built as a scalable, multi-brand system in Figma" loading="lazy"/>
+    </div>
+  </div>
+</header>
+
+<section id="challenge">
+  <div class="wrap">
+    <p class="kicker">Background &amp; challenge</p>
+    <h2>A rebrand a legacy system couldn't carry</h2>
+    <p class="lead">Royal Caribbean was transitioning to a newly rebranded e-commerce experience as part of a broader digital transformation. The existing system had to evolve into a modern, scalable foundation aligned with new brand guidelines — while still supporting multiple platforms and product teams.</p>
+    <div class="cards">
+      <div class="card"><span class="n">01</span><h3>Limited documentation</h3><p>Components lacked clear usage and accessibility guidance, slowing adoption and inviting drift.</p></div>
+      <div class="card"><span class="n">02</span><h3>Inconsistent components</h3><p>Patterns varied across teams and platforms, fragmenting the experience.</p></div>
+      <div class="card"><span class="n">03</span><h3>Rebrand risk</h3><p>A new brand identity threatened to break consistency if the system couldn't flex to express it.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="role">
+  <div class="wrap">
+    <p class="kicker">My role</p>
+    <h2>Owning core components, end to end</h2>
+    <p class="lead">I owned core UI components within the design system from request to adoption.</p>
+    <ul class="clean" style="columns:2;column-gap:48px;">
+      <li>Reviewed component requests from product teams</li>
+      <li>Conducted competitive &amp; industry audits</li>
+      <li>Designed full component architectures in Figma</li>
+      <li>Created usage and accessibility documentation</li>
+      <li>Facilitated alignment during design-system office hours</li>
+      <li>Partnered with engineers to implement in Storybook</li>
+    </ul>
+  </div>
+</section>
+
+<section id="method">
+  <div class="wrap">
+    <p class="kicker">Methodology</p>
+    <h2>A repeatable component process</h2>
+    <p class="lead">Every component followed the same path — so quality and consistency didn't depend on who picked it up.</p>
+    <div class="flow">
+      <div class="step"><span class="s">01</span><h4>Review request &amp; define scope</h4></div>
+      <div class="step"><span class="s">02</span><h4>Audit industry standards</h4></div>
+      <div class="step"><span class="s">03</span><h4>Define component architecture</h4></div>
+      <div class="step"><span class="s">04</span><h4>Build variants &amp; states</h4></div>
+      <div class="step"><span class="s">05</span><h4>Document usage</h4></div>
+      <div class="step"><span class="s">06</span><h4>Align with engineering</h4></div>
+    </div>
+  </div>
+</section>
+
+<section id="component">
+  <div class="wrap">
+    <p class="kicker">Component deep-dive · Page loader</p>
+    <h2>Reframing a one-off request as system behavior</h2>
+    <div class="two" style="margin-top:8px;">
+      <div>
+        <p class="body" style="margin-top:0;">Before designing anything, I ran a competitive and system audit to establish UX and behavior standards, then defined the behavior principles the loader had to honor:</p>
+        <ul class="clean">
+          <li>Clear progress feedback</li>
+          <li>Predictable loading patterns</li>
+          <li>Consistent user expectations</li>
+          <li>Accessibility-first signaling</li>
+        </ul>
+      </div>
+      <div>
+        <p class="body" style="margin-top:0;">Then I built it as a scalable system in Figma — structured to be reused across brands:</p>
+        <ul class="clean">
+          <li>Token-driven sizing and color</li>
+          <li>Brand-adaptive variants (Royal Caribbean, Celebrity, Silversea)</li>
+          <li>Consistent component anatomy</li>
+        </ul>
+      </div>
+    </div>
+    <figure><img src="images/s60_0.png" alt="Page-loader component — anatomy, size, color variants across brands, placement, and motion" loading="lazy"/><figcaption>The page loader as a system: anatomy, sizing, brand-adaptive color, placement, and motion — one component, many brands.</figcaption></figure>
+    <div class="goal" style="margin-top:34px;">
+      <p class="kicker">A trade-off I led</p>
+      <p>Prioritize system scale and consistency over isolated feature polish — <em style="color:#8ab4f8;font-style:normal;">foundations before features</em>, core components before edge cases.</p>
+    </div>
+  </div>
+</section>
+
+<section id="governance">
+  <div class="wrap">
+    <p class="kicker">Governance</p>
+    <h2>A system that stays consistent on purpose</h2>
+    <p class="lead">To prevent fragmentation, every change flows through a structured intake and governance process — from backlog through design review, accessibility checks, and dev-readiness gates.</p>
+    <div class="flow">
+      <div class="step"><span class="s">01</span><h4>Intake &amp; evaluation</h4></div>
+      <div class="step"><span class="s">02</span><h4>Audit &amp; alignment</h4></div>
+      <div class="step"><span class="s">03</span><h4>System design</h4></div>
+      <div class="step"><span class="s">04</span><h4>Build &amp; documentation</h4></div>
+      <div class="step"><span class="s">05</span><h4>Adoption &amp; measurement</h4></div>
+    </div>
+    <figure><img src="images/s64_0.png" alt="Design-system governance board — component requests moving through backlog, in-progress, review, and dev-ready" loading="lazy"/><figcaption>Governance in practice: controlled requests, accessibility baked into the workflow, cross-team visibility, and readiness gates before engineering.</figcaption></figure>
+    <p class="body">Governance feeds a centralized foundation — shared tokens, scalable components, consistent patterns, and accessibility-first defaults — reused across teams. (More recently, I've folded AI-assisted steps into the audit, architecture, and documentation stages to move faster without losing rigor.)</p>
+  </div>
+</section>
+
+<section id="impact" style="border-bottom:none;">
+  <div class="wrap">
+    <p class="kicker">Adoption, impact &amp; reflection</p>
+    <h2>Built to be adopted</h2>
+    <p class="lead">Once governance and foundations were in place, we tracked real adoption — the number of teams using the system, component insertions over time, and the high-usage core components carrying the most weight.</p>
+    <ul class="clean">
+      <li>Enabled <b>richer brand expression without breaking consistency</b> across multiple cruise brands.</li>
+      <li>Introduced governance that gave teams cross-team visibility and accessibility by default.</li>
+    </ul>
+    <div class="goal" style="margin-top:34px;">
+      <p class="kicker">Reflection</p>
+      <p>My goal is always to leave a design system <em style="color:#8ab4f8;font-style:normal;">more structured, more scalable, and easier for teams to adopt</em> than when I arrived.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="big">Let's build something worth shipping.</p>
+    <div class="frow">
+      <a class="btn solid" href="https://mail.google.com/mail/?view=cm&fs=1&to=jeurysantos1@gmail.com" target="_blank" rel="noopener">Email me ↗</a>
+      <a class="btn" href="../../index.html">← Back to portfolio</a>
+    </div>
+    <p class="foot-note">Royal Caribbean · e-Commerce Design System · UX Designer. Case study by Jeury Santos.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:0.12, rootMargin:'0px 0px -6% 0px' });
+  document.querySelectorAll('section>.wrap, .hero .wrap').forEach(function(el){ io.observe(el); });
+  setTimeout(function(){ document.querySelectorAll('section>.wrap:not(.in), .hero .wrap:not(.in)').forEach(function(el){ var r=el.getBoundingClientRect(); if(r.top<innerHeight*1.1) el.classList.add('in'); }); }, 1400);
+  if(!REDUCE){
+    var layers=[].slice.call(document.querySelectorAll('[data-parallax]'));var t=false;
+    function up(){var y=scrollY;layers.forEach(function(el){var s=parseFloat(el.dataset.parallax);var r=el.getBoundingClientRect();el.style.transform='translate3d(0,'+(-(r.top+y-innerHeight/2)*s)+'px,0)';});t=false;}
+    addEventListener('scroll',function(){if(!t){requestAnimationFrame(up);t=true;}},{passive:true});up();
+  }
+  var links={};document.querySelectorAll('.sidenav a').forEach(function(a){links[a.getAttribute('href').slice(1)]=a;});
+  var spy=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){var id=e.target.id;Object.keys(links).forEach(function(k){links[k].classList.toggle('active',k===id);});}});},{rootMargin:'-45% 0px -45% 0px'});
+  ['challenge','role','method','component','governance','impact'].forEach(function(id){var el=document.getElementById(id);if(el)spy.observe(el);});
+})();
+</script>
+</body>
+</html>
