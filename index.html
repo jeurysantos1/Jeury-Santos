@@ -289,13 +289,14 @@
   @keyframes cardIn{from{opacity:0;transform:translateY(20px) scale(.985);}to{opacity:1;transform:none;}}
   .case-card.no-link{cursor:default;}
   /* placeholder media for work without a case-study page */
-  .media-ph{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;
-    background:linear-gradient(150deg,color-mix(in srgb,var(--cs) 32%,#0a0c10),#0a0c10);}
-  .media-ph::before{content:"";position:absolute;inset:0;opacity:.55;
-    background:radial-gradient(120% 90% at 80% 8%,color-mix(in srgb,var(--cs) 45%,transparent),transparent 60%);}
-  .media-ph::after{content:"";position:absolute;inset:0;opacity:.5;
-    background-image:linear-gradient(color-mix(in srgb,var(--cs) 18%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--cs) 18%,transparent) 1px,transparent 1px);background-size:34px 34px;mask-image:radial-gradient(70% 70% at 50% 40%,#000,transparent);}
-  .media-ph .mono{display:none;}
+  .media-ph{position:relative;overflow:hidden;
+    background:
+      linear-gradient(color-mix(in srgb,var(--cs) 13%,transparent) 1px,transparent 1px) 0 0/42px 42px,
+      linear-gradient(90deg,color-mix(in srgb,var(--cs) 13%,transparent) 1px,transparent 1px) 0 0/42px 42px,
+      radial-gradient(120% 95% at 82% 4%,color-mix(in srgb,var(--cs) 50%,transparent),transparent 58%),
+      linear-gradient(150deg,color-mix(in srgb,var(--cs) 30%,#0a0c10),#080a0d 74%);}
+  .media-ph .mono{display:block;position:absolute;top:26px;left:28px;right:28px;z-index:1;font-family:var(--font-display);font-weight:800;
+    font-size:clamp(2rem,3.2vw,2.9rem);line-height:.9;letter-spacing:-.03em;color:#fff;opacity:.2;}
   .media-ph .phtype{display:none;}
   .case-soon{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font-weight:600;font-size:13.5px;color:rgba(255,255,255,.72);align-self:flex-start;}
   .case-soon::before{content:"";width:7px;height:7px;border-radius:50%;border:1px solid rgba(255,255,255,.5);}
