@@ -117,6 +117,12 @@
   .ba-block.before .ba-word{color:#caa988;}
   .ba-block.after .ba-word{color:#9cc0f4;}
   .ba-cap{margin:10px 0 0;font-size:15px;color:var(--ink);}
+  .ba-block .ba-shot{margin:16px 0;border-radius:10px;overflow:hidden;border:1px solid rgba(15,23,42,.1);box-shadow:0 16px 36px -18px rgba(15,23,42,.45);background:#fff;}
+  .ba-block .ba-shot img{width:100%;display:block;}
+  .ba-table{margin:16px 0;background:#fff;border:1px solid #e6dccd;border-radius:10px;padding:16px;box-shadow:0 16px 36px -18px rgba(15,23,42,.3);}
+  .ba-table span{display:block;height:9px;border-radius:3px;background:#ece2d2;margin:0 0 10px;}
+  .ba-table span:nth-child(odd){background:#f3ebdd;}
+  .ba-table span:last-child{margin-bottom:0;width:66%;}
   .ba-block.before .ba-cap b,.ba-block.after .ba-cap b{font-weight:700;}
 
   /* persona */
@@ -219,14 +225,15 @@
     <div class="ba-two" style="text-align:left;">
       <div class="ba-block before">
         <span class="ba-word">Before</span>
+        <div class="ba-table" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
         <p class="ba-cap"><b>A reporting-only table.</b> Dense rows, no hierarchy, no pacing logic, no client-safe mode. Understanding a deal meant a manual download into Excel.</p>
       </div>
       <div class="ba-block after">
         <span class="ba-word">After</span>
+        <div class="ba-shot"><img src="images/final-design.png" alt="The redesigned Connect Deals dashboard" loading="lazy"/></div>
         <p class="ba-cap"><b>An insight-driven dashboard.</b> Pacing, gap-to-next-tier, spend deep-dive, and an external-share toggle — the answer is on the screen.</p>
       </div>
     </div>
-    <figure><img src="images/final-design.png" alt="The redesigned Connect Deals dashboard" loading="lazy"/><figcaption>After: pacing, cumulative spend performance, and milestone tiers in one glanceable view.</figcaption></figure>
   </div>
 </section>
 
