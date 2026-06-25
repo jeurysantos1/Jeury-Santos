@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AMA Contact Collection — Case Study · Jeury Santos Avila</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+  :root{
+    --ink:#0f1419; --body:#48535b; --muted:#5c6770;
+    --line:#e7eaee; --bg:#ffffff; --soft:#f6f8fa;
+    --blue:#0a78be; --blue-2:#1877f2; --accent:#0a78be; --accent-2:#c2761f;
+    --ok:#0b6b46; --warn:#af5000;
+    --maxw:1120px;
+    --r:20px;
+    --shadow:0 30px 70px -28px rgba(15,23,42,.38), 0 10px 26px -12px rgba(15,23,42,.18);
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji",sans-serif;
+    --font-display:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:var(--font);color:var(--body);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  h1,h2,h3{color:var(--ink);line-height:1.12;letter-spacing:-0.02em;margin:0;}
+  h1,h2,.ba-word,footer .big{font-family:var(--font-display);letter-spacing:-0.035em;}
+  a{color:var(--blue);text-decoration:none;}
+
+  /* accessibility */
+  .skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--ink);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;font-weight:600;font-size:14px;}
+  .skip:focus{left:0;}
+  a:focus-visible,button:focus-visible,.sidenav a:focus-visible{outline:3px solid rgba(10,120,190,.5);outline-offset:3px;border-radius:6px;}
+
+  /* editorial ghost section numbers */
+  body{counter-reset:sec;}
+  section{position:relative;}
+  section > .wrap{position:relative;z-index:2;}
+  section::before{counter-increment:sec;content:counter(sec,decimal-leading-zero);position:absolute;top:18px;right:5%;z-index:0;font-family:var(--font-display);font-weight:700;font-size:clamp(72px,9vw,150px);line-height:1;color:var(--accent-2);opacity:.06;pointer-events:none;}
+  @media(max-width:760px){section::before{right:16px;font-size:64px;}}
+
+  /* scroll/load reveal (only when JS is present) */
+  .js section>.wrap, .js .hero .wrap{opacity:0;transform:translateY(28px);transition:opacity .8s ease, transform .85s cubic-bezier(.2,.85,.25,1);}
+  .js section>.wrap.in, .js .hero .wrap.in{opacity:1;transform:none;}
+  [data-parallax]{will-change:transform;}
+  @media(prefers-reduced-motion:reduce){
+    .js section>.wrap, .js .hero .wrap{opacity:1 !important;transform:none !important;transition:none;}
+    [data-parallax]{transform:none !important;}
+  }
+  img{display:block;max-width:100%;}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line);}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;}
+  .brand{font-weight:700;color:var(--ink);letter-spacing:-0.01em;}
+  .navlinks{display:flex;gap:26px;font-size:14px;font-weight:500;}
+  .navlinks a{color:var(--body);}
+  .navlinks a:hover{color:var(--ink);}
+  @media(max-width:720px){.navlinks{display:none;}}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden;background:
+    radial-gradient(1100px 500px at 78% -8%, rgba(24,119,242,.13), transparent 60%),
+    radial-gradient(900px 480px at 0% 12%, rgba(120,80,255,.10), transparent 55%),
+    linear-gradient(180deg,#fbfcfe 0%, #f4f7fb 100%);
+    border-bottom:1px solid var(--line);}
+  .hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding-top:104px;padding-bottom:112px;}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--blue);background:#eaf3fb;border:1px solid #d6e8f7;padding:6px 12px;border-radius:999px;}
+  .hero h1{font-size:clamp(48px,7vw,92px);font-weight:700;margin:20px 0 0;}
+  .hero .lede{font-size:19px;color:var(--body);margin:18px 0 0;max-width:36ch;}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+  .chip{font-size:12.5px;font-weight:600;color:var(--ink);background:#fff;border:1px solid var(--line);padding:7px 12px;border-radius:999px;box-shadow:0 1px 2px rgba(15,23,42,.04);}
+  .chip.ok{color:var(--ok);border-color:#bfe3d0;background:#eaf6ef;}
+
+  /* hero phones */
+  .stage{position:relative;height:560px;}
+  .device{position:absolute;border-radius:36px;overflow:hidden;background:#fff;border:1px solid rgba(15,23,42,.06);box-shadow:var(--shadow);}
+  .device img{width:100%;}
+  .d-front{width:268px;right:18px;top:8px;transform:rotate(2.2deg);z-index:2;}
+  .d-back{width:244px;left:8px;top:70px;transform:rotate(-4deg);z-index:1;opacity:.97;}
+  @media(max-width:920px){
+    .hero .wrap{grid-template-columns:1fr;gap:8px;padding-bottom:48px;}
+    .hero h1{font-size:40px;}
+    .stage{height:480px;margin-top:18px;}
+    .d-front{right:auto;left:50%;transform:translateX(-30%) rotate(2deg);}
+    .d-back{left:50%;transform:translateX(-78%) rotate(-5deg);}
+  }
+
+  /* sections */
+  section{padding:104px 0;border-bottom:1px solid var(--line);}
+  @media(max-width:760px){section{padding:64px 0;}}
+  .kicker{font-size:13px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--blue);margin:0 0 14px;}
+  h2{font-size:38px;font-weight:700;}
+  .lead{font-size:20px;color:var(--ink);max-width:62ch;margin:18px 0 0;font-weight:500;}
+  p.body{font-size:17px;max-width:64ch;margin:16px 0 0;}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+  @media(max-width:860px){.two{grid-template-columns:1fr;gap:28px;}}
+
+  /* overview strip */
+  .ovgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
+  .ovgrid h4{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px;font-weight:700;}
+  .ovgrid p{margin:0;color:var(--ink);font-weight:600;font-size:15.5px;}
+  @media(max-width:760px){.ovgrid{grid-template-columns:1fr 1fr;gap:22px;}}
+
+  /* goal callout */
+  .goal{background:var(--ink);color:#fff;border-radius:var(--r);padding:40px 40px;}
+  .goal .kicker{color:#7fc0f0;}
+  .goal p{font-size:24px;line-height:1.4;color:#fff;font-weight:600;margin:0;max-width:48ch;letter-spacing:-0.01em;}
+  .goal em{color:#9bd0f5;font-style:normal;}
+
+  /* table */
+  table{width:100%;border-collapse:collapse;margin-top:26px;font-size:15px;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+  th,td{padding:13px 16px;text-align:left;border-top:1px solid var(--line);}
+  thead th{background:var(--soft);border-top:none;font-weight:700;color:var(--ink);}
+  td.win{color:var(--ok);font-weight:700;}
+
+  /* decision cards */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;transition:transform .25s ease, box-shadow .25s ease;}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+  .card .n{width:34px;height:34px;border-radius:16px;background:#eaf3fb;color:var(--blue);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px;}
+  .card h3{font-size:18px;margin:16px 0 8px;}
+  .card p{margin:0;font-size:14.5px;}
+  @media(max-width:860px){.cards{grid-template-columns:1fr;}}
+
+  /* gallery */
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:36px;}
+  .shot{}
+  .shot .device{position:static;transform:none;box-shadow:0 18px 40px -22px rgba(15,23,42,.35);}
+  .shot figcaption{margin:14px 2px 0;font-size:13.5px;color:var(--muted);}
+  .shot b{color:var(--ink);font-weight:600;}
+  @media(max-width:860px){.gallery{grid-template-columns:1fr 1fr;}}
+  @media(max-width:560px){.gallery{grid-template-columns:1fr;}}
+
+  .flowshot{margin-top:30px;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);background:var(--soft);}
+
+  /* outcome */
+  .out{display:grid;grid-template-columns:1fr 1.2fr;gap:48px;align-items:center;}
+  .badge-ok{display:inline-flex;align-items:center;gap:10px;font-weight:800;color:var(--ok);background:#eaf6ef;border:1px solid #bfe3d0;padding:12px 18px;border-radius:14px;font-size:18px;}
+  ul.clean{list-style:none;padding:0;margin:20px 0 0;}
+  ul.clean li{position:relative;padding:10px 0 10px 30px;border-top:1px solid var(--line);font-size:16px;color:var(--ink);}
+  ul.clean li:before{content:"";position:absolute;left:2px;top:17px;width:9px;height:9px;border-radius:9px;background:rgba(0,0,0,0.05);}
+  @media(max-width:860px){.out{grid-template-columns:1fr;gap:24px;}}
+
+  /* reflections */
+  .refl{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:30px;}
+  .refl div{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:22px 24px;}
+  .refl h3{font-size:16px;margin:0 0 6px;}
+  .refl p{margin:0;font-size:15px;}
+  @media(max-width:760px){.refl{grid-template-columns:1fr;}}
+
+  /* live prototype */
+  .proto-actions{display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:#fff;font-weight:600;font-size:14px;padding:11px 18px;border-radius:11px;border:1px solid var(--ink);transition:opacity .2s ease, transform .2s ease;}
+  .btn.ghost{background:#fff;color:var(--ink);border-color:var(--line);}
+  .btn:hover{opacity:.92;transform:translateY(-1px);}
+  .proto-hint{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:13.5px;color:var(--muted);background:#fff;border:1px solid var(--line);padding:7px 14px;border-radius:999px;}
+  .proto-hint b{color:var(--ink);}
+  .proto-stage{display:flex;justify-content:center;margin-top:30px;}
+  .proto-shell{background:linear-gradient(180deg,#eef1f6 0%, #e6eaf1 100%);border:1px solid var(--line);border-radius:30px;padding:26px;box-shadow:inset 0 1px 0 #fff, 0 30px 70px -34px rgba(15,23,42,.40);max-width:100%;}
+  .proto-frame{width:415px;height:852px;border:0;background:transparent;max-width:100%;display:block;}
+  @media(max-width:480px){.proto-shell{padding:12px;border-radius:22px;}.proto-frame{height:820px;}}
+
+  /* animated aurora background */
+  .aurora{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  .aurora span{position:absolute;border-radius:50%;filter:blur(72px);opacity:.55;will-change:transform;}
+  .aurora .b1{width:560px;height:560px;background:radial-gradient(circle at 30% 30%,#bfe0ff,transparent 62%);top:-180px;left:-120px;animation:drift1 24s ease-in-out infinite;}
+  .aurora .b2{width:520px;height:520px;background:radial-gradient(circle at 60% 40%,#ffd9cc,transparent 62%);top:-90px;right:-140px;animation:drift2 28s ease-in-out infinite;}
+  .aurora .b3{width:620px;height:620px;background:radial-gradient(circle at 50% 60%,#e2d6ff,transparent 62%);bottom:-260px;left:28%;animation:drift3 32s ease-in-out infinite;}
+  @keyframes drift1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(70px,46px) scale(1.12);}}
+  @keyframes drift2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-56px,54px) scale(1.08);}}
+  @keyframes drift3{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(44px,-56px) scale(1.15);}}
+  @media(prefers-reduced-motion:reduce){.aurora span{animation:none;}}
+
+  /* two-column live prototype */
+  .try-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:56px;align-items:center;text-align:left;position:relative;z-index:1;}
+  .try-grid .lead{margin-left:0;margin-right:0;}
+  .try-grid .proto-actions{justify-content:flex-start;}
+  .try-grid .proto-stage{margin-top:4px;justify-content:center;}
+  @media(max-width:920px){
+    .try-grid{grid-template-columns:1fr;gap:30px;text-align:center;}
+    .try-grid .lead{margin-left:auto;margin-right:auto;}
+    .try-grid .proto-actions{justify-content:center;}
+  }
+
+  /* floating glass side nav (center-left) */
+  .sidenav{position:fixed;left:18px;top:50%;transform:translateY(-50%);z-index:60;display:none;flex-direction:column;gap:2px;padding:10px 8px;border-radius:20px;
+    background:rgba(255,255,255,.52);-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);
+    border:1px solid rgba(255,255,255,.6);box-shadow:0 18px 46px -18px rgba(15,23,42,.34), inset 0 1px 0 rgba(255,255,255,.65);
+    transition:box-shadow .4s ease, background .4s ease;animation:snIn .6s .15s ease both;}
+  .sidenav:hover{box-shadow:0 28px 64px -20px rgba(15,23,42,.44), inset 0 1px 0 rgba(255,255,255,.75);background:rgba(255,255,255,.62);}
+  .sidenav a{position:relative;display:flex;align-items:center;padding:9px 10px;border-radius:12px;color:var(--body);text-decoration:none;
+    transition:background .28s ease, transform .28s cubic-bezier(.2,.8,.2,1);}
+  .sidenav a .dot{width:7px;height:7px;border-radius:50%;background:#c1c9d2;flex-shrink:0;transition:all .28s cubic-bezier(.2,.8,.2,1);}
+  .sidenav a .label{max-width:0;overflow:hidden;white-space:nowrap;opacity:0;font-size:13.5px;font-weight:600;line-height:1;
+    transition:max-width .42s cubic-bezier(.2,.8,.2,1), opacity .26s ease, margin-left .42s cubic-bezier(.2,.8,.2,1);}
+  .sidenav:hover a .label{max-width:180px;opacity:1;margin-left:12px;}
+  .sidenav a:hover{background:rgba(10,120,190,.10);transform:translateX(3px);}
+  .sidenav a:hover .dot,.sidenav a.active .dot{background:var(--blue);transform:scale(1.4);box-shadow:0 0 0 4px rgba(10,120,190,.16);}
+  .sidenav a.active{color:var(--ink);}
+  @keyframes snIn{from{opacity:0;left:0;}to{opacity:1;left:18px;}}
+  @media(min-width:1180px){.sidenav{display:flex;} .topbar .navlinks{display:none;}}
+  @media(prefers-reduced-motion:reduce){.sidenav{animation:none;}}
+
+  /* before / after — expressive color blocks */
+  .ba-two{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:42px;}
+  .ba-block{position:relative;border-radius:28px;padding:0 28px 38px;overflow:hidden;display:flex;flex-direction:column;align-items:center;}
+  .ba-block.before{background:#f3ebe3;}
+  .ba-block.after{background:#e8f1fb;}
+  .ba-word{position:absolute;top:26px;left:0;right:0;text-align:center;font-weight:800;letter-spacing:-0.045em;line-height:.85;font-size:clamp(64px,10vw,124px);pointer-events:none;user-select:none;z-index:0;}
+  .ba-block.before .ba-word{color:#e8d8c5;}
+  .ba-block.after .ba-word{color:#d3e3f7;}
+  .ba-device{position:relative;z-index:1;width:212px;max-width:80%;margin-top:88px;border-radius:30px;overflow:hidden;box-shadow:0 26px 60px -24px rgba(15,23,42,.42);border:1px solid rgba(15,23,42,.05);transition:transform .55s cubic-bezier(.2,.8,.2,1);}
+  .ba-device img{display:block;width:100%;}
+  .ba-block.before:hover .ba-device{transform:translateY(-10px) rotate(-1.2deg);}
+  /* after block shows a fanned pair: entry point + destination */
+  .ba-duo{position:relative;z-index:1;margin-top:88px;display:flex;justify-content:center;}
+  .ba-duo .ba-device{margin-top:0;width:168px;max-width:none;}
+  .ba-duo .d2a{transform:rotate(-5deg);z-index:1;}
+  .ba-duo .d2b{margin-left:-44px;transform:rotate(5deg);z-index:2;}
+  .ba-block.after:hover .d2a{transform:rotate(-7deg) translateY(-10px);}
+  .ba-block.after:hover .d2b{transform:rotate(7deg) translateY(-10px);}
+  .ba-tagpill{position:relative;z-index:1;margin-top:24px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:999px;}
+  .ba-block.before .ba-tagpill{color:#8a6f55;background:#ecdfce;}
+  .ba-block.after .ba-tagpill{color:#2f5e91;background:#d7e7f9;}
+  .ba-cap{position:relative;z-index:1;margin-top:12px;font-size:15px;line-height:1.5;text-align:center;max-width:30ch;}
+  .ba-block.before .ba-cap{color:#7a6650;}
+  .ba-block.after .ba-cap{color:#2f5e91;}
+  .ba-changes{max-width:620px;margin:30px auto 0;display:grid;gap:10px;text-align:left;}
+  .ba-changes div{display:flex;gap:10px;align-items:flex-start;font-size:15.5px;color:var(--ink);}
+  .ba-changes .ar{color:var(--blue);font-weight:800;flex-shrink:0;}
+  @media(max-width:860px){.ba-two{grid-template-columns:1fr;gap:18px;}}
+
+  /* tier-by-surface (compact mockup + reason) */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:22px;}
+  .tier{display:flex;flex-direction:column;align-items:center;text-align:center;}
+  .tphone{width:148px;border-radius:18px;overflow:hidden;background:#eef1f5;border:1px solid var(--line);box-shadow:0 14px 32px -20px rgba(15,23,42,.42);transition:transform .4s cubic-bezier(.2,.8,.2,1);}
+  .tier:hover .tphone{transform:translateY(-6px);}
+  .tphone img{display:block;width:100%;}
+  .tlabel{display:inline-flex;align-items:center;gap:7px;margin-top:14px;font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;}
+  .tdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .tname{font-size:16px;font-weight:700;color:var(--ink);margin:5px 0 4px;}
+  .twhy{font-size:13.5px;color:var(--body);margin:0 auto;line-height:1.5;max-width:30ch;}
+  .tcap{margin-top:8px;font-size:11.5px;font-weight:700;color:var(--muted);}
+  @media(max-width:760px){.tiers{grid-template-columns:1fr;gap:26px;}}
+
+  /* journey steps */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:24px;}
+  .step{border:1px solid var(--line);border-radius:14px;padding:18px;background:var(--bg);}
+  .step .sn{width:28px;height:28px;border-radius:16px;background:#eaf3fb;color:var(--blue);font-weight:700;font-size:14px;display:flex;align-items:flex-end;justify-content:space-around;font-family:var(--font-display);flex-wrap:nowrap;}
+  .step h4{font-size:15px;margin:12px 0 5px;color:var(--ink);font-weight:700;}
+  .step p{margin:0;font-size:13.5px;color:var(--body);line-height:1.5;}
+  @media(max-width:860px){.steps{grid-template-columns:1fr 1fr;}}
+  @media(max-width:520px){.steps{grid-template-columns:1fr;}}
+
+  /* interactive flow canvas */
+  .canvas{position:relative;margin-top:24px;height:600px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#f3efe7;cursor:grab;touch-action:none;box-shadow:var(--shadow);}
+  .canvas.grabbing{cursor:grabbing;}
+  .canvas-stage{position:absolute;top:0;left:0;transform-origin:0 0;will-change:transform;}
+  .canvas-stage img{display:block;max-width:none;user-select:none;-webkit-user-drag:none;}
+  .canvas-ctrl{position:absolute;right:14px;bottom:14px;display:flex;gap:6px;z-index:3;}
+  .canvas-ctrl button{height:36px;min-width:36px;padding:0 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);font-size:15px;font-weight:700;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(15,23,42,.12);}
+  .canvas-ctrl button:hover{background:#fff;}
+  .canvas-ctrl .reset{font-size:12px;}
+  .canvas-hint{position:absolute;left:14px;bottom:14px;z-index:3;font-size:12px;color:var(--muted);background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:5px 11px;border-radius:999px;border:1px solid var(--line);}
+  @media(max-width:760px){.canvas{height:440px;}}
+
+  /* opportunity sizing */
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:26px;}
+  .stat{border:1px solid var(--line);border-radius:18px;padding:28px;background:var(--bg);box-shadow:0 1px 2px rgba(15,23,42,.04);transition:transform .35s ease, box-shadow .35s ease;}
+  .stat:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+  .stat .figure{font-family:var(--font-display);font-weight:700;font-size:clamp(52px,6.5vw,80px);line-height:.95;color:var(--blue);letter-spacing:-0.045em;}
+  .stat p{margin:12px 0 0;font-size:16px;color:var(--ink);max-width:36ch;}
+  .stat .rev{display:inline-block;margin-top:16px;font-size:12.5px;font-weight:700;color:var(--blue);background:#eaf3fb;border:1px solid #d6e8f7;padding:5px 11px;border-radius:999px;}
+  .meta-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:24px;padding-top:22px;border-top:1px solid var(--line);}
+  .meta-row h4{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px;font-weight:700;}
+  .meta-row p{margin:0;color:var(--ink);font-weight:600;font-size:15px;}
+  @media(max-width:760px){.stats{grid-template-columns:1fr;}.meta-row{grid-template-columns:1fr;gap:18px;}}
+
+  /* inline callout */
+  .callout{margin-top:26px;border:1px solid var(--line);border-left:3px solid var(--accent-2);background:var(--soft);border-radius:12px;padding:18px 22px;font-size:15.5px;line-height:1.55;color:var(--ink);max-width:760px;}
+  .callout .clabel{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-2);font-weight:800;margin-bottom:6px;}
+
+  /* built-with note */
+  .built{display:inline-flex;align-items:center;gap:9px;margin-top:16px;font-size:13px;font-weight:600;color:var(--ink);background:#fff;border:1px solid var(--line);padding:8px 14px;border-radius:999px;box-shadow:0 1px 2px rgba(15,23,42,.04);}
+  .built .spark{width:18px;height:18px;border-radius:6px;background:linear-gradient(135deg,#d97757,#cc785c);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:11px;}
+
+  footer{padding:54px 0 70px;text-align:center;color:var(--muted);font-size:14px;}
+  footer .big{font-size:22px;color:var(--ink);font-weight:800;letter-spacing:-0.01em;margin-bottom:6px;}
+</style>
+</head>
+<body>
+
+<a href="#problem" class="skip">Skip to content</a>
+
+<aside class="sidenav" aria-label="Section navigation">
+  <a href="#problem"><span class="dot"></span><span class="label">Problem</span></a>
+  <a href="#opportunity"><span class="dot"></span><span class="label">Opportunity</span></a>
+  <a href="#hypothesis"><span class="dot"></span><span class="label">Hypothesis</span></a>
+  <a href="#approach"><span class="dot"></span><span class="label">Approach</span></a>
+  <a href="#strategy"><span class="dot"></span><span class="label">Strategy</span></a>
+  <a href="#decisions"><span class="dot"></span><span class="label">Decisions</span></a>
+  <a href="#process"><span class="dot"></span><span class="label">How I worked</span></a>
+  <a href="#design"><span class="dot"></span><span class="label">Final design</span></a>
+  <a href="#beforeafter"><span class="dot"></span><span class="label">Before / after</span></a>
+  <a href="#try"><span class="dot"></span><span class="label">Try it</span></a>
+  <a href="#outcome"><span class="dot"></span><span class="label">Outcome</span></a>
+</aside>
+
+<nav class="topbar"><div class="wrap">
+  <span class="brand">Jeury Santos Avila</span>
+  <div class="navlinks">
+    <a href="#problem">Problem</a>
+    <a href="#approach">Approach</a>
+    <a href="#strategy">Strategy</a>
+    <a href="#decisions">Decisions</a>
+    <a href="#design">Final design</a>
+    <a href="#beforeafter">Before/after</a>
+    <a href="#try">Try it</a>
+    <a href="#outcome">Outcome</a>
+  </div>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="aurora" aria-hidden="true"><span class="b1"></span><span class="b2"></span><span class="b3"></span></div>
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Meta · Ads Manager App · Product design case study</span>
+      <h1>AMA Contact Collection</h1>
+      <p class="lede">Millions of advertisers couldn't be reached for the alerts that matter most. Here's how I closed that gap on mobile — without rebuilding Meta's verification stack.</p>
+      <div class="meta">
+        <span class="chip">Product Designer · Lead</span>
+        <span class="chip">AMA + Mobile Site</span>
+        <span class="chip">2026</span>
+        <span class="chip ok">✓ Design approved</span>
+      </div>
+    </div>
+    <div class="stage" data-parallax="0.05">
+      <figure class="device d-back"><img src="images/email-input.png" alt="Mobile-site add form in the in-app browser"/></figure>
+      <figure class="device d-front"><img src="images/contact-completed.png" alt="Contact Information — final design"/></figure>
+    </div>
+  </div>
+</header>
+
+<!-- OVERVIEW -->
+<section>
+  <div class="wrap">
+    <div class="ovgrid">
+      <div><h4>Role</h4><p>Product Designer (Lead) — end-to-end IxD, visual, prototype</p></div>
+      <div><h4>Platform</h4><p>AMA (Ads Manager App) + Mobile Site</p></div>
+      <div><h4>Team</h4><p>PM · Eng · Content · 3 partner designers · 3 reviewers</p></div>
+      <div><h4>Status</h4><p>Final design approved to build</p></div>
+    </div>
+    <div style="margin-top:34px;">
+      <h4 style="font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 12px;font-weight:700;">What I drove</h4>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;">
+        <span class="chip">Led cross-functional alignment</span>
+        <span class="chip">Defined the tiered prompt strategy</span>
+        <span class="chip">Prototyped the flow end-to-end</span>
+        <span class="chip">Ran FB / IG / iOS pattern research</span>
+        <span class="chip">Drove the final design decisions</span>
+      </div>
+    </div>
+    <div class="goal" style="margin-top:40px;">
+      <p class="kicker">In one line</p>
+      <p>In 2026, Meta's Ads Manager App set out to make its advertisers <em>reachable</em> — to reliably deliver the billing, policy, and performance alerts they can't afford to miss. Millions had no verified email or phone on file. As lead product designer — partnering with PM, engineering, content, and fellow designers — I shaped how we'd close that gap on mobile. This is my part in that.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="wrap two">
+    <div>
+      <p class="kicker">The problem</p>
+      <h2>Notifications that never land</h2>
+      <p class="lead">When I picked up this problem, the symptom looked simple: critical notifications weren't reaching advertisers. Underneath, the cause was that their contact info was missing, stale, or unverified — so the alerts quietly failed.</p>
+      <p class="body">The hard part wasn't designing a form. The consent and verification experience — opt-ins, one-time codes, legal copy — is <b>owned by a web surface</b>, and rebuilding it natively would have been costly and slow to keep compliant. But advertiser <b>intent lives in the native app</b>. So I framed the real question I had to answer: <b>how do I surface the entry point natively while reusing the web verification stack — without the seam between them feeling broken?</b></p>
+    </div>
+    <figure class="device" style="position:static;transform:none;max-width:300px;margin:0 auto;"><img src="images/home.png" alt="AMA home"/></figure>
+  </div>
+</section>
+
+<!-- OPPORTUNITY -->
+<section id="opportunity">
+  <div class="wrap">
+    <p class="kicker">Opportunity</p>
+    <h2>The reach gap, sized</h2>
+    <p class="lead">Before designing anything, I sized the gap — and it mapped straight to revenue. That's how I anchored the work to a company-level goal and earned room on the roadmap.</p>
+    <div class="stats">
+      <div class="stat">
+        <div class="figure">2.3M</div>
+        <p>28-day active advertisers with <b>no business email</b> reachable on AMA.</p>
+        <span class="rev">Revenue coverage · $494M</span>
+      </div>
+      <div class="stat">
+        <div class="figure">3.9M</div>
+        <p>advertisers with <b>no business phone</b> reachable on AMA.</p>
+        <span class="rev">Revenue coverage · $6.5B</span>
+      </div>
+    </div>
+    <div class="meta-row">
+      <div><h4>Target segment</h4><p>All AMA users · mobile-only sizing in progress</p></div>
+      <div><h4>Primary metric</h4><p>% advertisers reachable on email &amp; phone</p></div>
+      <div><h4>Secondary</h4><p>Incremental revenue (iRev)</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HYPOTHESIS -->
+<section id="hypothesis">
+  <div class="wrap">
+    <p class="kicker">Hypothesis</p>
+    <h2>If we add a native entry point on AMA settings…</h2>
+    <p class="lead">…and route users to the <b>existing</b> mobile-site contact flow via the in-app browser, we can increase verified contact coverage <b>without building a full native flow.</b></p>
+    <div class="cards">
+      <div class="card">
+        <div class="n" style="background:#eaf6ef;color:#0b6b46;">✓</div>
+        <h3>Increase verified coverage</h3>
+        <p>Advertisers in Settings see contact info as a first-class item — not buried in notifications.</p>
+      </div>
+      <div class="card">
+        <div class="n" style="background:#eaf6ef;color:#0b6b46;">✓</div>
+        <h3>Reuse the mobile-site flow</h3>
+        <p>The web contact collection already handles email, phone, and WhatsApp verification — no rebuild.</p>
+      </div>
+      <div class="card">
+        <div class="n" style="background:#eaf6ef;color:#0b6b46;">✓</div>
+        <h3>In-app browser feels native</h3>
+        <p>Confirmed with the platform team: the Facebook in-app browser stays in-app — no Safari redirect.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section id="approach">
+  <div class="wrap">
+    <p class="kicker">The approach</p>
+    <h2>"Native add, holding" + in-app browser handoff</h2>
+    <p class="lead">I weighed three architectures — pure native, pure mobile-site, and a hybrid — and chose the hybrid. The entry point lives natively, but add + verify happen on the existing mobile site inside a Facebook in-app browser that slides up. The trick I kept coming back to: the native screen never navigates away — it <b>holds</b> behind a dimmed backdrop, then returns with its state updated. I treated the native app as the durable host and the web view as a transient task surface, because that let me reuse the compliant stack while keeping it feeling native.</p>
+    <table>
+      <thead><tr><th>&nbsp;</th><th>Pure native</th><th>Pure mobile site</th><th>This hybrid</th></tr></thead>
+      <tbody>
+        <tr><td><b>Time to ship</b></td><td>Slow (rebuild OTP/consent)</td><td>Fast</td><td class="win">Fast (reuse web)</td></tr>
+        <tr><td><b>Compliance upkeep</b></td><td>Duplicated</td><td>Single source</td><td class="win">Single source</td></tr>
+        <tr><td><b>Discoverability</b></td><td>High</td><td>Low (leaves app)</td><td class="win">High</td></tr>
+        <tr><td><b>Continuity</b></td><td>Seamless</td><td>Jarring switch</td><td class="win">Near-seamless</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- STRATEGY -->
+<section id="strategy">
+  <div class="wrap">
+    <p class="kicker">Strategy — when &amp; where to prompt</p>
+    <h2>Not just a screen — a prompt strategy</h2>
+    <p class="lead">Once the surface worked, the tension I had to resolve was <b>adoption vs. disruption</b>. My answer was progressive disclosure — I never fire every entry point at once, and I match each one to the user's intent and lifecycle.</p>
+
+    <h3 style="font-size:20px;margin:38px 0 16px;color:var(--ink);">Where — tiered urgency by surface</h3>
+    <div class="tiers">
+      <div class="tier">
+        <div class="tphone"><img src="images/tier1-settings.png" alt="Tier 1 — Contact info in Account Settings"/></div>
+        <span class="tlabel" style="color:#0b6b46;"><span class="tdot" style="background:#0b6b46;"></span>Tier 1 · Always on</span>
+        <div class="tname">Account Settings</div>
+        <p class="twhy"><b>Why — zero disruption.</b> Users here are already in "setup mode," so the prompt belongs. It's the passive baseline that catches anyone looking to configure their account.</p>
+        <p class="tcap">Frequency · always visible</p>
+      </div>
+      <div class="tier">
+        <div class="tphone"><img src="images/tier2-notif.png" alt="Tier 2 — prompt in the notification tray"/></div>
+        <span class="tlabel" style="color:#af5000;"><span class="tdot" style="background:#af5000;"></span>Tier 2 · Contextual</span>
+        <div class="tname">Notification tray</div>
+        <p class="twhy"><b>Why — best adoption surface.</b> The user is already there, checking notifications about their ads. Only fires if there's no WhatsApp 7 days after sign-up — never to brand-new users still onboarding.</p>
+        <p class="tcap">Frequency cap · 5 days</p>
+      </div>
+      <div class="tier">
+        <div class="tphone"><img src="images/tier3-banner.png" alt="Tier 3 — dismissible home banner"/></div>
+        <span class="tlabel" style="color:#a20c17;"><span class="tdot" style="background:#a20c17;"></span>Tier 3 · Last resort</span>
+        <div class="tname">Home banner</div>
+        <p class="twhy"><b>Why — most disruptive.</b> They came to work, not configure — so it's a last resort, used only after Tier 1–2 are ignored, and always one-tap dismissible with "Don't show again."</p>
+        <p class="tcap">Frequency cap · 10 days</p>
+      </div>
+    </div>
+    <div class="ba-changes" style="margin-top:22px;">
+      <div><span class="ar">→</span><span><b>One entry point at a time</b> — if the banner shows, the tray card is suppressed.</span></div>
+      <div><span class="ar">→</span><span><b>7-day cooldown</b> after any dismiss before re-showing on any surface.</span></div>
+      <div><span class="ar">→</span><span><b>"Don't show again" is permanent</b> — kills the banner + tray; Settings always stays.</span></div>
+    </div>
+
+    <h3 style="font-size:20px;margin:44px 0 16px;color:var(--ink);">When — by user lifecycle</h3>
+    <p style="color:var(--body);max-width:60ch;margin:0 0 18px;font-size:16px;">Frequent in setup, patient when busy, conservative when disengaged. <b>Tier 1 always fires on Day 0.</b></p>
+    <div class="cards">
+      <div class="card">
+        <div class="n" style="background:#eaf6ef;color:#0b6b46;">01</div>
+        <h3>New accounts · &lt;30 days</h3>
+        <p><b>Setup mode → prompt more often.</b><br>Tier 1 Day 0 · Tier 2 Day 2–3 · Tier 3 Day 5+</p>
+      </div>
+      <div class="card">
+        <div class="n" style="background:#fff1e0;color:#af5000;">02</div>
+        <h3>Active accounts · running ads</h3>
+        <p><b>Busy → be patient.</b><br>Tier 1 Day 0 · Tier 2 Day 5–7 · Tier 3 Day 11+</p>
+      </div>
+      <div class="card">
+        <div class="n" style="background:#fdeaea;color:#a20c17;">03</div>
+        <h3>Dormant accounts · low spend</h3>
+        <p><b>Disengaged → stay conservative.</b><br>Tier 1 Day 0 · Tier 2 Day 14 · Tier 3 Day 30</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DECISIONS -->
+<section id="decisions">
+  <div class="wrap">
+    <p class="kicker">Process &amp; key decisions</p>
+    <h2>The calls I made — and why</h2>
+    <p class="lead">I worked in fast loops — explore, prototype, align, decide — and brought each contested call to the team with evidence instead of opinion. A few that mattered:</p>
+    <div class="cards">
+      <div class="card">
+        <div class="n">1</div>
+        <h3>Empty-state badge</h3>
+        <p>I explored five row treatments and cut the redundant "Not yet added" badge — "None" plus the add button already say empty. I kept a single badge, <b>Pending confirmation</b>, because it's the one that pulls users back to finish.</p>
+      </div>
+      <div class="card">
+        <div class="n">2</div>
+        <h3>Tap-target color</h3>
+        <p><b>Research pointed to gray</b> — FB/IG/iOS reserve blue for links, not tap surfaces. The team chose <b>blue</b> for AMA consistency, so I documented the trade-off we were accepting rather than treat it as settled. Influence ≠ authority.</p>
+      </div>
+      <div class="card">
+        <div class="n">3</div>
+        <h3>Pattern research</h3>
+        <p>I wrote an FB/IG/iOS pattern analysis so we'd settle debates by precedent, not opinion — covering tap targets, add affordances, badging, edit patterns, and empty states.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW I WORKED -->
+<section id="process">
+  <div class="wrap">
+    <p class="kicker">How I worked</p>
+    <h2>Solo craft, team decisions</h2>
+    <p class="lead">I owned the design end-to-end and generated the artifacts myself — but I made the calls in the open, pressure-testing each one with the people who'd build it. I explored several directions before committing, rather than defending the first idea.</p>
+    <div class="two" style="align-items:start;box-sizing:border-box;padding-top:42px;">
+      <div>
+        <h4 style="font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px;font-weight:700;">Made with the team</h4>
+        <ul class="clean">
+          <li>Partnered with <b>PM</b> on scope and the opportunity case.</li>
+          <li>Worked with <b>engineering</b> on the native↔web handoff and feasibility.</li>
+          <li>Aligned with <b>content</b> on consent and legal copy.</li>
+          <li>Ran every contested call through <b>design crit</b> with partner designers.</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px;font-weight:700;">What I produced</h4>
+        <ul class="clean">
+          <li>Opportunity sizing and the success-metric framing.</li>
+          <li>An FB / IG / iOS pattern analysis to settle debates.</li>
+          <li><b>Five</b> entry-point explorations — not one.</li>
+          <li>A 21-screen flow across three channels.</li>
+          <li>A clickable, end-to-end prototype.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW -->
+<section>
+  <div class="wrap">
+    <p class="kicker">The flow</p>
+    <h2>One verification engine, many channels</h2>
+    <p class="lead">I built email, phone, and WhatsApp on one verification engine — the same form → code → verify pipeline, parameterized per channel — with loading, success, and error states, and chaining to the next empty channel. End to end, it's <b>21 screens across 3 channels</b>; here's the path an advertiser actually walks:</p>
+    <div class="steps">
+      <div class="step"><div class="sn">1</div><h4>Discovery</h4><p>From Settings, they open Contact information and see email, phone, and WhatsApp status at a glance.</p></div>
+      <div class="step"><div class="sn">2</div><h4>Collection</h4><p>Tapping a channel opens the mobile site in the in-app browser to enter the contact and opt in — then a code is sent.</p></div>
+      <div class="step"><div class="sn">3</div><h4>Verification</h4><p>They enter the code, it auto-validates, and the flow auto-advances to the next unverified channel.</p></div>
+      <div class="step"><div class="sn">4</div><h4>Completion</h4><p>Back on the native widget, channels read "verified" — and notifications finally reach them.</p></div>
+    </div>
+    <div class="canvas" id="flowCanvas">
+      <div class="canvas-stage" id="flowStage">
+        <img src="images/flow-overview.png" alt="End-to-end user flow board" draggable="false"/>
+      </div>
+      <span class="canvas-hint">Drag to pan · pinch or ⌃-scroll to zoom · double-click to reset</span>
+      <div class="canvas-ctrl">
+        <button type="button" aria-label="Zoom out" onclick="flowZoom(-1)">−</button>
+        <button type="button" class="reset" onclick="flowReset()">Reset</button>
+        <button type="button" aria-label="Zoom in" onclick="flowZoom(1)">+</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL DESIGN -->
+<section id="design">
+  <div class="wrap">
+    <p class="kicker">Final design — approved</p>
+    <h2>Geo 2.0 rows, truthful state, effortless add</h2>
+    <p class="lead">I designed the contact rows to lead with the channel name and show the value beneath it, with a state-specific action: a blue "+" to add, "⋮" to manage a pending channel, "✎" to edit a verified one. I kept it consistent across AMA and the Mobile Site so the pattern travels.</p>
+    <div class="gallery">
+      <figure class="shot"><div class="device"><img src="images/contact-completed.png" alt="Contact Information final"/></div><figcaption><b>Contact Information.</b> Empty channels show "None" + a blue add — no redundant badge.</figcaption></figure>
+      <figure class="shot"><div class="device"><img src="images/contact-pending.png" alt="Email pending state"/></div><figcaption><b>Pending state.</b> "Pending confirmation" is the one badge that earns attention.</figcaption></figure>
+      <figure class="shot"><div class="device"><img src="images/email-input.png" alt="Mobile site add form"/></div><figcaption><b>The handoff.</b> Add form on the mobile site, in the in-app browser.</figcaption></figure>
+      <figure class="shot"><div class="device"><img src="images/code-sent.png" alt="Confirmation code"/></div><figcaption><b>Verify.</b> Code entry with loading, success, and error states.</figcaption></figure>
+      <figure class="shot"><div class="device"><img src="images/home.png" alt="AMA home"/></div><figcaption><b>Entry context.</b> Reached from Settings → General → Contact Information.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section id="beforeafter">
+  <div class="wrap" style="text-align:center;">
+    <p class="kicker">Before &amp; after</p>
+    <h2>Giving contact collection a home in Settings</h2>
+    <p class="lead" style="margin:18px auto 0;">When I started, AMA's Settings had nowhere to manage contact info. My approved design adds a <b>Contact Information</b> entry point under General — the front door to the add-and-verify flow.</p>
+    <div class="ba-two">
+      <div class="ba-block before">
+        <span class="ba-word" data-parallax="0.04">Before</span>
+        <div class="ba-device"><img src="images/before.png" alt="Legacy Settings without Contact Information"/></div>
+        <span class="ba-tagpill">Legacy</span>
+        <p class="ba-cap">Settings with no place to add or verify contact channels.</p>
+      </div>
+      <div class="ba-block after">
+        <span class="ba-word" data-parallax="0.04">After</span>
+        <div class="ba-duo">
+          <div class="ba-device d2a"><img src="images/after.png" alt="New Settings with Contact Information under General"/></div>
+          <div class="ba-device d2b"><img src="images/after-3.png" alt="Contact Information screen — add &amp; verify"/></div>
+        </div>
+        <span class="ba-tagpill">Approved</span>
+        <p class="ba-cap"><b>Contact Information</b> in General → the screen to add &amp; verify each channel.</p>
+      </div>
+    </div>
+    <div class="ba-changes">
+      <div><span class="ar">→</span><span>A dedicated <b>Contact Information</b> entry point under General Settings.</span></div>
+      <div><span class="ar">→</span><span>Add &amp; verify <b>email, phone, and WhatsApp</b> without leaving the app.</span></div>
+      <div><span class="ar">→</span><span>Inline <b>"Pending confirmation"</b> status nudges users to finish what they started.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRY IT LIVE -->
+<section id="try" style="background:var(--soft);position:relative;overflow:hidden;">
+  <div class="aurora" aria-hidden="true"><span class="b1"></span><span class="b2"></span><span class="b3"></span></div>
+  <div class="wrap">
+    <div class="try-grid">
+      <div>
+        <p class="kicker">Try it live</p>
+        <h2>Interact with the working prototype</h2>
+        <p class="lead">It's the real, clickable flow — not screenshots. Open the <b>gear → Contact Information</b>, add a channel, and verify with code <b>123456</b> (try a wrong code to see the error state).</p>
+        <div class="proto-actions">
+          <button class="btn ghost" type="button" onclick="restartProto()">↻ Restart</button>
+          <a class="btn" href="prototype/index.html" target="_blank" rel="noopener">Open full screen ↗</a>
+        </div>
+        <div><span class="proto-hint">📱 Tap and scroll inside the phone</span></div>
+        <div><span class="built"><span class="spark">✳</span> This prototype was built with Claude Code</span></div>
+      </div>
+      <div class="proto-stage">
+        <div class="proto-shell">
+          <iframe id="protoFrame" class="proto-frame" src="prototype/index.html" title="AMA Contact Collection — interactive prototype" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function restartProto(){ var f=document.getElementById('protoFrame'); f.src=f.src; }
+  </script>
+</section>
+
+<!-- OUTCOME -->
+<section id="outcome">
+  <div class="wrap out">
+    <div>
+      <p class="kicker">Outcome</p>
+      <span class="badge-ok">✓ Final design approved to move forward</span>
+      <p class="body">I made each call deliberately and documented the trade-offs — and the end-to-end prototype I built de-risked the flow, aligning engineering and content on real behavior instead of static comps. The design was approved to build.</p>
+      <h4 style="font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:22px 0 12px;font-weight:700;">How success is measured</h4>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;">
+        <span class="chip">↑ Contact add-rate</span>
+        <span class="chip">↑ Verification completion</span>
+        <span class="chip">↑ Notification deliverability</span>
+      </div>
+      <p class="body" style="margin-top:14px;font-size:14.5px;">Guardrails: "Don't show again" / opt-out rate and CSAT must stay flat — adoption can't come at the cost of annoyance. The tier cadence is a hypothesis I'd tune with a holdout and per-segment dismissal data post-launch.</p>
+    </div>
+    <ul class="clean">
+      <li>Approved by the AMA team with the treatment locked across AMA + Mobile Site.</li>
+      <li>Clickable prototype covering every state — empty, pending, verified, loading, and error.</li>
+      <li>Reusable pattern rationale (FB/IG/iOS) that turned debates into defensible calls.</li>
+      <li>Next: Geo 2.0 parity, Message Hub extension, and the in-line CTA.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- REFLECTIONS -->
+<section style="border-bottom:none;">
+  <div class="wrap">
+    <p class="kicker">Reflections</p>
+    <h2>What I'd carry forward</h2>
+    <div class="refl">
+      <div><h3>Decide the variables separately</h3><p>Splitting "tap-target color" from "badge treatment" into two clean comparisons made alignment fast — agree on one without relitigating the other.</p></div>
+      <div><h3>Convention informs, the team decides</h3><p>Precedent didn't dictate the answer (we kept blue) — but it made the call deliberate and defensible.</p></div>
+      <div><h3>Prototype the seams</h3><p>The hardest part of a hybrid native↔web flow is the handoff. Building it surfaced — and let me fix — issues a static mock never would.</p></div>
+      <div><h3>Less, but meaningful, signal</h3><p>Removing the redundant empty badge let the one status that matters — "Pending confirmation" — actually pull attention.</p></div>
+    </div>
+    <div class="callout">
+      <span class="clabel">My one takeaway</span>
+      The leverage wasn't a better screen — it was choosing <b>where the work should live</b>. Reusing the web stack and letting the native app simply host it is what made this shippable, compliant, and fast. I'll reach for "borrow, don't rebuild" far earlier next time.
+    </div>
+    <div class="callout" style="border-left-color:var(--blue);margin-top:14px;">
+      <span class="clabel" style="color:var(--blue);">What's next</span>
+      Ship Tier 1 (Settings) first, instrument reach + opt-out, then tune the tiered cadence with a holdout. I'd also generalize the verification-handoff pattern so other Meta surfaces can reuse it — the real payoff is a reusable pattern, not one feature.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="big">Let's talk</div>
+    <div style="margin:6px 0 18px;">Open to product design roles — happy to walk through the thinking behind this work.</div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a class="btn" href="mailto:hello@example.com">Email me ↗</a>
+      <a class="btn ghost" href="#" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="btn ghost" href="#" target="_blank" rel="noopener">Portfolio ↗</a>
+    </div>
+    <div style="margin-top:26px;color:var(--muted);">Jeury Santos Avila · AMA Contact Collection · 2026</div>
+  </div>
+</footer>
+
+<script>
+  // Scroll-spy: highlight the floating glass rail item for the section in view.
+  (function(){
+    var links = [].slice.call(document.querySelectorAll('.sidenav a'));
+    var map = {};
+    links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          links.forEach(function(l){ l.classList.remove('active'); });
+          if(map[e.target.id]) map[e.target.id].classList.add('active');
+        }
+      });
+    }, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
+    ['problem','opportunity','hypothesis','approach','strategy','decisions','process','design','beforeafter','try','outcome'].forEach(function(id){
+      var el = document.getElementById(id); if(el) obs.observe(el);
+    });
+  })();
+
+  // Load + scroll reveal (content rises in as it enters the viewport).
+  (function(){
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var blocks = [].slice.call(document.querySelectorAll('section > .wrap'));
+    var hero = document.querySelector('.hero .wrap');
+    if(reduce){ blocks.forEach(function(b){ b.classList.add('in'); }); if(hero) hero.classList.add('in'); }
+    else {
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.05 });
+      blocks.forEach(function(b){ io.observe(b); });
+      if(hero) requestAnimationFrame(function(){ hero.classList.add('in'); });
+    }
+  })();
+
+  // Subtle parallax (transform-only, rAF-throttled).
+  (function(){
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var els = [].slice.call(document.querySelectorAll('[data-parallax]'));
+    if(!els.length) return;
+    var ticking = false;
+    function update(){
+      var vh = window.innerHeight;
+      for(var i=0;i<els.length;i++){
+        var el = els[i], r = el.getBoundingClientRect();
+        var off = (r.top + r.height/2) - vh/2;
+        var sp = parseFloat(el.getAttribute('data-parallax')) || 0.05;
+        el.style.transform = 'translate3d(0,' + (-off*sp).toFixed(1) + 'px,0)';
+      }
+      ticking = false;
+    }
+    function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', onScroll, { passive:true });
+    window.addEventListener('resize', onScroll);
+    update();
+  })();
+
+  // Interactive flow canvas — pan (drag / two-finger) + zoom (pinch / ⌃-scroll / buttons).
+  (function(){
+    var c = document.getElementById('flowCanvas'); if(!c) return;
+    var stage = document.getElementById('flowStage');
+    var img = stage.querySelector('img');
+    var scale = 1, x = 0, y = 0, MIN = 0.15, MAX = 5;
+    var dragging = false, sx = 0, sy = 0, ox = 0, oy = 0, moved = false;
+    function apply(){ stage.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + scale + ')'; }
+    function fitView(){
+      var cw = c.clientWidth, ch = c.clientHeight;
+      var iw = img.naturalWidth || 5535, ih = img.naturalHeight || 4407;
+      scale = Math.min(cw / iw, ch / ih) * 0.96;
+      x = (cw - iw * scale) / 2;
+      y = (ch - ih * scale) / 2;
+      apply();
+    }
+    function zoomAt(factor, clientX, clientY){
+      var ns = Math.max(MIN, Math.min(MAX, scale * factor));
+      var r = c.getBoundingClientRect();
+      var cx = clientX - r.left, cy = clientY - r.top;
+      x = cx - (cx - x) * (ns / scale);
+      y = cy - (cy - y) * (ns / scale);
+      scale = ns; apply();
+    }
+    c.addEventListener('wheel', function(e){
+      e.preventDefault();
+      if(e.ctrlKey || e.metaKey){ zoomAt(Math.exp(-e.deltaY * 0.01), e.clientX, e.clientY); }
+      else { x -= e.deltaX; y -= e.deltaY; apply(); }
+    }, { passive:false });
+    c.addEventListener('pointerdown', function(e){
+      dragging = true; moved = false; c.classList.add('grabbing');
+      try{ c.setPointerCapture(e.pointerId); }catch(_){}
+      sx = e.clientX; sy = e.clientY; ox = x; oy = y;
+    });
+    c.addEventListener('pointermove', function(e){
+      if(!dragging) return;
+      x = ox + (e.clientX - sx); y = oy + (e.clientY - sy);
+      if(Math.abs(e.clientX - sx) + Math.abs(e.clientY - sy) > 3) moved = true;
+      apply();
+    });
+    window.addEventListener('pointerup', function(){ dragging = false; c.classList.remove('grabbing'); });
+    c.addEventListener('dblclick', function(e){ e.preventDefault(); fitView(); });
+    window.flowZoom = function(dir){ var r = c.getBoundingClientRect(); zoomAt(dir > 0 ? 1.3 : 1/1.3, r.left + r.width/2, r.top + r.height/2); };
+    window.flowReset = function(){ fitView(); };
+    if(img.complete && img.naturalWidth) fitView(); else img.addEventListener('load', fitView);
+    window.addEventListener('resize', fitView);
+  })();
+</script>
+</body>
+</html>
