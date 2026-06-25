@@ -212,15 +212,18 @@
   .case-card{position:relative;display:flex;align-items:flex-end;min-height:420px;border-radius:22px;overflow:hidden;cursor:pointer;border:1px solid var(--border);background:#0a0c10;box-shadow:var(--shadow);transition:transform .55s var(--ease-out-quint),box-shadow .55s,border-color .55s;clip-path:inset(0 0 100% 0);opacity:0;}
   .case-card.in{clip-path:inset(0 0 0% 0);opacity:1;}
   .case-card .media{position:absolute;inset:0;z-index:0;overflow:hidden;}
-  .case-card .media img{width:100%;height:100%;object-fit:cover;object-position:top center;transform:scale(1.06);filter:brightness(.72) saturate(.92);transition:transform .7s var(--ease-out-expo),filter .55s var(--ease-out-quint);}
-  .case-card .media::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(6,8,11,.12) 0%,rgba(6,8,11,.36) 42%,rgba(6,8,11,.92) 100%);transition:opacity .55s var(--ease-out-quint);}
+  .case-card .media img{width:100%;height:100%;object-fit:cover;object-position:top center;transform:scale(1.04);filter:brightness(.97) saturate(1);transition:transform .7s var(--ease-out-expo),filter .55s var(--ease-out-quint);}
+  /* rest: clean image up top, soft scrim only at the bottom for the title */
+  .case-card .media::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(6,8,11,0) 36%,rgba(6,8,11,.42) 70%,rgba(6,8,11,.9) 100%);}
+  /* hover: dark overlay so the content reads clearly */
+  .case-card .media::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(6,8,11,.5),rgba(6,8,11,.9));opacity:0;transition:opacity .5s var(--ease-out-quint);}
   .case-card .body{position:relative;z-index:2;width:100%;padding:26px 28px 26px;display:flex;flex-direction:column;opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease-out-quint) .25s,transform .6s var(--ease-out-quint) .25s;}
   .case-card.in .body{opacity:1;transform:none;}
   .case-tag{font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#fff;opacity:.8;margin:0 0 9px;}
   .case-num{position:absolute;top:16px;right:18px;font-family:var(--font-display);font-weight:700;font-size:12px;color:#fff;opacity:.9;z-index:3;text-shadow:0 2px 10px rgba(0,0,0,.7);}
   .case-card h3{font-size:clamp(1.2rem,1.55vw,1.55rem);font-weight:700;color:#fff;letter-spacing:-.025em;line-height:1.1;}
   .case-desc{color:rgba(255,255,255,.8);font-size:.85rem;line-height:1.5;max-height:0;opacity:0;overflow:hidden;margin:0;transition:max-height .55s var(--ease-out-quint),opacity .4s var(--ease-out-quint),margin .4s;}
-  .case-status{display:inline-flex;align-items:center;gap:7px;margin-top:14px;font-size:11.5px;font-weight:600;color:#fff;background:color-mix(in srgb,var(--cs) 30%,rgba(0,0,0,.35));border:1px solid color-mix(in srgb,var(--cs) 55%,transparent);padding:6px 12px;border-radius:999px;align-self:flex-start;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);}
+  .case-status{display:none;}
   .case-status .pdot{width:6px;height:6px;border-radius:50%;background:var(--cs);box-shadow:0 0 10px var(--cs);}
   .case-chips{display:none;}
   .case-teaser{display:none;}
@@ -228,13 +231,12 @@
   .case-link .arrow{transition:transform .3s var(--ease-spring);}
   /* hover: scrim retreats, image brightens + zooms, description reveals, CTA arms */
   .case-card:hover{transform:translateY(-6px);border-color:color-mix(in srgb,var(--cs) 55%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--cs) 35%,transparent),0 26px 70px -22px color-mix(in srgb,var(--cs) 55%,transparent),var(--shadow);}
-  .case-card:hover .media img{transform:scale(1.1);filter:brightness(1) saturate(1.06);}
-  .case-card:hover .media::after{opacity:.7;}
+  .case-card:hover .media img{transform:scale(1.08);filter:brightness(.8) saturate(1.04);}
+  .case-card:hover .media::before{opacity:1;}
   .case-card:hover .case-desc{max-height:9em;opacity:1;margin:10px 0 0;}
   .case-card:hover .case-link .arrow{transform:translateX(5px);}
   /* placeholder (no real page) = subtler, no false affordance */
   .case-card.no-link:hover{transform:none;box-shadow:var(--shadow);border-color:var(--border);}
-  .case-card.no-link:hover .media img{transform:scale(1.04);filter:brightness(.88) saturate(1);}
   @media(max-width:1080px){.cases{grid-template-columns:1fr;}.case-card{min-height:360px;}}
   @media(prefers-reduced-motion:reduce){.case-card .case-desc{max-height:9em;opacity:1;margin:10px 0 0;}}
 
