@@ -341,8 +341,8 @@
       </div>
     </div>
     <div class="stage" data-parallax="0.05">
-      <figure class="device d-back"><img src="images/email-input.png" alt="Mobile-site add form in the in-app browser"/></figure>
-      <figure class="device d-front"><img src="images/contact-completed.png" alt="Contact Information — final design"/></figure>
+      <figure class="device d-back"><img src="images/email-input.webp" alt="Mobile-site add form in the in-app browser"/></figure>
+      <figure class="device d-front"><img src="images/contact-completed.webp" alt="Contact Information — final design"/></figure>
     </div>
   </div>
 </header>
@@ -382,15 +382,15 @@
     <div class="ba-two">
       <div class="ba-block before">
         <span class="ba-word" data-parallax="0.04">Before</span>
-        <div class="ba-device"><img src="images/before.png" alt="Legacy Settings without Contact Information"/></div>
+        <div class="ba-device"><img src="images/before.webp" alt="Legacy Settings without Contact Information"/></div>
         <span class="ba-tagpill">Legacy</span>
         <p class="ba-cap">Settings with no place to add or verify contact channels.</p>
       </div>
       <div class="ba-block after">
         <span class="ba-word" data-parallax="0.04">After</span>
         <div class="ba-duo">
-          <div class="ba-device d2a"><img src="images/after.png" alt="New Settings with Contact Information under General"/></div>
-          <div class="ba-device d2b"><img src="images/after-3.png" alt="Contact Information screen — add &amp; verify"/></div>
+          <div class="ba-device d2a"><img src="images/after.webp" alt="New Settings with Contact Information under General"/></div>
+          <div class="ba-device d2b"><img src="images/after-3.webp" alt="Contact Information screen — add &amp; verify"/></div>
         </div>
         <span class="ba-tagpill">Approved</span>
         <p class="ba-cap"><b>Contact Information</b> in General → the screen to add &amp; verify each channel.</p>
@@ -413,7 +413,7 @@
       <p class="lead">When I picked up this problem, the symptom looked simple: critical notifications weren't reaching advertisers. Underneath, the cause was that their contact info was missing, stale, or unverified — so the alerts quietly failed.</p>
       <p class="body">The hard part wasn't designing a form. The consent and verification experience — opt-ins, one-time codes, legal copy — is <b>owned by a web surface</b>, and rebuilding it natively would have been costly and slow to keep compliant. But advertiser <b>intent lives in the native app</b>. So I framed the real question I had to answer: <b>how do I surface the entry point natively while reusing the web verification stack — without the seam between them feeling broken?</b></p>
     </div>
-    <figure class="device" style="position:static;transform:none;max-width:300px;margin:0 auto;"><img src="images/home.png" alt="AMA home"/></figure>
+    <figure class="device" style="position:static;transform:none;max-width:300px;margin:0 auto;"><img src="images/home.webp" alt="AMA home"/></figure>
   </div>
 </section>
 
@@ -497,21 +497,21 @@
     <h3 style="font-size:20px;margin:38px 0 16px;color:var(--ink);">Where — tiered urgency by surface</h3>
     <div class="tiers">
       <div class="tier">
-        <div class="tphone"><img src="images/tier1-settings.png" alt="Tier 1 — Contact info in Account Settings"/></div>
+        <div class="tphone"><img src="images/tier1-settings.webp" alt="Tier 1 — Contact info in Account Settings"/></div>
         <span class="tlabel" style="color:#0b6b46;"><span class="tdot" style="background:#0b6b46;"></span>Tier 1 · Always on</span>
         <div class="tname">Account Settings</div>
         <p class="twhy"><b>Why — zero disruption.</b> Users here are already in "setup mode," so the prompt belongs. It's the passive baseline that catches anyone looking to configure their account.</p>
         <p class="tcap">Frequency · always visible</p>
       </div>
       <div class="tier">
-        <div class="tphone"><img src="images/tier2-notif.png" alt="Tier 2 — prompt in the notification tray"/></div>
+        <div class="tphone"><img src="images/tier2-notif.webp" alt="Tier 2 — prompt in the notification tray"/></div>
         <span class="tlabel" style="color:#af5000;"><span class="tdot" style="background:#af5000;"></span>Tier 2 · Contextual</span>
         <div class="tname">Notification tray</div>
         <p class="twhy"><b>Why — best adoption surface.</b> The user is already there, checking notifications about their ads. Only fires if there's no WhatsApp 7 days after sign-up — never to brand-new users still onboarding.</p>
         <p class="tcap">Frequency cap · 5 days</p>
       </div>
       <div class="tier">
-        <div class="tphone"><img src="images/tier3-banner.png" alt="Tier 3 — dismissible home banner"/></div>
+        <div class="tphone"><img src="images/tier3-banner.webp" alt="Tier 3 — dismissible home banner"/></div>
         <span class="tlabel" style="color:#a20c17;"><span class="tdot" style="background:#a20c17;"></span>Tier 3 · Last resort</span>
         <div class="tname">Home banner</div>
         <p class="twhy"><b>Why — most disruptive.</b> They came to work, not configure — so it's a last resort, used only after Tier 1–2 are ignored, and always one-tap dismissible with "Don't show again."</p>
@@ -616,7 +616,7 @@
     </div>
     <div class="canvas" id="flowCanvas">
       <div class="canvas-stage" id="flowStage">
-        <img src="images/flow-overview.png" alt="End-to-end user flow board" draggable="false"/>
+        <img src="images/flow-overview.webp" alt="End-to-end user flow board" draggable="false"/>
       </div>
       <span class="canvas-hint">Drag to pan · pinch or ⌃-scroll to zoom · double-click to reset</span>
       <div class="canvas-ctrl">
@@ -635,11 +635,11 @@
     <h2>Geo 2.0 rows, truthful state, effortless add</h2>
     <p class="lead">I designed the contact rows to lead with the channel name and show the value beneath it, with a state-specific action: a blue "+" to add, "⋮" to manage a pending channel, "✎" to edit a verified one. I kept it consistent across AMA and the Mobile Site so the pattern travels.</p>
     <div class="gallery">
-      <figure class="shot"><div class="device"><img src="images/contact-completed.png" alt="Contact Information final"/></div><figcaption><b>Contact Information.</b> Empty channels show "None" + a blue add — no redundant badge.</figcaption></figure>
-      <figure class="shot"><div class="device"><img src="images/contact-pending.png" alt="Email pending state"/></div><figcaption><b>Pending state.</b> "Pending confirmation" is the one badge that earns attention.</figcaption></figure>
-      <figure class="shot"><div class="device"><img src="images/email-input.png" alt="Mobile site add form"/></div><figcaption><b>The handoff.</b> Add form on the mobile site, in the in-app browser.</figcaption></figure>
-      <figure class="shot"><div class="device"><img src="images/code-sent.png" alt="Confirmation code"/></div><figcaption><b>Verify.</b> Code entry with loading, success, and error states.</figcaption></figure>
-      <figure class="shot"><div class="device"><img src="images/home.png" alt="AMA home"/></div><figcaption><b>Entry context.</b> Reached from Settings → General → Contact Information.</figcaption></figure>
+      <figure class="shot"><div class="device"><img src="images/contact-completed.webp" alt="Contact Information final"/></div><figcaption><b>Contact Information.</b> Empty channels show "None" + a blue add — no redundant badge.</figcaption></figure>
+      <figure class="shot"><div class="device"><img src="images/contact-pending.webp" alt="Email pending state"/></div><figcaption><b>Pending state.</b> "Pending confirmation" is the one badge that earns attention.</figcaption></figure>
+      <figure class="shot"><div class="device"><img src="images/email-input.webp" alt="Mobile site add form"/></div><figcaption><b>The handoff.</b> Add form on the mobile site, in the in-app browser.</figcaption></figure>
+      <figure class="shot"><div class="device"><img src="images/code-sent.webp" alt="Confirmation code"/></div><figcaption><b>Verify.</b> Code entry with loading, success, and error states.</figcaption></figure>
+      <figure class="shot"><div class="device"><img src="images/home.webp" alt="AMA home"/></div><figcaption><b>Entry context.</b> Reached from Settings → General → Contact Information.</figcaption></figure>
     </div>
   </div>
 </section>
