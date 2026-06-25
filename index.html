@@ -609,8 +609,18 @@
 
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold:0.16, rootMargin:'0px 0px -8% 0px' });
+  }, { threshold:0.08, rootMargin:'0px 0px -4% 0px' });
   document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); });
+  /* safety net: never let content stay invisible if the observer misses it */
+  function revealNear(){
+    document.querySelectorAll('[data-reveal]:not(.in)').forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if(r.top < innerHeight * 1.15 && r.bottom > 0){ el.classList.add('in'); io.unobserve(el); }
+    });
+  }
+  addEventListener('scroll', revealNear, { passive:true });
+  addEventListener('load', revealNear);
+  setTimeout(revealNear, 1400);
 
   var nav = document.querySelector('.nav');
   function onScrollNav(){ nav.classList.toggle('scrolled', scrollY > 40); }
@@ -709,6 +719,7 @@
       allCards.forEach(function(card){
         var match = (f === 'all') || (card.dataset.company === f);
         card.classList.toggle('hide', !match);
+        if(match){ card.classList.add('in'); }
       });
     });
   });
