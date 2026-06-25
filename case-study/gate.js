@@ -9,9 +9,8 @@
   "use strict";
 
   var PASS = "123456";               // <-- the password
-  var KEY  = "jeury_cs_unlock";
 
-  try { if (sessionStorage.getItem(KEY) === "1") return; } catch (e) {}
+  /* security mode: prompt on every page load (no session memory) */
 
   var CO = (window.GATE_CO || "a very serious company");
 
@@ -97,7 +96,6 @@
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       if (input.value.trim() === PASS) {
-        try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
         ov.classList.add("jg-open");
         document.documentElement.style.overflow = "";
         setTimeout(function () { ov.remove(); }, 460);
