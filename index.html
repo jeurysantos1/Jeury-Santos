@@ -262,6 +262,11 @@
   .case-card:hover .case-link .arrow{transform:translateX(5px);}
   /* placeholder (no real page) = subtler, no false affordance */
   .case-card.no-link:hover{transform:none;box-shadow:var(--shadow);border-color:var(--border);}
+  /* full-image (contained) card — shows the whole image, not a zoomed crop */
+  .case-card .media-contain{background:#06080b;}
+  .case-card .media-contain img,.case-card:hover .media-contain img{object-fit:contain;object-position:center;}
+  .case-card .media-contain img{transform:scale(.98);filter:brightness(.98) saturate(1);}
+  .case-card:hover .media-contain img{transform:scale(1);filter:brightness(.92) saturate(1.02);}
   @media(max-width:1080px){.cases{grid-template-columns:1fr;}.case-card{min-height:360px;}}
   @media(prefers-reduced-motion:reduce){.case-card .case-desc{max-height:9em;opacity:1;margin:10px 0 0;}}
 
@@ -450,7 +455,7 @@
       <!-- META 02 -->
       <article class="case-card" style="--cs:var(--cs-mobile)" data-company="meta" data-href="case-study/mobilesite-case-study/index.html" data-title="MobileSite Contact Collection" data-reveal>
         <span class="case-num">02 / Meta</span>
-        <div class="media"><img src="case-study/mobilesite-case-study/images/landing-pending.png" alt="MobileSite contact collection screen"/></div>
+        <div class="media media-contain"><img src="case-study/mobilesite-case-study/images/flow-board.png" alt="MobileSite contact collection flow board"/></div>
         <div class="body">
           <p class="case-teaser">Same story, other surface — the flow the native app hands off to.</p>
           <p class="case-tag">Meta · BizComm · Mobile Web (msite)</p>
