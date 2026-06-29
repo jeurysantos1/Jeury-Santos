@@ -64,11 +64,11 @@
 .ja-chip:hover{background:rgba(255,176,46,.2);transform:translateY(-1px);}
 
 .ja-input-row{display:flex;gap:8px;padding:12px 14px;border-top:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);}
-.ja-input{flex:1;min-width:0;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:999px;
-  padding:11px 15px;color:#fff;font-size:13.5px;font-family:var(--ja-font);outline:none;transition:border-color .2s,box-shadow .2s;}
+.ja-input{flex:1;min-width:0;min-height:44px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:999px;
+  padding:11px 16px;color:#fff;font-size:13.5px;font-family:var(--ja-font);outline:none;transition:border-color .2s,box-shadow .2s;}
 .ja-input:focus{border-color:var(--ja-accent);box-shadow:0 0 0 3px rgba(255,176,46,.18);}
 .ja-input::placeholder{color:#6b7682;}
-.ja-send{flex-shrink:0;width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;font-size:17px;font-weight:700;color:#04110d;
+.ja-send{flex-shrink:0;width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;font-size:17px;font-weight:700;color:#04110d;
   background:linear-gradient(120deg,var(--ja-accent),var(--ja-accent2));transition:transform .2s,box-shadow .2s;}
 .ja-send:hover{transform:translateY(-1px);box-shadow:0 10px 26px -8px rgba(255,176,46,.55);}
 
