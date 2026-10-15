@@ -15,7 +15,7 @@
   :root{
     /* fixed brand */
     --accent:#ffb02e; --accent-2:#ff7a45;
-    --cs-ama:#0a9bd6; --cs-mobile:#7d5cff;
+    --cs-ama:#0a9bd6; --cs-mobile:#7d5cff; --cs-alert:#2d88ff;
     --font-display:'Bricolage Grotesque',-apple-system,sans-serif;
     --font-body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
     --maxw:1180px;
@@ -265,6 +265,8 @@
   .case-card.no-link:hover{transform:none;box-shadow:var(--shadow);border-color:var(--border);}
   /* full-image (contained) card — shows the whole image, not a zoomed crop */
   .case-card .media-contain{background:#06080b;}
+  /* desktop screenshot: keep the bell + card corner in frame */
+  .case-card .media-alert img,.case-card:hover .media-alert img{object-position:left top;}
   .case-card .media-contain img,.case-card:hover .media-contain img{object-fit:contain;object-position:center;}
   .case-card .media-contain img{transform:scale(.98);filter:brightness(.98) saturate(1);}
   .case-card:hover .media-contain img{transform:scale(1);filter:brightness(.92) saturate(1.02);}
@@ -399,7 +401,7 @@
         <span class="line"><span>clarity into</span></span>
         <span class="line"><span class="grad">complex products.</span></span>
       </h1>
-      <p class="lede fade-up">I'm a product designer who turns complex, high-stakes systems into experiences that feel obvious — from enterprise analytics to consumer hardware. I work end to end: global user research, sharp interaction design, and working prototypes that de-risk the build.</p>
+      <p class="lede fade-up">I'm a product designer who turns complex, high-stakes systems into experiences that feel obvious — from advertiser communications at Meta to enterprise analytics and consumer hardware. I work end to end: global user research, sharp interaction design, and working prototypes that de-risk the build.</p>
       <div class="hero-cta fade-up">
         <a class="btn btn-primary" href="#work" data-magnetic>View the work <span class="arrow">→</span></a>
         <a class="btn btn-ghost" href="resume.html">Résumé</a>
@@ -435,8 +437,8 @@
     </div>
 
     <div class="filters" data-reveal>
-      <button class="chip-filter active" type="button" data-filter="all">All <span class="n">5</span></button>
-      <button class="chip-filter" type="button" data-filter="meta">Meta <span class="n">2</span></button>
+      <button class="chip-filter active" type="button" data-filter="all">All <span class="n">6</span></button>
+      <button class="chip-filter" type="button" data-filter="meta">Meta <span class="n">3</span></button>
       <button class="chip-filter" type="button" data-filter="google">Google <span class="n">2</span></button>
       <button class="chip-filter" type="button" data-filter="royal">Royal Caribbean <span class="n">1</span></button>
     </div>
@@ -470,9 +472,23 @@
         </div>
       </article>
 
-      <!-- GOOGLE 03 -->
+      <!-- META 03 -->
+      <article class="case-card" style="--cs:var(--cs-alert)" data-company="meta" data-href="case-study/live-notification/index.html" data-title="Ads Manager Critical Alert" data-reveal>
+        <span class="case-num">03 / Meta</span>
+        <div class="media media-alert"><img src="case-study/live-notification/assets/card-crop.webp" alt="Critical alert card arriving beside the Ads Manager notification bell"/></div>
+        <div class="body">
+          <p class="case-teaser">The message already existed. I moved the moment of delivery.</p>
+          <p class="case-tag">Meta · Facebook Ads Manager · Desktop</p>
+          <h3>Ads Manager Critical Alert</h3>
+          <p class="case-desc">A rejected ad stops spending immediately, but the only signal was a passive chip painted at page load. I audited six surfaces, prototyped three placements, and designed a live, ad-level alert anchored to the bell — with a three-question rule that can refuse it. A 3-week test at 10% showed a positive revenue signal; it's now ramping to 30%.</p>
+          <div class="case-chips"><span>Surface audit</span><span>Coded prototype</span><span>Governance rule</span></div>
+          <span class="case-link">Read the Critical Alert case study <span class="arrow">→</span></span>
+        </div>
+      </article>
+
+      <!-- GOOGLE 04 -->
       <article class="case-card" style="--cs:#4285f4" data-company="google" data-href="case-study/connect-deals/index.html" data-title="Connect Deals" data-reveal>
-        <span class="case-num">03 / Google</span>
+        <span class="case-num">04 / Google</span>
         <div class="media media-contain"><img src="case-study/connect-deals/images/final-design.webp" alt="Connect Deals reporting dashboard"/></div>
         <div class="body">
           <p class="case-teaser">At-a-glance dashboards that turn ad performance into decisions.</p>
@@ -484,9 +500,9 @@
         </div>
       </article>
 
-      <!-- GOOGLE 04 -->
+      <!-- GOOGLE 05 -->
       <article class="case-card" style="--cs:#34a853" data-company="google" data-href="case-study/pixel-tablet/index.html" data-title="Pixel Tablet" data-reveal>
-        <span class="case-num">04 / Google</span>
+        <span class="case-num">05 / Google</span>
         <div class="media media-contain"><img src="case-study/pixel-tablet/images/s13_1.webp" alt="Pixel Tablet settings redesign"/></div>
         <div class="body">
           <p class="case-teaser">Settings that surface, not bury.</p>
@@ -498,9 +514,9 @@
         </div>
       </article>
 
-      <!-- ROYAL CARIBBEAN 05 -->
+      <!-- ROYAL CARIBBEAN 06 -->
       <article class="case-card" style="--cs:#1f86e0" data-company="royal" data-href="case-study/royal-caribbean/index.html" data-title="Royal Caribbean" data-reveal>
-        <span class="case-num">05 / RCCL</span>
+        <span class="case-num">06 / RCCL</span>
         <div class="media media-contain"><img src="case-study/royal-caribbean/images/s60_0.webp" alt="Royal Caribbean design system component canvas"/></div>
         <div class="body">
           <p class="case-teaser">A design system built to scale.</p>
@@ -521,16 +537,22 @@
     <div class="about-head" data-reveal>
       <p class="sec-eyebrow">About me</p>
       <h2>I work where intent meets infrastructure.</h2>
-      <p class="about-lede">I'm a product designer who's led <strong>reporting & analytics for enterprise advertising at Google</strong>, shaped <strong>e-commerce for Royal Caribbean</strong>, and built features for the <strong>Google Pixel Tablet</strong>. I care most about the seams — continuity, truthful state, and decisions that hold up under cross-functional scrutiny — and I go from global research all the way to working prototypes that prove the idea before anyone writes production code.</p>
+      <p class="about-lede">I'm a product designer who's led <strong>advertiser reachability at Meta</strong> and <strong>reporting & analytics for enterprise advertising at Google</strong>, shaped <strong>e-commerce for Royal Caribbean</strong>, and built features for the <strong>Google Pixel Tablet</strong>. I care most about the seams — continuity, truthful state, and decisions that hold up under cross-functional scrutiny — and I go from global research all the way to working prototypes that prove the idea before anyone writes production code.</p>
     </div>
 
     <div class="about-cols">
       <div class="timeline" data-reveal>
         <p class="colh">Experience</p>
         <div class="tl-item">
+          <div class="tl-role">Product Designer · Reachability lead</div>
+          <div class="tl-org">Meta (Contract) · Business Communications</div>
+          <div class="tl-when">Feb 2026 – Oct 2026</div>
+          <p>Led the reachability experience for advertisers in Facebook Ads Manager, making sure account-critical messages reach the people who can act on them. Partnered with the notifications, governance and UI-notification teams across Meta's business platforms, and shipped contact collection (native + mobile web) and a real-time critical alert that showed a positive revenue signal at 10%.</p>
+        </div>
+        <div class="tl-item">
           <div class="tl-role">Product Designer</div>
           <div class="tl-org">Google (Contract) · Connect Deals</div>
-          <div class="tl-when">Feb 2025 – Aug 2026</div>
+          <div class="tl-when">Feb 2025 – Feb 2026</div>
           <p>Led end-to-end design of reporting and analytics for an enterprise platform tracking ad performance across Google products. Built at-a-glance dashboards and ran global research with sellers and account teams to shape product strategy.</p>
         </div>
         <div class="tl-item">
